@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://28eyd120rjcg"]
+
+[ext_resource type="Script" uid="uid://pb8ja47yp6kj" path="res://top_bar.gd" id="1_s4d5a"]
+[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/TopBarTheme.tres" id="2_kk5jy"]
+
+[node name="TopBar" type="MenuBar"]
+offset_right = 731.6
+offset_bottom = 56.117
+theme = ExtResource("2_kk5jy")
+script = ExtResource("1_s4d5a")
+
+[node name="FileMenu" type="PopupMenu" parent="."]
+title = "📁File"
+size = Vector2i(253, 218)
+theme = ExtResource("2_kk5jy")
+theme_override_font_sizes/font_size = 30
+item_count = 5
+item_0/text = "🆕 New... "
+item_0/id = 0
+item_1/text = "📂 Open... "
+item_1/id = 1
+item_2/text = "🔎 Open Recent"
+item_2/id = 2
+item_3/text = "💾 Save"
+item_3/id = 3
+item_4/text = "📤 Export"
+item_4/id = 4
+
+[node name="GraphicsMenu" type="PopupMenu" parent="."]
+title = "💠Graphics"
+theme = ExtResource("2_kk5jy")
+theme_override_font_sizes/font_size = 30
+item_count = 3
+item_0/text = "⛽ Pop"
+item_0/id = 0
+item_1/text = "🌀 Valve"
+item_1/id = 1
+item_2/text = "➕ Add more..."
+item_2/id = 2
+
+[node name="AnalysisMenu" type="PopupMenu" parent="."]
+title = "🧭Analysis"
+theme = ExtResource("2_kk5jy")
+theme_override_font_sizes/font_size = 30
+item_count = 2
+item_0/text = "🌲 Draw ETA Tree"
+item_0/id = 0
+item_1/text = "📉 Calculate Success & Failure Rates"
+item_1/id = 1
+
+[node name="SettingsMenu" type="PopupMenu" parent="."]
+title = "⚙️Settings"
+theme = ExtResource("2_kk5jy")
+theme_override_font_sizes/font_size = 30
+item_count = 2
+item_0/text = "🔮 Themes"
+item_0/id = 0
+item_1/text = "🗣️ Language"
+item_1/id = 1
+
+[node name="HelpMenu" type="PopupMenu" parent="."]
+title = "🤝Help"
+theme = ExtResource("2_kk5jy")
+theme_override_font_sizes/font_size = 30
+item_count = 4
+item_0/text = "📔 FreeEta Handbook"
+item_0/id = 0
+item_1/text = "🌏 About FreeEta"
+item_1/id = 1
+item_2/text = "🤖 About Godot"
+item_2/id = 2
+item_3/text = "🐛Debug"
+item_3/id = 3

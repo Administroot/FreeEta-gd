@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bflgx4bqisc57"]
+
+[ext_resource type="Texture2D" uid="uid://dcvpakna8i04d" path="res://godot-rust.png" id="1_00ayd"]
+[ext_resource type="Script" uid="uid://b608r4xluh3hg" path="res://rust_crab.gd" id="2_mqeat"]
+
+[node name="CrabScene" type="Node2D"]
+
+[node name="RustCrab" type="Sprite2D" parent="."]
+texture = ExtResource("1_00ayd")
+script = ExtResource("2_mqeat")
