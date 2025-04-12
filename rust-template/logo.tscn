@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckxs3nenmu5av"]
+
+[ext_resource type="Texture2D" uid="uid://dy27xircsrwab" path="res://assets/logo.svg" id="1_hgdat"]
+[ext_resource type="Script" uid="uid://cm5f0ibttfdug" path="res://logo.gd" id="2_aicgo"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_hgdat"]
+diffuse_texture = ExtResource("1_hgdat")
+
+[node name="Logo" type="Button"]
+layout_direction = 1
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+scale = Vector2(1.425, 1.425)
+pivot_offset = Vector2(20, 20)
+icon = SubResource("CanvasTexture_hgdat")
+script = ExtResource("2_aicgo")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

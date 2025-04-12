@@ -1,13 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://28eyd120rjcg"]
+[gd_scene load_steps=2 format=3 uid="uid://28eyd120rjcg"]
 
-[ext_resource type="Script" uid="uid://pb8ja47yp6kj" path="res://top_bar.gd" id="1_s4d5a"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/TopBarTheme.tres" id="2_kk5jy"]
 
 [node name="TopBar" type="MenuBar"]
-offset_right = 731.6
-offset_bottom = 56.117
+offset_right = 854.0
+offset_bottom = 57.0
 theme = ExtResource("2_kk5jy")
-script = ExtResource("1_s4d5a")
 
 [node name="FileMenu" type="PopupMenu" parent="."]
 title = "📁File"
