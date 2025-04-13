@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbn3upoctkldp"]
+
+[ext_resource type="PackedScene" uid="uid://28eyd120rjcg" path="res://top_bar.tscn" id="1_kadda"]
+[ext_resource type="PackedScene" uid="uid://ckxs3nenmu5av" path="res://logo.tscn" id="2_sbqac"]
+
+[sub_resource type="Gradient" id="Gradient_kadda"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.0784314, 0.0784314, 0.0784314, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sbqac"]
+gradient = SubResource("Gradient_kadda")
+
+[node name="TopSlide" type="Node2D"]
+
+[node name="TopBg" type="Sprite2D" parent="."]
+position = Vector2(960.25, 28.625)
+scale = Vector2(7.49805, 56.75)
+texture = SubResource("GradientTexture1D_sbqac")
+
+[node name="TopBar" parent="." instance=ExtResource("1_kadda")]
+
+[node name="Logo" parent="." instance=ExtResource("2_sbqac")]
+offset_left = 1872.0
+offset_top = 8.0
+offset_right = 1912.0
+offset_bottom = 48.0
+size_flags_horizontal = 4
+size_flags_vertical = 0

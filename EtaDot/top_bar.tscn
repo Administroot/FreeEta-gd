@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://28eyd120rjcg"]
 
-[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/TopBarTheme.tres" id="2_kk5jy"]
+[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_kk5jy"]
 
 [node name="TopBar" type="MenuBar"]
-offset_right = 854.0
+offset_right = 985.0
 offset_bottom = 57.0
 theme = ExtResource("2_kk5jy")
 

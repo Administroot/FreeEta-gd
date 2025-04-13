@@ -2,4 +2,4 @@ extends Button
 
 
 func _on_pressed() -> void:
-	rotation += PI
+	rotation += PI / 2

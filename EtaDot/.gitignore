@@ -4,3 +4,6 @@
 
 # Addons
 addons/
+
+# Krita temp files
+*~
