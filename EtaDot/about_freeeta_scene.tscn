@@ -1,0 +1,78 @@
+[gd_scene load_steps=7 format=3 uid="uid://b2fgn2e4ds1rx"]
+
+[ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_lmawn"]
+[ext_resource type="Texture2D" uid="uid://ck8mbjlcsd0n3" path="res://assets/logo.svg" id="2_eaqyw"]
+[ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="3_h6p58"]
+[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="4_emt80"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2t7d"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j1fs2"]
+content_margin_left = 50.0
+content_margin_top = 40.0
+content_margin_right = 20.0
+content_margin_bottom = 40.0
+
+[node name="AboutFreeetaScene" type="PopupPanel"]
+title = "🌏 About FreeEta"
+initial_position = 2
+size = Vector2i(1242, 795)
+visible = true
+borderless = false
+always_on_top = true
+theme = ExtResource("1_lmawn")
+theme_override_styles/panel = SubResource("StyleBoxFlat_k2t7d")
+
+[node name="WindowTypeSetting" type="VBoxContainer" parent="."]
+offset_right = 1242.0
+offset_bottom = 795.0
+
+[node name="SummaryInfo" type="HBoxContainer" parent="WindowTypeSetting"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="WindowTypeSetting/SummaryInfo"]
+layout_mode = 2
+texture = ExtResource("2_eaqyw")
+expand_mode = 3
+
+[node name="Intro" type="Label" parent="WindowTypeSetting/SummaryInfo"]
+layout_mode = 2
+theme = ExtResource("3_h6p58")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_j1fs2")
+text = "FreeEta v0.0.1-alpha
+  © 2025-present Shanghai Justlinking Safety Technology co.,ltd.  
+  © 2025-present Administroot"
+
+[node name="SelectTab" type="TabContainer" parent="WindowTypeSetting"]
+layout_mode = 2
+theme = ExtResource("4_emt80")
+current_tab = 2
+
+[node name="Author" type="Button" parent="WindowTypeSetting/SelectTab"]
+visible = false
+layout_mode = 2
+theme = ExtResource("4_emt80")
+theme_override_font_sizes/font_size = 20
+text = "Author"
+metadata/_tab_index = 0
+
+[node name="License" type="Button" parent="WindowTypeSetting/SelectTab"]
+visible = false
+layout_mode = 2
+theme = ExtResource("4_emt80")
+theme_override_font_sizes/font_size = 20
+text = "License"
+metadata/_tab_index = 1
+
+[node name="Third-Party License" type="Button" parent="WindowTypeSetting/SelectTab"]
+layout_mode = 2
+theme = ExtResource("4_emt80")
+theme_override_font_sizes/font_size = 20
+text = "Third-Party License"
+metadata/_tab_index = 2

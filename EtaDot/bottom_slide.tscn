@@ -1,9 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://dknierfavh8um"]
+[gd_scene load_steps=9 format=3 uid="uid://dknierfavh8um"]
 
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="1_r83t7"]
 [ext_resource type="Texture2D" uid="uid://mljkviguqxb1" path="res://assets/pen.png" id="2_r83t7"]
 [ext_resource type="Texture2D" uid="uid://dw60xuigtybal" path="res://assets/node.png" id="3_kdin5"]
 [ext_resource type="Texture2D" uid="uid://botbbmg85qoai" path="res://assets/programming.png" id="4_aqo5o"]
+
+[sub_resource type="GDScript" id="GDScript_kdin5"]
+script/source = "extends Node2D
+"
 
 [sub_resource type="Gradient" id="Gradient_kadda"]
 interpolation_mode = 2
@@ -13,7 +17,10 @@ colors = PackedColorArray(0.0784314, 0.0784314, 0.0784314, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_kdin5"]
 gradient = SubResource("Gradient_kadda")
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_aqo5o"]
+
 [node name="BottomSlide" type="Node2D"]
+script = SubResource("GDScript_kdin5")
 
 [node name="BottomBg" type="Sprite2D" parent="."]
 scale = Vector2(7.49219, 66.1997)
@@ -38,17 +45,23 @@ theme = ExtResource("1_r83t7")
 [node name="ViewButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_r83t7")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_aqo5o")
 text = "View"
 icon = ExtResource("2_r83t7")
 
 [node name="EtaButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_r83t7")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_aqo5o")
 text = "ETA"
 icon = ExtResource("3_kdin5")
 
 [node name="CodeButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_r83t7")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_aqo5o")
 text = "Code"
 icon = ExtResource("4_aqo5o")

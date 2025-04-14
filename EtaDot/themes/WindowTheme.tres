@@ -1,0 +1,5 @@
+[gd_resource type="Theme" format=3 uid="uid://dchftuxx2uqu2"]
+
+[resource]
+PopupPanel/colors/title_color = Color(0.101961, 0.101961, 0.101961, 1)
+PopupPanel/font_sizes/title_font_size = 25
