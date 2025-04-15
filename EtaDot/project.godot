@@ -14,7 +14,7 @@ config/name="EtaDot"
 config/description="FreeEta powered by Rust and Godot"
 run/main_scene="uid://c7iskwgu5aphr"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="uid://dy27xircsrwab"
+config/icon="uid://ck8mbjlcsd0n3"
 
 [display]
 
