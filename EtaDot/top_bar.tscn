@@ -1,11 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://28eyd120rjcg"]
+[gd_scene load_steps=4 format=3 uid="uid://28eyd120rjcg"]
 
+[ext_resource type="Script" uid="uid://bpfybnj4yvtk7" path="res://top_bar.gd" id="2_fydeb"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_kk5jy"]
+[ext_resource type="PackedScene" uid="uid://b2fgn2e4ds1rx" path="res://about_freeeta_scene.tscn" id="3_ermxm"]
 
 [node name="TopBar" type="MenuBar"]
 offset_right = 985.0
 offset_bottom = 57.0
 theme = ExtResource("2_kk5jy")
+script = ExtResource("2_fydeb")
 
 [node name="FileMenu" type="PopupMenu" parent="."]
 title = "📁File"
@@ -69,3 +72,7 @@ item_2/text = "🤖 About Godot"
 item_2/id = 2
 item_3/text = "🐛Debug"
 item_3/id = 3
+
+[node name="AboutFreeetaScene" parent="HelpMenu" instance=ExtResource("3_ermxm")]
+
+[connection signal="id_pressed" from="HelpMenu" to="." method="_on_help_menu_id_pressed"]

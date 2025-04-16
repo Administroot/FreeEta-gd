@@ -1,16 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2fgn2e4ds1rx"]
+[gd_scene load_steps=11 format=3 uid="uid://b2fgn2e4ds1rx"]
 
 [ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_lmawn"]
 [ext_resource type="Texture2D" uid="uid://ck8mbjlcsd0n3" path="res://assets/logo.svg" id="2_eaqyw"]
+[ext_resource type="Script" uid="uid://22e1qc8w83m8" path="res://about_freeeta_scene.gd" id="2_h6p58"]
 [ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="3_h6p58"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="4_emt80"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2t7d"]
-bg_color = Color(0.101961, 0.101961, 0.101961, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j1fs2"]
 content_margin_left = 50.0
@@ -28,6 +22,8 @@ gradient = SubResource("Gradient_lmawn")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h6p58"]
 texture = SubResource("GradientTexture1D_eaqyw")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eaqyw"]
+
 [node name="AboutFreeetaScene" type="PopupPanel"]
 title = "🌏 About FreeEta"
 initial_position = 2
@@ -35,12 +31,15 @@ size = Vector2i(1242, 538)
 visible = true
 borderless = false
 always_on_top = true
+content_scale_mode = 1
 theme = ExtResource("1_lmawn")
-theme_override_styles/panel = SubResource("StyleBoxFlat_k2t7d")
+script = ExtResource("2_h6p58")
 
 [node name="WindowTypeSetting" type="VBoxContainer" parent="."]
-offset_right = 1242.0
-offset_bottom = 538.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 1222.0
+offset_bottom = 518.0
 
 [node name="SummaryInfo" type="HBoxContainer" parent="WindowTypeSetting"]
 layout_mode = 2
@@ -74,7 +73,6 @@ alignment = 0
 metadata/_tab_index = 0
 
 [node name="NameButton" type="LinkButton" parent="WindowTypeSetting/SelectTab/Author"]
-visible = false
 layout_mode = 0
 offset_right = 697.0
 offset_bottom = 49.0
@@ -91,11 +89,14 @@ theme = ExtResource("4_emt80")
 theme_override_font_sizes/font_size = 20
 metadata/_tab_index = 1
 
-[node name="LicensePaper" type="RichTextLabel" parent="WindowTypeSetting/SelectTab/License"]
+[node name="LicenseScrollContainer" type="ScrollContainer" parent="WindowTypeSetting/SelectTab/License"]
+layout_mode = 0
+offset_right = 1214.0
+offset_bottom = 270.0
+
+[node name="LicensePaper" type="RichTextLabel" parent="WindowTypeSetting/SelectTab/License/LicenseScrollContainer"]
 layout_mode = 2
-offset_right = 1499.0
-offset_bottom = 33026.0
-theme = ExtResource("4_emt80")
+theme = ExtResource("3_h6p58")
 text = "GNU GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007
 
@@ -781,26 +782,69 @@ theme = ExtResource("4_emt80")
 theme_override_font_sizes/font_size = 20
 metadata/_tab_index = 2
 
-[node name="FreeEtaRelies" type="Label" parent="WindowTypeSetting/SelectTab/Third-Party License"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 49.0
-text = "Godot Engine relies on a number of third-party free and open source libraries,all compatible with the terms of its MIT license.The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."
-
-[node name="LicenseHSplit" type="HSplitContainer" parent="WindowTypeSetting/SelectTab/Third-Party License"]
+[node name="Third-PartyVContainer" type="VBoxContainer" parent="WindowTypeSetting/SelectTab/Third-Party License"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ThirdPartyList" type="Tree" parent="WindowTypeSetting/SelectTab/Third-Party License/LicenseHSplit"]
+[node name="LicensePaper" type="RichTextLabel" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer"]
+layout_mode = 2
+theme = ExtResource("3_h6p58")
+text = "FreeEta relies on a number of third-party free and open source libraries,all compatible with the terms of its MIT license.
+The following is an exhaustive list of all such third-party components with their respective copyright statements and 
+license terms."
+fit_content = true
+scroll_following = true
+autowrap_mode = 0
+
+[node name="LicenseHSplit" type="HSplitContainer" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer"]
+layout_mode = 2
+theme_override_styles/split_bar_background = SubResource("StyleBoxFlat_eaqyw")
+
+[node name="ThirdPartyList" type="ScrollContainer" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="PackageVBox" type="VBoxContainer" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/ThirdPartyList"]
 layout_mode = 2
 
-[node name="GodotRef" type="Button" parent="WindowTypeSetting/SelectTab/Third-Party License/LicenseHSplit"]
+[node name="GodotButton" type="Button" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/ThirdPartyList/PackageVBox"]
 layout_mode = 2
 theme = ExtResource("4_emt80")
+theme_override_font_sizes/font_size = 25
 text = "Godot"
 
-[node name="SerdeJsonRef" type="Button" parent="WindowTypeSetting/SelectTab/Third-Party License/LicenseHSplit"]
+[node name="SerdeButton" type="Button" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/ThirdPartyList/PackageVBox"]
 layout_mode = 2
-text = "serde_json"
+theme = ExtResource("4_emt80")
+theme_override_font_sizes/font_size = 25
+text = "Serde_json"
+
+[node name="TokioButton" type="Button" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/ThirdPartyList/PackageVBox"]
+layout_mode = 2
+theme = ExtResource("4_emt80")
+theme_override_font_sizes/font_size = 25
+text = "Tokio"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit"]
+layout_mode = 2
+
+[node name="SpecificLicenseText" type="RichTextLabel" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/ScrollContainer"]
+layout_mode = 2
+theme = ExtResource("3_h6p58")
+text = "DRAG ME TO SELECT!!
+DRAG ME TO SELECT!!
+DRAG ME TO SELECT!!
+DRAG ME TO SELECT!!
+DRAG ME TO SELECT!!
+DRAG ME TO SELECT!!
+DRAG ME TO SELECT!!
+DRAG ME TO SELECT!!
+DRAG ME TO SELECT!!
+DRAG ME TO SELECT!!"
+fit_content = true
+scroll_following = true
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[connection signal="focus_entered" from="WindowTypeSetting/SummaryInfo/Icon" to="." method="_on_icon_focus_entered"]
