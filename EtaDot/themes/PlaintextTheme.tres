@@ -1,6 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://cnm886uwig4ku"]
 
 [resource]
+resource_local_to_scene = true
 default_font_size = 20
 RichTextLabel/colors/default_color = Color(0.784314, 0.784314, 0.784314, 1)
 RichTextLabel/colors/font_outline_color = Color(0.784314, 0.784314, 0.784314, 1)

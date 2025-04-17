@@ -200,3 +200,4 @@ PopupMenu/styles/panel = SubResource("StyleBoxFlat_8mks0")
 PopupMenu/styles/separator = SubResource("StyleBoxLine_a3k15")
 TabBar/font_sizes/font_size = 20
 TabContainer/font_sizes/font_size = 25
+Tree/font_sizes/font_size = 20

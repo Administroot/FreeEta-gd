@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://22e1qc8w83m8" path="res://about_freeeta_scene.gd" id="2_h6p58"]
 [ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="3_h6p58"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="4_emt80"]
+[ext_resource type="Script" uid="uid://chifibs86hhem" path="res://license_tree.gd" id="6_h6p58"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j1fs2"]
 content_margin_left = 50.0
@@ -21,8 +22,6 @@ gradient = SubResource("Gradient_lmawn")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h6p58"]
 texture = SubResource("GradientTexture1D_eaqyw")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eaqyw"]
 
 [node name="AboutFreeetaScene" type="PopupPanel"]
 title = "🌏 About FreeEta"
@@ -782,10 +781,10 @@ theme = ExtResource("4_emt80")
 theme_override_font_sizes/font_size = 20
 metadata/_tab_index = 2
 
-[node name="Third-PartyVContainer" type="VBoxContainer" parent="WindowTypeSetting/SelectTab/Third-Party License"]
+[node name="Third-PartyVContainer" type="VSplitContainer" parent="WindowTypeSetting/SelectTab/Third-Party License"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1217.0
+offset_bottom = 269.0
 
 [node name="LicensePaper" type="RichTextLabel" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer"]
 layout_mode = 2
@@ -799,52 +798,29 @@ autowrap_mode = 0
 
 [node name="LicenseHSplit" type="HSplitContainer" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer"]
 layout_mode = 2
-theme_override_styles/split_bar_background = SubResource("StyleBoxFlat_eaqyw")
 
-[node name="ThirdPartyList" type="ScrollContainer" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit"]
+[node name="LicenseTree" type="Tree" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme = ExtResource("4_emt80")
+script = ExtResource("6_h6p58")
+
+[node name="LicenseScroll" type="ScrollContainer" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit"]
 layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="PackageVBox" type="VBoxContainer" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/ThirdPartyList"]
-layout_mode = 2
-
-[node name="GodotButton" type="Button" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/ThirdPartyList/PackageVBox"]
-layout_mode = 2
-theme = ExtResource("4_emt80")
-theme_override_font_sizes/font_size = 25
-text = "Godot"
-
-[node name="SerdeButton" type="Button" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/ThirdPartyList/PackageVBox"]
-layout_mode = 2
-theme = ExtResource("4_emt80")
-theme_override_font_sizes/font_size = 25
-text = "Serde_json"
-
-[node name="TokioButton" type="Button" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/ThirdPartyList/PackageVBox"]
-layout_mode = 2
-theme = ExtResource("4_emt80")
-theme_override_font_sizes/font_size = 25
-text = "Tokio"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit"]
-layout_mode = 2
-
-[node name="SpecificLicenseText" type="RichTextLabel" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/ScrollContainer"]
+[node name="SpecificLicense" type="RichTextLabel" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseScroll"]
+custom_minimum_size = Vector2(970, 170)
 layout_mode = 2
 theme = ExtResource("3_h6p58")
-text = "DRAG ME TO SELECT!!
-DRAG ME TO SELECT!!
-DRAG ME TO SELECT!!
-DRAG ME TO SELECT!!
-DRAG ME TO SELECT!!
-DRAG ME TO SELECT!!
-DRAG ME TO SELECT!!
-DRAG ME TO SELECT!!
-DRAG ME TO SELECT!!
-DRAG ME TO SELECT!!"
-fit_content = true
+text = "👋🏻CLICK ONE TO SHOW LICENSE👋🏻"
+scroll_active = false
 scroll_following = true
-autowrap_mode = 0
+autowrap_mode = 2
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[connection signal="focus_entered" from="WindowTypeSetting/SummaryInfo/Icon" to="." method="_on_icon_focus_entered"]
+[connection signal="button_clicked" from="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" to="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" method="_on_button_clicked"]
+[connection signal="column_title_clicked" from="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" to="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" method="_on_column_title_clicked"]
+[connection signal="item_mouse_selected" from="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" to="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" method="_on_item_mouse_selected"]
+[connection signal="item_selected" from="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" to="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" method="_on_item_selected"]
