@@ -1,16 +1,16 @@
 extends PopupPanel
 
-func _ready():
-	create_tree_items()
-	
-func create_tree_items() -> void:
-	var tree = $"WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree"
-	# tree.set_column_custom_minimum_width(0, 180)
-	var root = tree.create_item()
-	tree.hide_root = true
-	var godot = tree.create_item(root)
-	godot.set_text(0,"Godot")
-	var serde = tree.create_item(root)
-	serde.set_text(0,"Serde_Json")
-	var tokio = tree.create_item(root)
-	tokio.set_text(0,"Tokio")
+var item_contents = [
+	"Godot License\n这是Godot引擎的许可证信息...",
+	"Serde_json License\n这是Serde_json库的许可证信息...",
+	"Tokio License\n这是Tokio库的许可证信息...",
+]
+
+func _on_license_itemlist_item_selected(index: int) -> void:
+	var txt_label = $"WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseScroll/SpecificLicense"
+
+	if index >= 0 and index < item_contents.size():
+		print(item_contents[index])
+		txt_label.text = item_contents[index]
+	else:
+		push_error("No License found")

@@ -168,6 +168,7 @@ Button/colors/icon_hover_color = Color(0.341176, 0.623529, 1, 1)
 Button/colors/icon_hover_pressed_color = Color(0.341176, 0.623529, 1, 1)
 Button/colors/icon_pressed_color = Color(0.341176, 0.623529, 1, 1)
 HBoxContainer/constants/separation = 10
+ItemList/font_sizes/font_size = 20
 MenuBar/colors/font_hover_pressed_color = Color(0.341176, 0.623529, 1, 1)
 MenuBar/colors/font_pressed_color = Color(0.341176, 0.623529, 1, 1)
 MenuBar/constants/h_separation = 27

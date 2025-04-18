@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://22e1qc8w83m8" path="res://about_freeeta_scene.gd" id="2_h6p58"]
 [ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="3_h6p58"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="4_emt80"]
-[ext_resource type="Script" uid="uid://chifibs86hhem" path="res://license_tree.gd" id="6_h6p58"]
+[ext_resource type="Script" uid="uid://chifibs86hhem" path="res://license_itemlist.gd" id="6_h6p58"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j1fs2"]
 content_margin_left = 50.0
@@ -799,7 +799,7 @@ autowrap_mode = 0
 [node name="LicenseHSplit" type="HSplitContainer" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer"]
 layout_mode = 2
 
-[node name="LicenseTree" type="Tree" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit"]
+[node name="LicenseItemlist" type="ItemList" parent="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit"]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 theme = ExtResource("4_emt80")
@@ -820,7 +820,4 @@ autowrap_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="button_clicked" from="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" to="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" method="_on_button_clicked"]
-[connection signal="column_title_clicked" from="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" to="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" method="_on_column_title_clicked"]
-[connection signal="item_mouse_selected" from="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" to="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" method="_on_item_mouse_selected"]
-[connection signal="item_selected" from="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" to="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseTree" method="_on_item_selected"]
+[connection signal="item_selected" from="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseItemlist" to="." method="_on_license_itemlist_item_selected"]
