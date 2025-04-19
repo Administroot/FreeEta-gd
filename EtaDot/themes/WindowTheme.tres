@@ -2113,7 +2113,7 @@ content_margin_bottom = 0.0
 
 [resource]
 PopupPanel/colors/title_color = Color(0.65098, 0.494118, 0.717647, 1)
-PopupPanel/font_sizes/title_font_size = 25
+PopupPanel/font_sizes/title_font_size = 30
 PopupPanel/styles/panel = SubResource("StyleBoxFlat_i8c8h")
 RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 RichTextLabel/colors/font_outline_color = Color(0.643137, 0, 0, 0)

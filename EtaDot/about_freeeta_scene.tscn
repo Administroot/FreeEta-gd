@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2fgn2e4ds1rx"]
+[gd_scene load_steps=14 format=3 uid="uid://b2fgn2e4ds1rx"]
 
 [ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_lmawn"]
 [ext_resource type="Texture2D" uid="uid://ck8mbjlcsd0n3" path="res://assets/logo.svg" id="2_eaqyw"]
@@ -23,13 +23,23 @@ gradient = SubResource("Gradient_lmawn")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h6p58"]
 texture = SubResource("GradientTexture1D_eaqyw")
 
+[sub_resource type="Theme" id="Theme_h6p58"]
+Button/font_sizes/font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6p58"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_emt80"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+
 [node name="AboutFreeetaScene" type="PopupPanel"]
 title = "🌏 About FreeEta"
 initial_position = 2
-size = Vector2i(1242, 538)
+size = Vector2i(1242, 639)
 visible = true
 borderless = false
 always_on_top = true
+min_size = Vector2i(0, 85)
 content_scale_mode = 1
 theme = ExtResource("1_lmawn")
 script = ExtResource("2_h6p58")
@@ -38,7 +48,7 @@ script = ExtResource("2_h6p58")
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 1222.0
-offset_bottom = 518.0
+offset_bottom = 619.0
 
 [node name="SummaryInfo" type="HBoxContainer" parent="WindowTypeSetting"]
 layout_mode = 2
@@ -58,6 +68,7 @@ text = "FreeEta v0.0.1-alpha
   © 2025-present Administroot"
 
 [node name="SelectTab" type="TabContainer" parent="WindowTypeSetting"]
+custom_minimum_size = Vector2(0, 350)
 layout_mode = 2
 theme = ExtResource("4_emt80")
 theme_override_styles/tabbar_background = SubResource("StyleBoxTexture_h6p58")
@@ -820,4 +831,13 @@ autowrap_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ConfirmButton" type="Button" parent="WindowTypeSetting"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = SubResource("Theme_h6p58")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_h6p58")
+theme_override_styles/normal = SubResource("StyleBoxFlat_emt80")
+text = "GOT IT😉"
+
 [connection signal="item_selected" from="WindowTypeSetting/SelectTab/Third-Party License/Third-PartyVContainer/LicenseHSplit/LicenseItemlist" to="." method="_on_license_itemlist_item_selected"]
+[connection signal="pressed" from="WindowTypeSetting/ConfirmButton" to="." method="_on_confirm_button_pressed"]
