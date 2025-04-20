@@ -1,11 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7iskwgu5aphr"]
+[gd_scene load_steps=5 format=3 uid="uid://c7iskwgu5aphr"]
 
+[ext_resource type="Script" uid="uid://bbjwopgui8pw4" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://dbn3upoctkldp" path="res://top_slide.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://yfu4xjhobuqb" path="res://common_node.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://dknierfavh8um" path="res://bottom_slide.tscn" id="3_h2yge"]
 
 [node name="Node" type="Node"]
+script = ExtResource("1_1bvp3")
+CommonNode = ExtResource("3_1bvp3")
 
-[node name="TopSlide" parent="." instance=ExtResource("2_0xm2m")]
+[node name="Scenes" type="Node" parent="."]
 
-[node name="BottomSlide" parent="." instance=ExtResource("3_h2yge")]
+[node name="TopSlide" parent="Scenes" instance=ExtResource("2_0xm2m")]
+
+[node name="BottomSlide" parent="Scenes" instance=ExtResource("3_h2yge")]
 position = Vector2(959, 1003)
