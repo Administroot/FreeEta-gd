@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://28eyd120rjcg"]
+[gd_scene load_steps=6 format=3 uid="uid://28eyd120rjcg"]
 
 [ext_resource type="Script" uid="uid://bpfybnj4yvtk7" path="res://top_bar.gd" id="2_fydeb"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_kk5jy"]
 [ext_resource type="PackedScene" uid="uid://b2fgn2e4ds1rx" path="res://about_freeeta_scene.tscn" id="3_ermxm"]
+[ext_resource type="Texture2D" uid="uid://dvtrov2aff64m" path="res://assets/pump.svg" id="3_yqy6c"]
+[ext_resource type="Texture2D" uid="uid://cor3tflxbdhdc" path="res://assets/valve.svg" id="4_yqy6c"]
 
 [node name="TopBar" type="MenuBar"]
 offset_right = 985.0
@@ -29,18 +31,23 @@ item_4/id = 4
 
 [node name="GraphicsMenu" type="PopupMenu" parent="."]
 title = "💠Graphics"
+size = Vector2i(152, 100)
 theme = ExtResource("2_kk5jy")
+theme_override_constants/icon_max_width = 45
 theme_override_font_sizes/font_size = 30
 item_count = 3
-item_0/text = "⛽ Pop"
+item_0/text = "Pump"
+item_0/icon = ExtResource("3_yqy6c")
 item_0/id = 0
-item_1/text = "🌀 Valve"
+item_1/text = "Valve"
+item_1/icon = ExtResource("4_yqy6c")
 item_1/id = 1
-item_2/text = "➕ Add more..."
+item_2/text = "➕ Add More ..."
 item_2/id = 2
 
 [node name="AnalysisMenu" type="PopupMenu" parent="."]
 title = "🧭Analysis"
+size = Vector2i(548, 100)
 theme = ExtResource("2_kk5jy")
 theme_override_font_sizes/font_size = 30
 item_count = 2
