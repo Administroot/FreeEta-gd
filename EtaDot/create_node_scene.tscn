@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://dybgdtsd5hxqh"]
+
+[ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_midvm"]
+[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_5eagr"]
+[ext_resource type="Script" uid="uid://nyu8r6ya8ht0" path="res://label_list.gd" id="3_5eagr"]
+
+[node name="CreateNodeScene" type="PopupPanel"]
+auto_translate_mode = 1
+title = "➕ Create Node ..."
+initial_position = 2
+size = Vector2i(1242, 639)
+visible = true
+borderless = false
+min_size = Vector2i(210, 85)
+content_scale_mode = 1
+theme = ExtResource("1_midvm")
+
+[node name="HSplit1" type="HSplitContainer" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 1222.0
+offset_bottom = 619.0
+
+[node name="VBoxLeft" type="VBoxContainer" parent="HSplit1"]
+custom_minimum_size = Vector2(220, 390)
+layout_mode = 2
+
+[node name="LabelNameLabel" type="Label" parent="HSplit1/VBoxLeft"]
+layout_mode = 2
+theme = ExtResource("2_5eagr")
+text = "Label"
+
+[node name="LabelList" type="Tree" parent="HSplit1/VBoxLeft"]
+custom_minimum_size = Vector2(0, 390)
+layout_mode = 2
+theme = ExtResource("2_5eagr")
+theme_override_font_sizes/font_size = 30
+allow_rmb_select = true
+hide_root = true
+scroll_horizontal_enabled = false
+script = ExtResource("3_5eagr")
+
+[node name="VBoxRight" type="VBoxContainer" parent="HSplit1"]
+layout_mode = 2
+
+[node name="AddLabel" type="Label" parent="HSplit1/VBoxRight"]
+layout_mode = 2
+theme = ExtResource("2_5eagr")
+text = "An input  bar"

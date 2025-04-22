@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://28eyd120rjcg"]
+[gd_scene load_steps=8 format=3 uid="uid://28eyd120rjcg"]
 
 [ext_resource type="Script" uid="uid://bpfybnj4yvtk7" path="res://top_bar.gd" id="2_fydeb"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_kk5jy"]
 [ext_resource type="PackedScene" uid="uid://b2fgn2e4ds1rx" path="res://about_freeeta_scene.tscn" id="3_ermxm"]
 [ext_resource type="Texture2D" uid="uid://dvtrov2aff64m" path="res://assets/pump.svg" id="3_yqy6c"]
 [ext_resource type="Texture2D" uid="uid://cor3tflxbdhdc" path="res://assets/valve.svg" id="4_yqy6c"]
+[ext_resource type="PackedScene" uid="uid://dybgdtsd5hxqh" path="res://create_node_scene.tscn" id="5_jdy2n"]
+[ext_resource type="Texture2D" uid="uid://i2v27av08ql5" path="res://assets/add.svg" id="5_otsem"]
 
 [node name="TopBar" type="MenuBar"]
 offset_right = 985.0
@@ -31,7 +33,7 @@ item_4/id = 4
 
 [node name="GraphicsMenu" type="PopupMenu" parent="."]
 title = "💠Graphics"
-size = Vector2i(152, 100)
+size = Vector2i(288, 155)
 theme = ExtResource("2_kk5jy")
 theme_override_constants/icon_max_width = 45
 theme_override_font_sizes/font_size = 30
@@ -42,8 +44,11 @@ item_0/id = 0
 item_1/text = "Valve"
 item_1/icon = ExtResource("4_yqy6c")
 item_1/id = 1
-item_2/text = "➕ Add More ..."
+item_2/text = " Add More ..."
+item_2/icon = ExtResource("5_otsem")
 item_2/id = 2
+
+[node name="CreateNodeScene" parent="GraphicsMenu" instance=ExtResource("5_jdy2n")]
 
 [node name="AnalysisMenu" type="PopupMenu" parent="."]
 title = "🧭Analysis"
@@ -77,9 +82,10 @@ item_1/text = "🌏 About FreeEta"
 item_1/id = 1
 item_2/text = "🤖 About Godot"
 item_2/id = 2
-item_3/text = "🐛Debug"
+item_3/text = "🐛 Debug"
 item_3/id = 3
 
 [node name="AboutFreeetaScene" parent="HelpMenu" instance=ExtResource("3_ermxm")]
 
+[connection signal="id_pressed" from="GraphicsMenu" to="." method="_on_graphics_menu_id_pressed"]
 [connection signal="id_pressed" from="HelpMenu" to="." method="_on_help_menu_id_pressed"]
