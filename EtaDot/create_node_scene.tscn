@@ -8,7 +8,7 @@
 auto_translate_mode = 1
 title = "➕ Create Node ..."
 initial_position = 2
-size = Vector2i(1242, 639)
+size = Vector2i(1405, 639)
 visible = true
 borderless = false
 min_size = Vector2i(210, 85)
@@ -18,19 +18,19 @@ theme = ExtResource("1_midvm")
 [node name="HSplit1" type="HSplitContainer" parent="."]
 offset_left = 20.0
 offset_top = 20.0
-offset_right = 1222.0
+offset_right = 1385.0
 offset_bottom = 619.0
 
-[node name="VBoxLeft" type="VBoxContainer" parent="HSplit1"]
+[node name="LabelBox" type="VBoxContainer" parent="HSplit1"]
 custom_minimum_size = Vector2(220, 390)
 layout_mode = 2
 
-[node name="LabelNameLabel" type="Label" parent="HSplit1/VBoxLeft"]
+[node name="LabelNameLabel" type="Label" parent="HSplit1/LabelBox"]
 layout_mode = 2
 theme = ExtResource("2_5eagr")
 text = "Label"
 
-[node name="LabelList" type="Tree" parent="HSplit1/VBoxLeft"]
+[node name="LabelList" type="Tree" parent="HSplit1/LabelBox"]
 custom_minimum_size = Vector2(0, 390)
 layout_mode = 2
 theme = ExtResource("2_5eagr")
@@ -40,10 +40,23 @@ hide_root = true
 scroll_horizontal_enabled = false
 script = ExtResource("3_5eagr")
 
-[node name="VBoxRight" type="VBoxContainer" parent="HSplit1"]
+[node name="NodeBox" type="VBoxContainer" parent="HSplit1"]
 layout_mode = 2
 
-[node name="AddLabel" type="Label" parent="HSplit1/VBoxRight"]
+[node name="HBox1" type="HBoxContainer" parent="HSplit1/NodeBox"]
+layout_mode = 2
+
+[node name="AddNodeLineEdit" type="LineEdit" parent="HSplit1/NodeBox/HBox1"]
+custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 theme = ExtResource("2_5eagr")
-text = "An input  bar"
+theme_override_font_sizes/font_size = 30
+placeholder_text = "Create a new node type"
+max_length = 20
+clear_button_enabled = true
+
+[node name="Button" type="Button" parent="HSplit1/NodeBox/HBox1"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme = ExtResource("2_5eagr")
+text = "＋ Add"
