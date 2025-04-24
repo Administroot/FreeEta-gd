@@ -1,14 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://dybgdtsd5hxqh"]
+[gd_scene load_steps=7 format=3 uid="uid://dybgdtsd5hxqh"]
 
 [ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_midvm"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_5eagr"]
 [ext_resource type="Script" uid="uid://nyu8r6ya8ht0" path="res://label_list.gd" id="3_5eagr"]
+[ext_resource type="Script" uid="uid://c31172jxlhjvx" path="res://node_list.gd" id="4_1ek35"]
+[ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="5_dxhv1"]
+[ext_resource type="Texture2D" uid="uid://dvtrov2aff64m" path="res://assets/pump.svg" id="6_dxhv1"]
 
 [node name="CreateNodeScene" type="PopupPanel"]
 auto_translate_mode = 1
 title = "➕ Create Node ..."
 initial_position = 2
-size = Vector2i(1405, 639)
+size = Vector2i(1395, 657)
 visible = true
 borderless = false
 min_size = Vector2i(210, 85)
@@ -18,8 +21,8 @@ theme = ExtResource("1_midvm")
 [node name="HSplit1" type="HSplitContainer" parent="."]
 offset_left = 20.0
 offset_top = 20.0
-offset_right = 1385.0
-offset_bottom = 619.0
+offset_right = 1375.0
+offset_bottom = 637.0
 
 [node name="LabelBox" type="VBoxContainer" parent="HSplit1"]
 custom_minimum_size = Vector2(220, 390)
@@ -60,3 +63,85 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme = ExtResource("2_5eagr")
 text = "＋ Add"
+
+[node name="SelectLabel" type="Label" parent="HSplit1/NodeBox"]
+layout_mode = 2
+theme = ExtResource("2_5eagr")
+text = "Select :"
+
+[node name="NodeList" type="Tree" parent="HSplit1/NodeBox"]
+custom_minimum_size = Vector2(0, 278)
+layout_mode = 2
+theme = ExtResource("2_5eagr")
+theme_override_constants/icon_max_width = 30
+theme_override_font_sizes/font_size = 25
+allow_rmb_select = true
+hide_root = true
+scroll_horizontal_enabled = false
+script = ExtResource("4_1ek35")
+
+[node name="SelectLabel2" type="Label" parent="HSplit1/NodeBox"]
+layout_mode = 2
+theme = ExtResource("2_5eagr")
+text = "Description :"
+
+[node name="HSplit2" type="HSplitContainer" parent="HSplit1/NodeBox"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="HSplit1/NodeBox/HSplit2"]
+custom_minimum_size = Vector2(850, 160)
+layout_mode = 2
+color = Color(0.129412, 0.12549, 0.192157, 1)
+
+[node name="DescScroll" type="ScrollContainer" parent="HSplit1/NodeBox/HSplit2/ColorRect"]
+clip_contents = false
+layout_mode = 2
+offset_left = 854.0
+offset_right = 854.0
+offset_bottom = 160.0
+
+[node name="VBox1" type="VBoxContainer" parent="HSplit1/NodeBox/HSplit2/ColorRect/DescScroll"]
+layout_mode = 2
+
+[node name="NodeName" type="RichTextLabel" parent="HSplit1/NodeBox/HSplit2/ColorRect/DescScroll/VBox1"]
+custom_minimum_size = Vector2(850, 25)
+layout_mode = 2
+theme = ExtResource("5_dxhv1")
+bbcode_enabled = true
+text = "[b][color=orange]NodeName[/color][/b]"
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 2
+
+[node name="NodeDesc" type="RichTextLabel" parent="HSplit1/NodeBox/HSplit2/ColorRect/DescScroll/VBox1"]
+custom_minimum_size = Vector2(850, 25)
+layout_mode = 2
+theme = ExtResource("5_dxhv1")
+bbcode_enabled = true
+text = "[b]Short description of the node.[/b]"
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 2
+
+[node name="NodeDesc2" type="RichTextLabel" parent="HSplit1/NodeBox/HSplit2/ColorRect/DescScroll/VBox1"]
+custom_minimum_size = Vector2(850, 25)
+layout_mode = 2
+theme = ExtResource("5_dxhv1")
+bbcode_enabled = true
+text = "Custuomize description of this node.
+Custuomize description of this node.
+Custuomize description of this node.
+Custuomize description of this node.
+Custuomize description of this node."
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 2
+
+[node name="NodePhoto" type="TextureRect" parent="HSplit1/NodeBox"]
+layout_mode = 2
+texture = ExtResource("6_dxhv1")
+expand_mode = 2
+stretch_mode = 3
