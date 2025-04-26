@@ -16,3 +16,9 @@ func create_label(parent: TreeItem, label_name: String, path: String) -> void:
 	label.set_custom_font_size(0, 25)
 	label.add_button(0, load(path), -1, false, "")
 	label.set_editable(0, true)
+
+
+func _on_item_edited() -> void:
+	var treeitem = get_edited()
+	if treeitem != null and treeitem.get_text(0) == "":
+		treeitem.free()

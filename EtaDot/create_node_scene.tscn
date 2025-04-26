@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dybgdtsd5hxqh"]
+[gd_scene load_steps=8 format=3 uid="uid://dybgdtsd5hxqh"]
 
 [ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_midvm"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_5eagr"]
+[ext_resource type="Script" uid="uid://bpaqf6af5mj8b" path="res://create_node_scene.gd" id="2_hnr07"]
 [ext_resource type="Script" uid="uid://nyu8r6ya8ht0" path="res://label_list.gd" id="3_5eagr"]
 [ext_resource type="Script" uid="uid://c31172jxlhjvx" path="res://node_list.gd" id="4_1ek35"]
 [ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="5_dxhv1"]
@@ -11,18 +12,19 @@
 auto_translate_mode = 1
 title = "➕ Create Node ..."
 initial_position = 2
-size = Vector2i(1395, 657)
+size = Vector2i(1395, 693)
 visible = true
 borderless = false
 min_size = Vector2i(210, 85)
 content_scale_mode = 1
 theme = ExtResource("1_midvm")
+script = ExtResource("2_hnr07")
 
 [node name="HSplit1" type="HSplitContainer" parent="."]
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 1375.0
-offset_bottom = 637.0
+offset_bottom = 673.0
 
 [node name="LabelBox" type="VBoxContainer" parent="HSplit1"]
 custom_minimum_size = Vector2(220, 390)
@@ -42,6 +44,18 @@ allow_rmb_select = true
 hide_root = true
 scroll_horizontal_enabled = false
 script = ExtResource("3_5eagr")
+
+[node name="Hint" type="Label" parent="HSplit1/LabelBox"]
+layout_mode = 2
+theme = ExtResource("2_5eagr")
+theme_override_font_sizes/font_size = 25
+text = "💡Hint"
+
+[node name="HintText" type="Label" parent="HSplit1/LabelBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Please truncate item's title to
+delete it!"
 
 [node name="NodeBox" type="VBoxContainer" parent="HSplit1"]
 layout_mode = 2
@@ -88,22 +102,10 @@ text = "Description :"
 [node name="HSplit2" type="HSplitContainer" parent="HSplit1/NodeBox"]
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="HSplit1/NodeBox/HSplit2"]
-custom_minimum_size = Vector2(850, 160)
-layout_mode = 2
-color = Color(0.129412, 0.12549, 0.192157, 1)
-
-[node name="DescScroll" type="ScrollContainer" parent="HSplit1/NodeBox/HSplit2/ColorRect"]
-clip_contents = false
-layout_mode = 2
-offset_left = 854.0
-offset_right = 854.0
-offset_bottom = 160.0
-
-[node name="VBox1" type="VBoxContainer" parent="HSplit1/NodeBox/HSplit2/ColorRect/DescScroll"]
+[node name="GridContainer" type="GridContainer" parent="HSplit1/NodeBox/HSplit2"]
 layout_mode = 2
 
-[node name="NodeName" type="RichTextLabel" parent="HSplit1/NodeBox/HSplit2/ColorRect/DescScroll/VBox1"]
+[node name="NodeName" type="RichTextLabel" parent="HSplit1/NodeBox/HSplit2/GridContainer"]
 custom_minimum_size = Vector2(850, 25)
 layout_mode = 2
 theme = ExtResource("5_dxhv1")
@@ -114,7 +116,7 @@ scroll_active = false
 scroll_following = true
 autowrap_mode = 2
 
-[node name="NodeDesc" type="RichTextLabel" parent="HSplit1/NodeBox/HSplit2/ColorRect/DescScroll/VBox1"]
+[node name="NodeDesc" type="RichTextLabel" parent="HSplit1/NodeBox/HSplit2/GridContainer"]
 custom_minimum_size = Vector2(850, 25)
 layout_mode = 2
 theme = ExtResource("5_dxhv1")
@@ -125,7 +127,7 @@ scroll_active = false
 scroll_following = true
 autowrap_mode = 2
 
-[node name="NodeDesc2" type="RichTextLabel" parent="HSplit1/NodeBox/HSplit2/ColorRect/DescScroll/VBox1"]
+[node name="NodeDesc2" type="RichTextLabel" parent="HSplit1/NodeBox/HSplit2/GridContainer"]
 custom_minimum_size = Vector2(850, 25)
 layout_mode = 2
 theme = ExtResource("5_dxhv1")
@@ -140,8 +142,11 @@ scroll_active = false
 scroll_following = true
 autowrap_mode = 2
 
-[node name="NodePhoto" type="TextureRect" parent="HSplit1/NodeBox"]
+[node name="NodePhoto" type="TextureRect" parent="HSplit1/NodeBox/HSplit2"]
 layout_mode = 2
 texture = ExtResource("6_dxhv1")
 expand_mode = 2
 stretch_mode = 3
+
+[connection signal="item_edited" from="HSplit1/LabelBox/LabelList" to="HSplit1/LabelBox/LabelList" method="_on_item_edited"]
+[connection signal="item_edited" from="HSplit1/NodeBox/NodeList" to="HSplit1/NodeBox/NodeList" method="_on_item_edited"]

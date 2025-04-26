@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dvtrov2aff64m" path="res://assets/pump.svg" id="3_yqy6c"]
 [ext_resource type="Texture2D" uid="uid://cor3tflxbdhdc" path="res://assets/valve.svg" id="4_yqy6c"]
 [ext_resource type="PackedScene" uid="uid://dybgdtsd5hxqh" path="res://create_node_scene.tscn" id="5_jdy2n"]
-[ext_resource type="Texture2D" uid="uid://i2v27av08ql5" path="res://assets/add.svg" id="5_otsem"]
+[ext_resource type="Texture2D" uid="uid://w0a6xlhxn4iv" path="res://assets/add-more.png" id="5_otsem"]
 
 [node name="TopBar" type="MenuBar"]
 offset_right = 985.0
@@ -49,6 +49,7 @@ item_2/icon = ExtResource("5_otsem")
 item_2/id = 2
 
 [node name="CreateNodeScene" parent="GraphicsMenu" instance=ExtResource("5_jdy2n")]
+size = Vector2i(1401, 698)
 
 [node name="AnalysisMenu" type="PopupMenu" parent="."]
 title = "🧭Analysis"

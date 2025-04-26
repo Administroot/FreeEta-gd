@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://b652l7v6cpsrr"]
+
+[node name="CuNodeTypeScene" type="PopupPanel"]
+visible = true
