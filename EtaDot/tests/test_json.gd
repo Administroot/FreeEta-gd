@@ -1,6 +1,5 @@
 extends GutTest
 
-# Test Json
 func test_load_json() -> void:
 	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://saves/node_types.json") 
 	if loaded_data:
