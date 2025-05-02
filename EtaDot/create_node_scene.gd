@@ -16,29 +16,28 @@ func create_label(parent: TreeItem, node: NodeType) -> void:
 	label.set_text(0, node.node_name)
 	label.set_custom_font_size(0, 25)
 	label.add_button(0, load("res://assets/pen.png"), -1, false, "")
-	label.set_editable(0, true)
+	label.set_editable(0, false)
 
 # When user press specific node tree item
-# TODO: When end editing, update json file.
-func _on_node_list_item_edited() -> void:
-	var treeitem = $"HSplit1/NodeBox/NodeList".get_edited()
-	# Pick up
-	var node = data.get_type(treeitem.get_index())
-	if node == null:
+func _on_node_list_cell_selected() -> void:
+	var treeitem = node_list.get_selected()
+	var node_id = data.get_type(treeitem.get_index())
+	if node_id:
+		LogUtil.info("Treeitem %s Selected" % treeitem.get_text(0))
+		# Then show up
+		desc_box.get_node("GridContainer/NodeName").text = "[b][color=orange]" + node_id.node_name + "[/color][/b]"
+		desc_box.get_node("GridContainer/NodeShortDesc").text = "[b]" + node_id.short_desc + "[/b]"
+		desc_box.get_node("GridContainer/NodeLongDesc").text = node_id.long_desc
+		$HSplit1/NodeBox/DescBox/NodePhoto.texture = load(node_id.sprite_path)
+	else :
+		LogUtil.error("Node data not found in Json")
 		push_error("Node data not found in Json")
-	else:
-		LogUtil.info("TreeItem %s Select" % node)
-	# Then show up
-	desc_box.get_node("GridContainer/NodeName").text = "[b][color=orange]" + node.node_name + "[/color][/b]"
-	desc_box.get_node("GridContainer/NodeShortDesc").text = "[b]" + node.short_desc + "[/b]"
-	desc_box.get_node("GridContainer/NodeLongDesc").text = node.long_desc
-	$HSplit1/NodeBox/DescBox/NodePhoto.texture = load(node.sprite_path)
-	# Print name
-	LogUtil.info(treeitem.get_text(0))
+	
 
 func get_nodes() -> NodeTypes:
 	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://saves/node_types.json") 
 	if !loaded_data:
+		LogUtil.error("Error loading node data.")
 		push_error("Error loading node data.")
 	return loaded_data
 
