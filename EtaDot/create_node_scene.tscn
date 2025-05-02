@@ -151,4 +151,5 @@ expand_mode = 2
 stretch_mode = 3
 
 [connection signal="item_edited" from="HSplit1/LabelBox/LabelList" to="HSplit1/LabelBox/LabelList" method="_on_item_edited"]
+[connection signal="text_submitted" from="HSplit1/NodeBox/HBox1/AddNodeLineEdit" to="." method="_on_add_node_line_edit_text_submitted"]
 [connection signal="cell_selected" from="HSplit1/NodeBox/NodeList" to="." method="_on_node_list_cell_selected"]
