@@ -6,7 +6,6 @@ extends PopupPanel
 
 
 func _ready() -> void:
-	
 	var root = node_list.create_item()
 	for i in range(len(data.types)):
 		var node = data.get_type(i)
@@ -30,7 +29,7 @@ func _on_node_list_cell_selected() -> void:
 		desc_box.get_node("GridContainer/NodeShortDesc").text = "[b]" + node_id.short_desc + "[/b]"
 		desc_box.get_node("GridContainer/NodeLongDesc").text = node_id.long_desc
 		$HSplit1/NodeBox/DescBox/NodePhoto.texture = load(node_id.sprite_path)
-	else :
+	else:
 		LogUtil.error("Node data not found in Json")
 		push_error("Node data not found in Json")
 
@@ -39,16 +38,20 @@ func _on_node_list_cell_selected() -> void:
 func _on_add_node_line_edit_text_submitted(new_text: String) -> void:
 	for node_name in TreeUtil.get_column_item_names(node_list):
 		if node_name == new_text:
-			# TODO: Pop a warning panel here
-			LogUtil.warning("Your new NodeType Name %s is duplicated with the existing node name. Are you sure to continue?" % new_text)
-		else :
+			# Pop a warning panel
+			var warning_message = "Your new NodeType Name [b][color=yellow]{name}[/color][/b] is duplicated with the existing node name. Are you sure to continue?"
+			var dialog = preload("res://alert_dialog.tscn").instantiate()
+			dialog.msg = warning_message.format({"name": new_text})
+			add_child(dialog)
+			LogUtil.warning(warning_message.format({"name": new_text}))
+		else:
 			# TODO: Pop a add node panel here.
 			# And clear the text
 			$"HSplit1/NodeBox/HBox1/AddNodeLineEdit".clear()
 
 #region JSON Serialize and Deserialize
 func get_nodes() -> NodeTypes:
-	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://saves/node_types.json") 
+	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://saves/node_types.json")
 	if !loaded_data:
 		LogUtil.error("Error loading node data.")
 		push_error("Error loading node data.")
