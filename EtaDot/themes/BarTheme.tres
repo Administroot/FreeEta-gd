@@ -1,6 +1,12 @@
-[gd_resource type="Theme" load_steps=25 format=3 uid="uid://r35et6wncvi0"]
+[gd_resource type="Theme" load_steps=26 format=3 uid="uid://r35et6wncvi0"]
 
 [ext_resource type="FontFile" uid="uid://b2qwefd8fmkwb" path="res://fonts/Inter-Regular.ttf" id="1_bn0lg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bn0lg"]
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [sub_resource type="Image" id="Image_bn0lg"]
 data = {
@@ -159,7 +165,7 @@ corner_radius_bottom_left = 3
 corner_detail = 5
 
 [resource]
-default_font_size = 35
+default_font_size = 30
 Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
 Button/colors/font_hover_color = Color(0.341176, 0.623529, 1, 1)
 Button/colors/font_hover_pressed_color = Color(0.341176, 0.623529, 1, 1)
@@ -172,6 +178,7 @@ ItemList/font_sizes/font_size = 20
 MenuBar/colors/font_hover_pressed_color = Color(0.341176, 0.623529, 1, 1)
 MenuBar/colors/font_pressed_color = Color(0.341176, 0.623529, 1, 1)
 MenuBar/constants/h_separation = 27
+Panel/styles/panel = SubResource("StyleBoxFlat_bn0lg")
 PopupMenu/colors/font_hover_color = Color(0.341176, 0.623529, 1, 1)
 PopupMenu/constants/h_separation = 2
 PopupMenu/constants/icon_max_width = 0

@@ -16,7 +16,7 @@ bg_color = Color(0.25098, 0.25098, 0.25098, 1)
 [node name="AlertDialog" type="PopupPanel"]
 title = "⚠ Warning"
 initial_position = 1
-size = Vector2i(800, 241)
+size = Vector2i(800, 141)
 visible = true
 borderless = false
 always_on_top = true
@@ -29,7 +29,7 @@ script = ExtResource("1_mpjrm")
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 780.0
-offset_bottom = 221.0
+offset_bottom = 121.0
 theme = ExtResource("2_mpjrm")
 
 [node name="MsgLabel" type="RichTextLabel" parent="VBoxContainer"]

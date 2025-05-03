@@ -2,16 +2,16 @@
 
 [ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_midvm"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_5eagr"]
-[ext_resource type="Script" uid="uid://bpaqf6af5mj8b" path="res://create_node_scene.gd" id="2_hnr07"]
+[ext_resource type="Script" uid="uid://bpaqf6af5mj8b" path="res://node_type_management.gd" id="2_hnr07"]
 [ext_resource type="Script" uid="uid://nyu8r6ya8ht0" path="res://label_list.gd" id="3_5eagr"]
 [ext_resource type="Script" uid="uid://c31172jxlhjvx" path="res://node_list.gd" id="4_1ek35"]
 [ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="5_dxhv1"]
 [ext_resource type="Texture2D" uid="uid://dvtrov2aff64m" path="res://assets/pump.svg" id="6_dxhv1"]
 [ext_resource type="Script" uid="uid://2yvvm281eevf" path="res://desc_box.gd" id="6_qmguc"]
 
-[node name="CreateNodeScene" type="PopupPanel"]
+[node name="NodeTypeManagementScene" type="PopupPanel"]
 auto_translate_mode = 1
-title = "➕ Create Node ..."
+title = "⚙ Node Type Management"
 initial_position = 2
 size = Vector2i(1395, 693)
 visible = true

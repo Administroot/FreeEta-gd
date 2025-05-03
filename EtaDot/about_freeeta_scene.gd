@@ -17,4 +17,4 @@ func _on_license_itemlist_item_selected(index: int) -> void:
 
 
 func _on_confirm_button_pressed() -> void:
-	hide()
+	queue_free()

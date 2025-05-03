@@ -39,15 +39,22 @@ func _on_add_node_line_edit_text_submitted(new_text: String) -> void:
 	for node_name in TreeUtil.get_column_item_names(node_list):
 		if node_name == new_text:
 			# Pop a warning panel
-			var warning_message = "Your new NodeType Name [b][color=yellow]{name}[/color][/b] is duplicated with the existing node name. Are you sure to continue?"
+			var warning = "Your new NodeType Name [b][color=yellow]{name}[/color][/b] is duplicated with the existing node name."
 			var dialog = preload("res://alert_dialog.tscn").instantiate()
-			dialog.msg = warning_message.format({"name": new_text})
+			dialog.msg = warning.format({"name": new_text})
 			add_child(dialog)
-			LogUtil.warning(warning_message.format({"name": new_text}))
-		else:
-			# TODO: Pop a add node panel here.
-			# And clear the text
-			$"HSplit1/NodeBox/HBox1/AddNodeLineEdit".clear()
+			LogUtil.warning(warning.format({"name": new_text}))
+			return
+	# Pop add node panel.
+	var add_node_type_panel = preload("res://CU_node_type_scene.tscn").instantiate()
+	add_child(add_node_type_panel)
+	# And clear the text
+	$"HSplit1/NodeBox/HBox1/AddNodeLineEdit".clear()
+	# When ConfirmButton pressed, print success info
+	# FIXME: Cannot assign true to choice, maybe has been queue_free()
+	if add_node_type_panel.choice:
+		var info = "NodeType [b][color=blue]{name}[/color][/b] created successfully!"
+		LogUtil.info(info.format({"name": new_text}))
 
 #region JSON Serialize and Deserialize
 func get_nodes() -> NodeTypes:

@@ -6,4 +6,4 @@ func _ready() -> void:
 	$"VBoxContainer/MsgLabel".text = msg
 
 func _on_confirm_button_pressed() -> void:
-	hide()
+	queue_free()
