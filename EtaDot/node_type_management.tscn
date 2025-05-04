@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://dybgdtsd5hxqh"]
 
-[ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_midvm"]
-[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_5eagr"]
-[ext_resource type="Script" uid="uid://bpaqf6af5mj8b" path="res://node_type_management.gd" id="2_hnr07"]
-[ext_resource type="Script" uid="uid://nyu8r6ya8ht0" path="res://label_list.gd" id="3_5eagr"]
-[ext_resource type="Script" uid="uid://c31172jxlhjvx" path="res://node_list.gd" id="4_1ek35"]
-[ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="5_dxhv1"]
-[ext_resource type="Texture2D" uid="uid://dvtrov2aff64m" path="res://assets/pump.svg" id="6_dxhv1"]
-[ext_resource type="Script" uid="uid://2yvvm281eevf" path="res://desc_box.gd" id="6_qmguc"]
+[ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_a741m"]
+[ext_resource type="Script" uid="uid://bpaqf6af5mj8b" path="res://node_type_management.gd" id="2_araqd"]
+[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="3_3t685"]
+[ext_resource type="Script" uid="uid://nyu8r6ya8ht0" path="res://label_list.gd" id="4_1ks4v"]
+[ext_resource type="Script" uid="uid://c31172jxlhjvx" path="res://node_list.gd" id="5_aguj2"]
+[ext_resource type="Script" uid="uid://2yvvm281eevf" path="res://desc_box.gd" id="6_gtbck"]
+[ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="7_v3juf"]
+[ext_resource type="Texture2D" uid="uid://dvtrov2aff64m" path="res://assets/pump.svg" id="8_vustr"]
 
 [node name="NodeTypeManagementScene" type="PopupPanel"]
 auto_translate_mode = 1
@@ -18,8 +18,8 @@ visible = true
 borderless = false
 min_size = Vector2i(210, 85)
 content_scale_mode = 1
-theme = ExtResource("1_midvm")
-script = ExtResource("2_hnr07")
+theme = ExtResource("1_a741m")
+script = ExtResource("2_araqd")
 
 [node name="HSplit1" type="HSplitContainer" parent="."]
 offset_left = 20.0
@@ -33,22 +33,22 @@ layout_mode = 2
 
 [node name="LabelNameLabel" type="Label" parent="HSplit1/LabelBox"]
 layout_mode = 2
-theme = ExtResource("2_5eagr")
+theme = ExtResource("3_3t685")
 text = "Label"
 
 [node name="LabelList" type="Tree" parent="HSplit1/LabelBox"]
 custom_minimum_size = Vector2(0, 390)
 layout_mode = 2
-theme = ExtResource("2_5eagr")
+theme = ExtResource("3_3t685")
 theme_override_font_sizes/font_size = 30
 allow_rmb_select = true
 hide_root = true
 scroll_horizontal_enabled = false
-script = ExtResource("3_5eagr")
+script = ExtResource("4_1ks4v")
 
 [node name="Hint" type="Label" parent="HSplit1/LabelBox"]
 layout_mode = 2
-theme = ExtResource("2_5eagr")
+theme = ExtResource("3_3t685")
 theme_override_font_sizes/font_size = 25
 text = "💡Hint"
 
@@ -67,7 +67,7 @@ layout_mode = 2
 [node name="AddNodeLineEdit" type="LineEdit" parent="HSplit1/NodeBox/HBox1"]
 custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
-theme = ExtResource("2_5eagr")
+theme = ExtResource("3_3t685")
 theme_override_font_sizes/font_size = 30
 placeholder_text = "Create a new node type"
 max_length = 20
@@ -76,33 +76,33 @@ clear_button_enabled = true
 [node name="Button" type="Button" parent="HSplit1/NodeBox/HBox1"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-theme = ExtResource("2_5eagr")
+theme = ExtResource("3_3t685")
 text = "＋ Add"
 
 [node name="SelectLabel" type="Label" parent="HSplit1/NodeBox"]
 layout_mode = 2
-theme = ExtResource("2_5eagr")
+theme = ExtResource("3_3t685")
 text = "Select :"
 
 [node name="NodeList" type="Tree" parent="HSplit1/NodeBox"]
 custom_minimum_size = Vector2(0, 278)
 layout_mode = 2
-theme = ExtResource("2_5eagr")
+theme = ExtResource("3_3t685")
 theme_override_constants/icon_max_width = 30
 theme_override_font_sizes/font_size = 25
 allow_rmb_select = true
 hide_root = true
 scroll_horizontal_enabled = false
-script = ExtResource("4_1ek35")
+script = ExtResource("5_aguj2")
 
 [node name="DescLabel" type="Label" parent="HSplit1/NodeBox"]
 layout_mode = 2
-theme = ExtResource("2_5eagr")
+theme = ExtResource("3_3t685")
 text = "Description :"
 
 [node name="DescBox" type="HSplitContainer" parent="HSplit1/NodeBox"]
 layout_mode = 2
-script = ExtResource("6_qmguc")
+script = ExtResource("6_gtbck")
 
 [node name="GridContainer" type="GridContainer" parent="HSplit1/NodeBox/DescBox"]
 layout_mode = 2
@@ -110,7 +110,7 @@ layout_mode = 2
 [node name="NodeName" type="RichTextLabel" parent="HSplit1/NodeBox/DescBox/GridContainer"]
 custom_minimum_size = Vector2(850, 25)
 layout_mode = 2
-theme = ExtResource("5_dxhv1")
+theme = ExtResource("7_v3juf")
 bbcode_enabled = true
 text = "[b][color=orange]NodeName[/color][/b]"
 fit_content = true
@@ -121,7 +121,7 @@ autowrap_mode = 2
 [node name="NodeShortDesc" type="RichTextLabel" parent="HSplit1/NodeBox/DescBox/GridContainer"]
 custom_minimum_size = Vector2(850, 25)
 layout_mode = 2
-theme = ExtResource("5_dxhv1")
+theme = ExtResource("7_v3juf")
 bbcode_enabled = true
 text = "[b]Short description of the node.[/b]"
 fit_content = true
@@ -132,7 +132,7 @@ autowrap_mode = 2
 [node name="NodeLongDesc" type="RichTextLabel" parent="HSplit1/NodeBox/DescBox/GridContainer"]
 custom_minimum_size = Vector2(850, 25)
 layout_mode = 2
-theme = ExtResource("5_dxhv1")
+theme = ExtResource("7_v3juf")
 bbcode_enabled = true
 text = "Custuomize description of this node.
 Custuomize description of this node.
@@ -146,10 +146,11 @@ autowrap_mode = 2
 
 [node name="NodePhoto" type="TextureRect" parent="HSplit1/NodeBox/DescBox"]
 layout_mode = 2
-texture = ExtResource("6_dxhv1")
+texture = ExtResource("8_vustr")
 expand_mode = 2
 stretch_mode = 3
 
 [connection signal="item_edited" from="HSplit1/LabelBox/LabelList" to="HSplit1/LabelBox/LabelList" method="_on_item_edited"]
 [connection signal="text_submitted" from="HSplit1/NodeBox/HBox1/AddNodeLineEdit" to="." method="_on_add_node_line_edit_text_submitted"]
+[connection signal="pressed" from="HSplit1/NodeBox/HBox1/Button" to="." method="_on_button_pressed"]
 [connection signal="cell_selected" from="HSplit1/NodeBox/NodeList" to="." method="_on_node_list_cell_selected"]

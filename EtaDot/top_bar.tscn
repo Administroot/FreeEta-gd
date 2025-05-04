@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b2fgn2e4ds1rx" path="res://about_freeeta_scene.tscn" id="3_ermxm"]
 [ext_resource type="Texture2D" uid="uid://dvtrov2aff64m" path="res://assets/pump.svg" id="3_yqy6c"]
 [ext_resource type="Texture2D" uid="uid://cor3tflxbdhdc" path="res://assets/valve.svg" id="4_yqy6c"]
-[ext_resource type="PackedScene" uid="uid://dybgdtsd5hxqh" path="res://create_node_scene.tscn" id="5_jdy2n"]
+[ext_resource type="PackedScene" uid="uid://dybgdtsd5hxqh" path="res://node_type_management.tscn" id="5_jdy2n"]
 [ext_resource type="Texture2D" uid="uid://w0a6xlhxn4iv" path="res://assets/add-more.png" id="5_otsem"]
 
 [node name="TopBar" type="MenuBar"]

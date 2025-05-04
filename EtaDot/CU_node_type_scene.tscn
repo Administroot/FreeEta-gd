@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b652l7v6cpsrr"]
+[gd_scene load_steps=7 format=3 uid="uid://b652l7v6cpsrr"]
 
 [ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_72klk"]
 [ext_resource type="Script" uid="uid://sb3x3jmgectm" path="res://cu_node_type_scene.gd" id="2_yx5b0"]
+[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="3_p0ypg"]
 
 [sub_resource type="Theme" id="Theme_p0ypg"]
 Button/font_sizes/font_size = 30
@@ -15,7 +16,7 @@ bg_color = Color(0.25098, 0.25098, 0.25098, 1)
 [node name="CuNodeDialog" type="PopupPanel"]
 title = "➕Edit Node Type ..."
 initial_position = 1
-size = Vector2i(800, 274)
+size = Vector2i(800, 282)
 visible = true
 borderless = false
 min_size = Vector2i(800, 0)
@@ -26,7 +27,7 @@ script = ExtResource("2_yx5b0")
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 780.0
-offset_bottom = 254.0
+offset_bottom = 262.0
 
 [node name="VBox" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -71,12 +72,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Texture"
 
-[node name="TextureHint" type="Label" parent="VBoxContainer/VBox/Grid"]
+[node name="SelectButton" type="Button" parent="VBoxContainer/VBox/Grid"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.996078, 0.956863, 0.956863, 0.513726)
-theme_override_font_sizes/font_size = 20
-text = "🤔 Recommand svg/png"
-horizontal_alignment = 2
+theme = ExtResource("3_p0ypg")
+theme_override_font_sizes/font_size = 25
+text = "Select ..."
 
 [node name="NodeTexture" type="Sprite2D" parent="VBoxContainer/VBox"]
 position = Vector2(280, 152)
@@ -101,5 +101,24 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_xl5h4")
 theme_override_styles/normal = SubResource("StyleBoxFlat_yldk2")
 text = "❎Cancel"
 
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer/HBox"]
+title = "📂 Select a picture"
+initial_position = 2
+size = Vector2i(1210, 748)
+visible = true
+unresizable = true
+always_on_top = true
+popup_window = true
+exclude_from_capture = true
+theme = ExtResource("1_72klk")
+ok_button_text = "✅ Open"
+dialog_hide_on_ok = true
+dialog_close_on_escape = false
+cancel_button_text = "❎ Cancel"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png", "*.jpg", "*.jpeg", "*.svg", "*.ico", "*.bmp", "*.webp", "*.gif")
+
+[connection signal="pressed" from="VBoxContainer/VBox/Grid/SelectButton" to="." method="_on_select_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBox/ConfirmButton" to="." method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBox/CancelButton" to="." method="_on_cancel_button_pressed"]

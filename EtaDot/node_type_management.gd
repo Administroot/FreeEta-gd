@@ -36,25 +36,33 @@ func _on_node_list_cell_selected() -> void:
 # Submit and add a `TreeItem`
 #region Add Node
 func _on_add_node_line_edit_text_submitted(new_text: String) -> void:
+	add_node(new_text)
+
+func _on_button_pressed() -> void:
+	add_node($"HSplit1/NodeBox/HBox1/AddNodeLineEdit".text)
+
+func add_node(new_node_name: String) -> void:
 	for node_name in TreeUtil.get_column_item_names(node_list):
-		if node_name == new_text:
+		if node_name == new_node_name:
 			# Pop a warning panel
 			var warning = "Your new NodeType Name [b][color=yellow]{name}[/color][/b] is duplicated with the existing node name."
 			var dialog = preload("res://alert_dialog.tscn").instantiate()
-			dialog.msg = warning.format({"name": new_text})
+			dialog.msg = warning.format({"name": new_node_name})
 			add_child(dialog)
-			LogUtil.warning(warning.format({"name": new_text}))
+			LogUtil.warning(warning.format({"name": new_node_name}))
 			return
 	# Pop add node panel.
 	var add_node_type_panel = preload("res://CU_node_type_scene.tscn").instantiate()
+	add_node_type_panel.get_node("VBoxContainer/VBox/Grid/NameEdit").text = new_node_name
 	add_child(add_node_type_panel)
 	# And clear the text
 	$"HSplit1/NodeBox/HBox1/AddNodeLineEdit".clear()
+	# Wait for panel response
+	await add_node_type_panel.tree_exited
 	# When ConfirmButton pressed, print success info
-	# FIXME: Cannot assign true to choice, maybe has been queue_free()
 	if add_node_type_panel.choice:
 		var info = "NodeType [b][color=blue]{name}[/color][/b] created successfully!"
-		LogUtil.info(info.format({"name": new_text}))
+		LogUtil.info(info.format({"name": new_node_name}))
 
 #region JSON Serialize and Deserialize
 func get_nodes() -> NodeTypes:
