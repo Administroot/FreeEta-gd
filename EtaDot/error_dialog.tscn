@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cjy2relwiexup"]
+[gd_scene load_steps=7 format=3 uid="uid://deexiyjrdwssk"]
 
-[ext_resource type="Theme" uid="uid://dckql7ubj40c8" path="res://themes/WarningDialog.tres" id="1_252h4"]
-[ext_resource type="Script" uid="uid://chi74j8tu2ru1" path="res://alert_dialog.gd" id="1_mpjrm"]
+[ext_resource type="Theme" uid="uid://c5vd6b0y242s1" path="res://themes/ErrorDialog.tres" id="1_3j18p"]
+[ext_resource type="Script" uid="uid://bu5lhw5y0i2p5" path="res://error_dialog.gd" id="2_f8utj"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_mpjrm"]
 
 [sub_resource type="Theme" id="Theme_252h4"]
@@ -13,8 +13,8 @@ bg_color = Color(0.25098, 0.25098, 0.25098, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6u8e"]
 bg_color = Color(0.25098, 0.25098, 0.25098, 1)
 
-[node name="AlertDialog" type="PopupPanel"]
-title = "⚠ Warning"
+[node name="ErrorDialog" type="PopupPanel"]
+title = "❌ ERROR"
 initial_position = 1
 size = Vector2i(800, 141)
 visible = true
@@ -22,8 +22,8 @@ borderless = false
 always_on_top = true
 min_size = Vector2i(800, 0)
 content_scale_mode = 1
-theme = ExtResource("1_252h4")
-script = ExtResource("1_mpjrm")
+theme = ExtResource("1_3j18p")
+script = ExtResource("2_f8utj")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 20.0

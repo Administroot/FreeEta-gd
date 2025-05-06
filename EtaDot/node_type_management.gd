@@ -46,10 +46,7 @@ func add_node(new_node_name: String) -> void:
 		if node_name == new_node_name:
 			# Pop a warning panel
 			var warning = "Your new NodeType Name [b][color=yellow]{name}[/color][/b] is duplicated with the existing node name."
-			var dialog = preload("res://alert_dialog.tscn").instantiate()
-			dialog.msg = warning.format({"name": new_node_name})
-			add_child(dialog)
-			LogUtil.warning(warning.format({"name": new_node_name}))
+			LogUtil.warning_dialog($".", warning.format({"name": new_node_name}))
 			return
 	# Pop add node panel.
 	var add_node_type_panel = preload("res://CU_node_type_scene.tscn").instantiate()
