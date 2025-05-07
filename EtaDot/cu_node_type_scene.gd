@@ -2,6 +2,15 @@ extends PopupPanel
 
 @export var choice: bool
 @export var nodetype: NodeType
+var modetitle: bool
+
+func _ready() -> void:
+	if modetitle:
+		# Update Mode
+		title = "🖋 Edit Node Type ..."
+	else :
+		# Create Mode
+		title = "➕ Add Node Type ..."
 
 func _on_confirm_button_pressed() -> void:
 	choice = true
