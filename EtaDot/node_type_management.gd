@@ -51,14 +51,18 @@ func add_node(new_node_name: String) -> void:
 	# Pop add node panel.
 	var add_node_type_panel = preload("res://CU_node_type_scene.tscn").instantiate()
 	add_node_type_panel.get_node("VBoxContainer/VBox/Grid/NameEdit").text = new_node_name
+	add_node_type_panel.nodetype = NodeType.new()
 	add_child(add_node_type_panel)
 	# And clear the text
 	$"HSplit1/NodeBox/HBox1/AddNodeLineEdit".clear()
 	# Wait for panel response
 	await add_node_type_panel.tree_exited
 	# When ConfirmButton pressed, print success info
-	if add_node_type_panel.choice:
+	if add_node_type_panel.choice and add_node_type_panel.nodetype:
 		var info = "NodeType [b][color=blue]{name}[/color][/b] created successfully!"
+		# Add node to tree
+		create_label(node_list.get_root(), add_node_type_panel.nodetype)
+		# TODO: Serialize the new node to Json
 		LogUtil.info(info.format({"name": new_node_name}))
 
 #region JSON Serialize and Deserialize
@@ -70,4 +74,10 @@ func get_nodes() -> NodeTypes:
 	return loaded_data
 
 func save_nodes() -> void:
+	# TODO: Serialize the new node to Json
 	pass
+
+
+func _on_node_list_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index: int) -> void:
+	# TODO: Share panel with `CU_Node_Type_Scene`
+	pass # Replace with function body.

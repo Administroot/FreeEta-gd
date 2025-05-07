@@ -1,9 +1,13 @@
 extends PopupPanel
 
 @export var choice: bool
+@export var nodetype: NodeType
 
 func _on_confirm_button_pressed() -> void:
 	choice = true
+	nodetype.node_name = $"VBoxContainer/VBox/Grid/NameEdit".text
+	nodetype.short_desc = $"VBoxContainer/VBox/Grid/ShortDescEdit".text
+	nodetype.long_desc = $"VBoxContainer/VBox/Grid/LongDescEdit".text
 	queue_free()
 
 
@@ -31,3 +35,4 @@ func _on_file_dialog_file_selected(path: String) -> void:
 	
 	$"VBoxContainer/VBox/NodeTexture".texture = texture
 	LogUtil.info("Load picture from %s" % path)
+	nodetype.sprite_path = path
