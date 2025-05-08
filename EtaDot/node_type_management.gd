@@ -63,7 +63,9 @@ func add_node(new_node_name: String) -> void:
 		var info = "NodeType [b][color=blue]{name}[/color][/b] created successfully!"
 		# Add node to tree
 		create_label(node_list.get_root(), add_node_type_panel.nodetype)
-		# TODO: Serialize new node to Json
+		# Serialize new node to Json
+		save_nodes(add_node_type_panel.nodetype, 1)
+		# Print success info
 		LogUtil.info(info.format({"name": new_node_name}))
 
 #region Edit Node
@@ -77,6 +79,15 @@ func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_
 	$"HSplit1/NodeBox/HBox1/AddNodeLineEdit".clear()
 	# Wait for panel response
 	await add_node_type_panel.tree_exited
+	# When ConfirmButton pressed, print success info
+	if add_node_type_panel.choice and add_node_type_panel.nodetype:
+		var info = "NodeType [b][color=blue]{name}[/color][/b] updated successfully!"
+		# Update node in tree
+		item.set_text(column, add_node_type_panel.nodetype.node_name)
+		# Save the updated node to data
+		save_nodes(add_node_type_panel.nodetype, false)
+		# Print success info
+		LogUtil.info(info.format({"name": add_node_type_panel.nodetype.node_name}))
 
 
 #region JSON Serialize and Deserialize
@@ -87,6 +98,24 @@ func get_nodes() -> NodeTypes:
 		push_error("Error loading node data.")
 	return loaded_data
 
-func save_nodes() -> void:
-	# TODO: Serialize new node to Json
-	pass
+
+## Serialize `NodeType` and save into file.
+## Params:
+##	`nodetype`(NodeType): The nodetype you want to update or add.
+##	`savemode`(bool): `false` for Update, `true` for Add.
+func save_nodes(nodetype: NodeType, savemode: bool) -> void:
+	if savemode:
+		# Add mode
+		data.add_type(nodetype)
+	else:
+		#FIXME: When NodeType' node_name altered, cannot get its postion in `data`
+		# Update mode
+		var index = data.types.find(data.get_type_by_name(nodetype.node_name))
+		if index != -1:
+			data.types[index] = nodetype
+		else:
+			var msg = "Node type not found for updating: "
+			LogUtil.error(msg + nodetype.node_name)
+			push_error(msg + nodetype.node_name)
+	# Serialize
+	data.print_all_members("data")
