@@ -21,14 +21,14 @@ func create_label(parent: TreeItem, node: NodeType) -> void:
 # When user press specific node tree item
 func _on_node_list_cell_selected() -> void:
 	var treeitem = node_list.get_selected()
-	var node_id = data.get_type(treeitem.get_index())
-	if node_id:
-		LogUtil.info("Treeitem %s Selected" % treeitem.get_text(0))
+	var node_selected = data.get_type(treeitem.get_index())
+	if node_selected:
+		# LogUtil.info("Treeitem %s Selected" % treeitem.get_text(0))
 		# Then show up
-		desc_box.get_node("GridContainer/NodeName").text = "[b][color=orange]" + node_id.node_name + "[/color][/b]"
-		desc_box.get_node("GridContainer/NodeShortDesc").text = "[b]" + node_id.short_desc + "[/b]"
-		desc_box.get_node("GridContainer/NodeLongDesc").text = node_id.long_desc
-		$HSplit1/NodeBox/DescBox/NodePhoto.texture = load(node_id.sprite_path)
+		desc_box.get_node("GridContainer/NodeName").text = "[b][color=orange]" + node_selected.node_name + "[/color][/b]"
+		desc_box.get_node("GridContainer/NodeShortDesc").text = "[b]" + node_selected.short_desc + "[/b]"
+		desc_box.get_node("GridContainer/NodeLongDesc").text = node_selected.long_desc
+		$HSplit1/NodeBox/DescBox/NodePhoto.texture = load(node_selected.sprite_path)
 	else:
 		LogUtil.error("Node data not found in Json")
 		push_error("Node data not found in Json")
@@ -64,30 +64,36 @@ func add_node(new_node_name: String) -> void:
 		# Add node to tree
 		create_label(node_list.get_root(), add_node_type_panel.nodetype)
 		# Serialize new node to Json
-		save_nodes(add_node_type_panel.nodetype, 1)
+		save_nodes(add_node_type_panel.nodetype, true)
 		# Print success info
 		LogUtil.info(info.format({"name": new_node_name}))
 
 #region Edit Node
 func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_button_index: int) -> void:
-	var add_node_type_panel = preload("res://CU_node_type_scene.tscn").instantiate()
-	add_node_type_panel.modetitle = false
-	add_node_type_panel.get_node("VBoxContainer/VBox/Grid/NameEdit").text = item.get_text(column)
-	add_node_type_panel.nodetype = NodeType.new()
-	add_child(add_node_type_panel)
-	# And clear the text
-	$"HSplit1/NodeBox/HBox1/AddNodeLineEdit".clear()
-	# Wait for panel response
-	await add_node_type_panel.tree_exited
-	# When ConfirmButton pressed, print success info
-	if add_node_type_panel.choice and add_node_type_panel.nodetype:
-		var info = "NodeType [b][color=blue]{name}[/color][/b] updated successfully!"
-		# Update node in tree
-		item.set_text(column, add_node_type_panel.nodetype.node_name)
-		# Save the updated node to data
-		save_nodes(add_node_type_panel.nodetype, false)
-		# Print success info
-		LogUtil.info(info.format({"name": add_node_type_panel.nodetype.node_name}))
+	var item_id = item.get_index()
+	if item:
+		var add_node_type_panel = preload("res://CU_node_type_scene.tscn").instantiate()
+		add_node_type_panel.modetitle = false
+		# TODO: Get all origin content. Not just title
+		add_node_type_panel.get_node("VBoxContainer/VBox/Grid/NameEdit").text = item.get_text(column)
+		add_node_type_panel.nodetype = NodeType.new()
+		add_child(add_node_type_panel)
+		# And clear the text
+		$"HSplit1/NodeBox/HBox1/AddNodeLineEdit".clear()
+		# Wait for panel response
+		await add_node_type_panel.tree_exited
+		# When ConfirmButton pressed, print success info
+		if add_node_type_panel.choice and add_node_type_panel.nodetype:
+			var info = "NodeType [b][color=blue]{name}[/color][/b] updated successfully!"
+			# Update node in tree
+			item.set_text(column, add_node_type_panel.nodetype.node_name)
+			# Save the updated node to data
+			save_nodes(add_node_type_panel.nodetype, false, item_id)
+			# Print success info
+			LogUtil.info(info.format({"name": add_node_type_panel.nodetype.node_name}))
+	else :
+		LogUtil.error("Item not found")
+		push_error("Item not found")
 
 
 #region JSON Serialize and Deserialize
@@ -103,19 +109,11 @@ func get_nodes() -> NodeTypes:
 ## Params:
 ##	`nodetype`(NodeType): The nodetype you want to update or add.
 ##	`savemode`(bool): `false` for Update, `true` for Add.
-func save_nodes(nodetype: NodeType, savemode: bool) -> void:
+func save_nodes(nodetype: NodeType, savemode: bool, node_id: int = 0) -> void:
 	if savemode:
 		# Add mode
 		data.add_type(nodetype)
 	else:
-		#FIXME: When NodeType' node_name altered, cannot get its postion in `data`
-		# Update mode
-		var index = data.types.find(data.get_type_by_name(nodetype.node_name))
-		if index != -1:
-			data.types[index] = nodetype
-		else:
-			var msg = "Node type not found for updating: "
-			LogUtil.error(msg + nodetype.node_name)
-			push_error(msg + nodetype.node_name)
+		data.types[node_id] = nodetype
 	# Serialize
 	data.print_all_members("data")
