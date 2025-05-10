@@ -98,10 +98,14 @@ func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_
 		LogUtil.error("Item not found")
 		push_error("Item not found")
 
+#region Label
+func _on_label_list_cell_selected() -> void:
+	# TODO: The logic of label
+	pass # Replace with function body.
 
 #region JSON Serialize and Deserialize
 func get_nodes() -> NodeTypes:
-	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://saves/node_types.json")
+	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://config/node_types.json")
 	if !loaded_data:
 		LogUtil.error("Error loading node data.")
 		push_error("Error loading node data.")
@@ -120,3 +124,7 @@ func save_nodes(nodetype: NodeType, savemode: bool, node_id: int = 0) -> void:
 		data.types[node_id] = nodetype
 	# Serialize
 	data.print_all_members("data")
+	var json_data = JsonClassConverter.class_to_json(data)
+	var file_success: bool = JsonClassConverter.store_json_file("user://config/node_types.json", json_data)
+	if !file_success:
+		LogUtil.error_dialog($".", "Class --> Json Failed")
