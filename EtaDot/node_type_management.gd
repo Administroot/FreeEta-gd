@@ -71,12 +71,15 @@ func add_node(new_node_name: String) -> void:
 #region Edit Node
 func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_button_index: int) -> void:
 	var item_id = item.get_index()
+	var node_selected = data.get_type(item_id)
 	if item:
 		var add_node_type_panel = preload("res://CU_node_type_scene.tscn").instantiate()
 		add_node_type_panel.modetitle = false
-		# TODO: Get all origin content. Not just title
-		add_node_type_panel.get_node("VBoxContainer/VBox/Grid/NameEdit").text = item.get_text(column)
-		add_node_type_panel.nodetype = NodeType.new()
+		add_node_type_panel.get_node("VBoxContainer/VBox/Grid/NameEdit").text = node_selected.node_name
+		add_node_type_panel.get_node("VBoxContainer/VBox/Grid/ShortDescEdit").text = node_selected.short_desc
+		add_node_type_panel.get_node("VBoxContainer/VBox/Grid/LongDescEdit").text = node_selected.long_desc
+		add_node_type_panel.get_node("VBoxContainer/VBox/NodeTexture").texture = load(node_selected.sprite_path)
+		add_node_type_panel.nodetype = node_selected
 		add_child(add_node_type_panel)
 		# And clear the text
 		$"HSplit1/NodeBox/HBox1/AddNodeLineEdit".clear()
