@@ -3,19 +3,23 @@ extends PopupPanel
 @export var data = get_nodes()
 @onready var node_list = $"HSplit1/NodeBox/NodeList"
 @onready var desc_box = $"HSplit1/NodeBox/DescBox"
-
+@onready var label_list = $"HSplit1/RecentBox/RecentList"
 
 func _ready() -> void:
-	var root = node_list.create_item()
+	var item_root = label_list.create_item()
+	item_root.set_metadata(0, {"favor_flag": false})
+	create_recent_member(item_root, "Label")
+
+	var tree_root = node_list.create_item()
 	for i in range(len(data.types)):
 		var node = data.get_type(i)
-		create_label(root, node)
+		create_nodelist_member(tree_root, node, "res://assets/pen.png")
 
-func create_label(parent: TreeItem, node: NodeType) -> void:
+func create_nodelist_member(parent: TreeItem, node: NodeType, sprite_path: String) -> void:
 	var label = node_list.create_item(parent)
 	label.set_text(0, node.node_name)
 	label.set_custom_font_size(0, 25)
-	label.add_button(0, load("res://assets/pen.png"), -1, false, "")
+	label.add_button(0, load(sprite_path), -1, false, "")
 	label.set_editable(0, false)
 
 # When user press specific node tree item
@@ -62,7 +66,7 @@ func add_node(new_node_name: String) -> void:
 	if add_node_type_panel.choice and add_node_type_panel.nodetype:
 		var info = "NodeType [b][color=blue]{name}[/color][/b] created successfully!"
 		# Add node to tree
-		create_label(node_list.get_root(), add_node_type_panel.nodetype)
+		create_nodelist_member(node_list.get_root(), add_node_type_panel.nodetype, "res://assets/pen.png")
 		# Serialize new node to Json
 		save_nodes(add_node_type_panel.nodetype, true)
 		# Print success info
@@ -98,10 +102,37 @@ func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_
 		LogUtil.error("Item not found")
 		push_error("Item not found")
 
-#region Label
-func _on_label_list_cell_selected() -> void:
-	# TODO: The logic of label
-	pass # Replace with function body.
+#region Recent
+func create_recent_member(parent: TreeItem, label_name: String, path: String = "res://assets/dim-star.png") -> void:
+	var label = label_list.create_item(parent)
+	label.set_text(0, label_name)
+	label.set_custom_font_size(0, 25)
+	label.add_button(0, load(path), -1, false, "")
+	label.set_editable(0, false)
+	label.set_metadata(0, {"favor_flag": false})
+
+# Favor or not
+func _on_recent_list_button_clicked(item: TreeItem, column: int, id: int, _mouse_button_index: int) -> void:
+	if not item:
+		var msg = "RecentBox item not found!"
+		LogUtil.error_dialog($".", msg)
+		push_error(msg)
+		return
+		
+	item.erase_button(column, id)
+	var metadata = item.get_metadata(column)
+	if not metadata or not metadata.has("favor_flag"):
+		var msg = "RecentBox metadata[favor_flag] not found!"
+		LogUtil.error_dialog($".", msg)
+		push_error(msg)
+		return
+		
+	var sprite_path = "res://assets/star.png" if metadata["favor_flag"] else "res://assets/dim-star.png"
+	#TODO: Raise the priority of the item.
+	item.add_button(column, load(sprite_path), id, false, "")
+	
+	# Traverse favor_flag status
+	metadata["favor_flag"] = !metadata["favor_flag"]
 
 #region JSON Serialize and Deserialize
 func get_nodes() -> NodeTypes:

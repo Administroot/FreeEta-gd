@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dybgdtsd5hxqh"]
+[gd_scene load_steps=8 format=3 uid="uid://dybgdtsd5hxqh"]
 
 [ext_resource type="Theme" uid="uid://dchftuxx2uqu2" path="res://themes/WindowTheme.tres" id="1_a741m"]
 [ext_resource type="Script" uid="uid://bpaqf6af5mj8b" path="res://node_type_management.gd" id="2_araqd"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="3_3t685"]
-[ext_resource type="Script" uid="uid://nyu8r6ya8ht0" path="res://label_list.gd" id="4_1ks4v"]
 [ext_resource type="Script" uid="uid://c31172jxlhjvx" path="res://node_list.gd" id="5_aguj2"]
 [ext_resource type="Script" uid="uid://2yvvm281eevf" path="res://desc_box.gd" id="6_gtbck"]
 [ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="7_v3juf"]
@@ -27,32 +26,31 @@ offset_top = 20.0
 offset_right = 1375.0
 offset_bottom = 673.0
 
-[node name="LabelBox" type="VBoxContainer" parent="HSplit1"]
+[node name="RecentBox" type="VBoxContainer" parent="HSplit1"]
 custom_minimum_size = Vector2(220, 390)
 layout_mode = 2
 
-[node name="LabelNameLabel" type="Label" parent="HSplit1/LabelBox"]
+[node name="RecentLabel" type="Label" parent="HSplit1/RecentBox"]
 layout_mode = 2
 theme = ExtResource("3_3t685")
-text = "Label"
+text = "Recent"
 
-[node name="LabelList" type="Tree" parent="HSplit1/LabelBox"]
+[node name="RecentList" type="Tree" parent="HSplit1/RecentBox"]
 custom_minimum_size = Vector2(0, 390)
 layout_mode = 2
 theme = ExtResource("3_3t685")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 25
 allow_rmb_select = true
 hide_root = true
 scroll_horizontal_enabled = false
-script = ExtResource("4_1ks4v")
 
-[node name="Hint" type="Label" parent="HSplit1/LabelBox"]
+[node name="Hint" type="Label" parent="HSplit1/RecentBox"]
 layout_mode = 2
 theme = ExtResource("3_3t685")
 theme_override_font_sizes/font_size = 25
 text = "💡Hint"
 
-[node name="HintText" type="Label" parent="HSplit1/LabelBox"]
+[node name="HintText" type="Label" parent="HSplit1/RecentBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
 text = "Please truncate item's title to
@@ -150,7 +148,7 @@ texture = ExtResource("8_vustr")
 expand_mode = 2
 stretch_mode = 3
 
-[connection signal="item_edited" from="HSplit1/LabelBox/LabelList" to="HSplit1/LabelBox/LabelList" method="_on_item_edited"]
+[connection signal="button_clicked" from="HSplit1/RecentBox/RecentList" to="." method="_on_recent_list_button_clicked"]
 [connection signal="text_submitted" from="HSplit1/NodeBox/HBox1/AddNodeLineEdit" to="." method="_on_add_node_line_edit_text_submitted"]
 [connection signal="pressed" from="HSplit1/NodeBox/HBox1/Button" to="." method="_on_button_pressed"]
 [connection signal="button_clicked" from="HSplit1/NodeBox/NodeList" to="." method="_on_node_list_button_clicked"]
