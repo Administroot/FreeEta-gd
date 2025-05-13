@@ -128,6 +128,9 @@ func _on_recent_list_button_clicked(item: TreeItem, column: int, id: int, _mouse
 		LogUtil.error_dialog($".", msg)
 		push_error(msg)
 		return
+	# Traverse favor_flag status
+	metadata["favor_flag"] = !metadata["favor_flag"]
+
 	var priority = metadata["favor_flag"]
 	var sprite_path = "res://assets/star.png" if priority else "res://assets/dim-star.png"
 	# If priority == true, raise the priority of the item.
@@ -142,9 +145,7 @@ func _on_recent_list_button_clicked(item: TreeItem, column: int, id: int, _mouse
 			last_child = last_child.get_next()
 		item.move_after(last_child)
 	item.add_button(column, load(sprite_path), id, false, "")
-	
-	# Traverse favor_flag status
-	metadata["favor_flag"] = !metadata["favor_flag"]
+
 
 #region JSON Serialize and Deserialize
 func get_nodes() -> NodeTypes:

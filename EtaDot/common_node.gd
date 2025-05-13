@@ -1,11 +1,46 @@
-extends Node2D
+extends RigidBody2D
+
+@export var CuNodeScene: PackedScene
+
+var dragging := false
+var drag_offset := Vector2()
 
 func _ready() -> void:
 	set_properties("res://assets/pump.svg")
 	
 func set_properties(picture: String) -> void:
-	$Body/photo.texture = load(picture)
-	var picture_size = $Body/photo.texture.get_size()
-	$Body/CollisionShape.shape.size = picture_size
-	$Body/Button.size = picture_size
-	$Body/Button.position = - picture_size / 2.
+	$photo.texture = load(picture)
+	var picture_size = $photo.texture.get_size()
+	$CollisionShape.shape.size = picture_size
+	$Button.size = picture_size
+	$Button.position = - picture_size / 2.
+
+func _on_mouse_entered() -> void:
+	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+
+func _on_mouse_exited() -> void:
+	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+
+## While pressing MOUSE_BUTTON_LEFT and dragging: dragging
+## While pressing MOUSE_BUTTON_RIGHT: show node statics
+## While pressing ENTER: create a brother bode
+## While pressing TAB: create a sub-node
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		match event.button_index:
+			MOUSE_BUTTON_LEFT:
+				if event.pressed:
+					# Begin dragging
+					if $Button.get_global_rect().has_point(event.global_position):
+						dragging = true
+						drag_offset = event.global_position - global_position
+				else:
+					# After dragging
+					dragging = false
+			MOUSE_BUTTON_RIGHT:
+				var panel = CuNodeScene.instantiate()
+				add_child(panel)
+	
+	elif event is InputEventMouseMotion and dragging:
+		# Update position
+		global_position = event.global_position - drag_offset

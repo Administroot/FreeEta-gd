@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dksjj5kiaw8v2"]
+
+[ext_resource type="Script" uid="uid://dp2lrb383s6x6" path="res://cu_node_scene.gd" id="1_l8sbo"]
+
+[node name="CuNodeScene" type="Panel"]
+script = ExtResource("1_l8sbo")
