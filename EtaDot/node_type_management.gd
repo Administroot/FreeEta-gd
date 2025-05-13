@@ -8,7 +8,9 @@ extends PopupPanel
 func _ready() -> void:
 	var item_root = label_list.create_item()
 	item_root.set_metadata(0, {"favor_flag": false})
-	create_recent_member(item_root, "Label")
+	create_recent_member(item_root, "Pump")
+	create_recent_member(item_root, "Valve")
+	create_recent_member(item_root, "Switch")
 
 	var tree_root = node_list.create_item()
 	for i in range(len(data.types)):
@@ -126,9 +128,19 @@ func _on_recent_list_button_clicked(item: TreeItem, column: int, id: int, _mouse
 		LogUtil.error_dialog($".", msg)
 		push_error(msg)
 		return
-		
-	var sprite_path = "res://assets/star.png" if metadata["favor_flag"] else "res://assets/dim-star.png"
-	#TODO: Raise the priority of the item.
+	var priority = metadata["favor_flag"]
+	var sprite_path = "res://assets/star.png" if priority else "res://assets/dim-star.png"
+	# If priority == true, raise the priority of the item.
+	var parent = item.get_parent()
+	if priority:
+		# Move item to top
+		item.move_before(parent.get_first_child())
+	else:
+		# Move item to bottom - traverse to find last child
+		var last_child = parent.get_first_child()
+		while last_child.get_next():
+			last_child = last_child.get_next()
+		item.move_after(last_child)
 	item.add_button(column, load(sprite_path), id, false, "")
 	
 	# Traverse favor_flag status
