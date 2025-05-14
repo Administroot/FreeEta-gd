@@ -1,6 +1,110 @@
-[gd_scene load_steps=2 format=3 uid="uid://dksjj5kiaw8v2"]
+[gd_scene load_steps=4 format=3 uid="uid://dksjj5kiaw8v2"]
 
 [ext_resource type="Script" uid="uid://dp2lrb383s6x6" path="res://cu_node_scene.gd" id="1_l8sbo"]
+[ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="2_l2mki"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1te4q"]
+bg_color = Color(0.176471, 0.168627, 0.333333, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.941176, 0.701961, 0.694118, 0.654902)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 20.0
+expand_margin_top = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 20.0
 
 [node name="CuNodeScene" type="Panel"]
+custom_minimum_size = Vector2(300, 150)
+tooltip_text = "Info"
+theme_override_styles/panel = SubResource("StyleBoxFlat_1te4q")
 script = ExtResource("1_l8sbo")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 10
+
+[node name="Grid1" type="GridContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="NodeName" type="RichTextLabel" parent="VBox/Grid1"]
+custom_minimum_size = Vector2(150, 25)
+layout_mode = 2
+theme = ExtResource("2_l2mki")
+bbcode_enabled = true
+text = "[b][color=orange]NodeName[/color][/b]"
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 2
+
+[node name="NameEdit" type="TextEdit" parent="VBox/Grid1"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Press <ENTER> to commit"
+
+[node name="NodeType" type="RichTextLabel" parent="VBox/Grid1"]
+custom_minimum_size = Vector2(150, 25)
+layout_mode = 2
+theme = ExtResource("2_l2mki")
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+bbcode_enabled = true
+text = "[b][color=orange]NodeType[/color][/b]"
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="VBox/Grid1"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="ShowDesc" type="RichTextLabel" parent="VBox"]
+custom_minimum_size = Vector2(150, 25)
+layout_mode = 2
+theme = ExtResource("2_l2mki")
+bbcode_enabled = true
+text = "Short description of this node."
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 2
+
+[node name="Grid2" type="GridContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="ReliLabel" type="RichTextLabel" parent="VBox/Grid2"]
+custom_minimum_size = Vector2(150, 25)
+layout_mode = 2
+theme = ExtResource("2_l2mki")
+bbcode_enabled = true
+text = "[b][color=blue]Reliability[/color][/b]"
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 2
+
+[node name="ReliEdit" type="TextEdit" parent="VBox/Grid2"]
+custom_minimum_size = Vector2(150, 25)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Press <ENTER> to commit"
