@@ -1,6 +1,5 @@
 extends Panel
 
-# TODO: Draw this scene.
 # NodeName: String
 # NodeType: String
 # <Short Desc>

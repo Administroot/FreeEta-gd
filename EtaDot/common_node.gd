@@ -1,9 +1,8 @@
 extends RigidBody2D
 
-@export var CuNodeScene: PackedScene
-
 var dragging := false
 var drag_offset := Vector2()
+var panel: Node = null
 
 func _ready() -> void:
 	set_properties("res://assets/pump.svg")
@@ -29,6 +28,9 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		match event.button_index:
 			MOUSE_BUTTON_LEFT:
+				if panel:
+					panel.queue_free()
+					panel = null
 				if event.pressed:
 					# Begin dragging
 					if $Button.get_global_rect().has_point(event.global_position):
@@ -38,8 +40,9 @@ func _input(event: InputEvent) -> void:
 					# After dragging
 					dragging = false
 			MOUSE_BUTTON_RIGHT:
-				var panel = CuNodeScene.instantiate()
-				add_child(panel)
+				if not panel:
+					panel = preload("res://CU_node_scene.tscn").instantiate()
+					add_child(panel)
 	
 	elif event is InputEventMouseMotion and dragging:
 		# Update position

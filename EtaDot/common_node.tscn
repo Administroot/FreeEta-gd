@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://yfu4xjhobuqb"]
+[gd_scene load_steps=8 format=3 uid="uid://yfu4xjhobuqb"]
 
 [ext_resource type="Script" uid="uid://d0yur1rro3d4t" path="res://common_node.gd" id="1_2vvs8"]
-[ext_resource type="PackedScene" uid="uid://dksjj5kiaw8v2" path="res://CU_node_scene.tscn" id="2_2vvs8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8xu3x"]
 friction = 0.5
@@ -30,7 +29,6 @@ physics_material_override = SubResource("PhysicsMaterial_8xu3x")
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_2vvs8")
-CuNodeScene = ExtResource("2_2vvs8")
 
 [node name="Button" type="Button" parent="."]
 offset_left = -25.0

@@ -48,6 +48,7 @@ fit_content = true
 scroll_active = false
 scroll_following = true
 autowrap_mode = 2
+shortcut_keys_enabled = false
 
 [node name="NameEdit" type="TextEdit" parent="VBox/Grid1"]
 custom_minimum_size = Vector2(150, 30)
