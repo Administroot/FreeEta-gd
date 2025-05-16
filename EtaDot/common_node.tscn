@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d0yur1rro3d4t" path="res://common_node.gd" id="1_2vvs8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8xu3x"]
+resource_local_to_scene = true
 friction = 0.5
 bounce = 0.5
 absorbent = true
@@ -45,3 +46,5 @@ shape = SubResource("RectangleShape2D_2vvs8")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

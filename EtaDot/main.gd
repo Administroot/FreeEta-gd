@@ -1,7 +1,5 @@
 extends Node
 
-@export var CommonNode: PackedScene
-
 func _ready() -> void:
 	var dir = DirAccess.open("user://config")
 	if dir == null:
@@ -16,6 +14,6 @@ func _ready() -> void:
 
 func _input(event):
 	if event.is_action_pressed("ui_left"):
-		var new_node = CommonNode.instantiate()
+		var new_node = load("res://common_node.tscn").instantiate()
 		new_node.position = get_viewport().get_mouse_position()
 		add_child(new_node)

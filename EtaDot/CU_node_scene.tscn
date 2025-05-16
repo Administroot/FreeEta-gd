@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="2_l2mki"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1te4q"]
+resource_local_to_scene = true
 bg_color = Color(0.176471, 0.168627, 0.333333, 1)
 border_width_left = 1
 border_width_top = 1

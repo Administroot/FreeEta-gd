@@ -1,5 +1,6 @@
 extends RigidBody2D
 
+@export var Id := get_instance_id()
 var dragging := false
 var drag_offset := Vector2()
 var panel: Node = null
@@ -28,9 +29,6 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		match event.button_index:
 			MOUSE_BUTTON_LEFT:
-				if panel:
-					panel.queue_free()
-					panel = null
 				if event.pressed:
 					# Begin dragging
 					if $Button.get_global_rect().has_point(event.global_position):
@@ -39,11 +37,24 @@ func _input(event: InputEvent) -> void:
 				else:
 					# After dragging
 					dragging = false
-			MOUSE_BUTTON_RIGHT:
-				if not panel:
-					panel = preload("res://CU_node_scene.tscn").instantiate()
-					add_child(panel)
 	
 	elif event is InputEventMouseMotion and dragging:
 		# Update position
 		global_position = event.global_position - drag_offset
+
+
+func _on_button_pressed() -> void:
+	if panel:
+		panel.queue_free()
+		panel = null
+
+func _on_right_button_pressed() -> void:
+	if not panel:
+		panel = load("res://CU_node_scene.tscn").instantiate()
+		add_child(panel)
+		await panel.tree_exited
+
+
+func _on_button_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		_on_right_button_pressed()
