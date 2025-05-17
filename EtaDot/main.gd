@@ -1,6 +1,6 @@
 extends Node
 
-func _ready() -> void:
+func _init() -> void:
 	var dir = DirAccess.open("user://config")
 	if dir == null:
 		DirAccess.make_dir_absolute("user://config")
