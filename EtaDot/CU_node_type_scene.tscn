@@ -54,7 +54,7 @@ text = "Short Description"
 [node name="ShortDescEdit" type="TextEdit" parent="VBoxContainer/VBox/Grid"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
-placeholder_text = "Tell me what is the node"
+placeholder_text = "Tell me what is this node type"
 
 [node name="LongDescLabel" type="Label" parent="VBoxContainer/VBox/Grid"]
 layout_mode = 2
@@ -64,7 +64,7 @@ text = "Long Description"
 [node name="LongDescEdit" type="TextEdit" parent="VBoxContainer/VBox/Grid"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
-placeholder_text = "Tell me what func/params it have"
+placeholder_text = "Tell me what func/params it has"
 
 [node name="TextureLabel" type="Label" parent="VBoxContainer/VBox/Grid"]
 layout_mode = 2

@@ -2,13 +2,13 @@
 	"types": [
 		{
 			"long_desc": "\tStandard industrial centrifugal pump\n\t- Max flow rate: 120 m³/h\n\t- Working pressure: 1.6 MPa\n\t- Compatible media: Water/Oil\n\t- Protection class: IP55\n\tSupports variable frequency control and remote monitoring",
-			"node_name": "Pump",
+			"type_name": "Pump",
 			"short_desc": "Centrifugal fluid transfer device",
 			"sprite_path": "res://assets/pump.svg"
 		},
 		{
 			"long_desc": "\t316L stainless steel quarter-turn valve\n\t- Nominal diameter: DN50\n\t- Temperature range: -20°C to 180°C\n\t- Connection type: Flange\n\t- Seal material: PTFE\n\tSupports both actuator and manual operation modes",
-			"node_name": "4-Way Ball Valve",
+			"type_name": "4-Way Ball Valve",
 			"short_desc": "Stainless steel control valve",
 			"sprite_path": "res://assets/valve.svg"
 		}

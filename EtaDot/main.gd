@@ -13,7 +13,7 @@ func _ready() -> void:
 		target.close()
 
 func _input(event):
-	if event.is_action_pressed("ui_left"):
-		var new_node = load("res://common_node.tscn").instantiate()
+	if event.is_action_pressed("ui_accept"):
+		var new_node = load("res://component.tscn").instantiate()
 		new_node.position = get_viewport().get_mouse_position()
 		add_child(new_node)

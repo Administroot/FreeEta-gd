@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func create_nodelist_member(parent: TreeItem, node: NodeType, sprite_path: String) -> void:
 	var label = node_list.create_item(parent)
-	label.set_text(0, node.node_name)
+	label.set_text(0, node.type_name)
 	label.set_custom_font_size(0, 25)
 	label.add_button(0, load(sprite_path), -1, false, "")
 	label.set_editable(0, false)
@@ -31,7 +31,7 @@ func _on_node_list_cell_selected() -> void:
 	if node_selected:
 		# LogUtil.info("Treeitem %s Selected" % treeitem.get_text(0))
 		# Then show up
-		desc_box.get_node("GridContainer/NodeName").text = "[b][color=orange]" + node_selected.node_name + "[/color][/b]"
+		desc_box.get_node("GridContainer/NodeName").text = "[b][color=orange]" + node_selected.type_name + "[/color][/b]"
 		desc_box.get_node("GridContainer/NodeShortDesc").text = "[b]" + node_selected.short_desc + "[/b]"
 		desc_box.get_node("GridContainer/NodeLongDesc").text = node_selected.long_desc
 		$HSplit1/NodeBox/DescBox/NodePhoto.texture = load(node_selected.sprite_path)
@@ -47,17 +47,17 @@ func _on_add_node_line_edit_text_submitted(new_text: String) -> void:
 func _on_button_pressed() -> void:
 	add_node($"HSplit1/NodeBox/HBox1/AddNodeLineEdit".text)
 
-func add_node(new_node_name: String) -> void:
-	for node_name in TreeUtil.get_column_item_names(node_list):
-		if node_name == new_node_name:
+func add_node(new_type_name: String) -> void:
+	for type_name in TreeUtil.get_column_item_names(node_list):
+		if type_name == new_type_name:
 			# Pop a warning panel
 			var warning = "Your new NodeType Name [b][color=yellow]{name}[/color][/b] is duplicated with the existing node name."
-			LogUtil.warning_dialog($".", warning.format({"name": new_node_name}))
+			LogUtil.warning_dialog($".", warning.format({"name": new_type_name}))
 			return
 	# Pop add node panel.
 	var add_node_type_panel = preload("res://CU_node_type_scene.tscn").instantiate()
 	add_node_type_panel.modetitle = false
-	add_node_type_panel.get_node("VBoxContainer/VBox/Grid/NameEdit").text = new_node_name
+	add_node_type_panel.get_node("VBoxContainer/VBox/Grid/NameEdit").text = new_type_name
 	add_node_type_panel.nodetype = NodeType.new()
 	add_child(add_node_type_panel)
 	# And clear the text
@@ -72,7 +72,7 @@ func add_node(new_node_name: String) -> void:
 		# Serialize new node to Json
 		save_nodes(add_node_type_panel.nodetype, true)
 		# Print success info
-		LogUtil.info(info.format({"name": new_node_name}))
+		LogUtil.info(info.format({"name": new_type_name}))
 
 #region Edit Node
 func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_button_index: int) -> void:
@@ -81,7 +81,7 @@ func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_
 	if item:
 		var add_node_type_panel = preload("res://CU_node_type_scene.tscn").instantiate()
 		add_node_type_panel.modetitle = false
-		add_node_type_panel.get_node("VBoxContainer/VBox/Grid/NameEdit").text = node_selected.node_name
+		add_node_type_panel.get_node("VBoxContainer/VBox/Grid/NameEdit").text = node_selected.type_name
 		add_node_type_panel.get_node("VBoxContainer/VBox/Grid/ShortDescEdit").text = node_selected.short_desc
 		add_node_type_panel.get_node("VBoxContainer/VBox/Grid/LongDescEdit").text = node_selected.long_desc
 		add_node_type_panel.get_node("VBoxContainer/VBox/NodeTexture").texture = load(node_selected.sprite_path)
@@ -95,11 +95,11 @@ func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_
 		if add_node_type_panel.choice and add_node_type_panel.nodetype:
 			var info = "NodeType [b][color=blue]{name}[/color][/b] updated successfully!"
 			# Update node in tree
-			item.set_text(column, add_node_type_panel.nodetype.node_name)
+			item.set_text(column, add_node_type_panel.nodetype.type_name)
 			# Save the updated node to data
 			save_nodes(add_node_type_panel.nodetype, false, item_id)
 			# Print success info
-			LogUtil.info(info.format({"name": add_node_type_panel.nodetype.node_name}))
+			LogUtil.info(info.format({"name": add_node_type_panel.nodetype.type_name}))
 	else :
 		LogUtil.error("Item not found")
 		push_error("Item not found")
@@ -167,7 +167,7 @@ func save_nodes(nodetype: NodeType, savemode: bool, node_id: int = 0) -> void:
 	else:
 		data.types[node_id] = nodetype
 	# Serialize
-	data.print_all_members("data")
+	data.print_all_members("NodeTypes")
 	var json_data = JsonClassConverter.class_to_json(data)
 	var file_success: bool = JsonClassConverter.store_json_file("user://config/node_types.json", json_data)
 	if !file_success:

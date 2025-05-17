@@ -3,7 +3,7 @@ extends GutTest
 func test_load_json() -> void:
 	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://saves/node_types.json") 
 	if loaded_data:
-		assert_eq(loaded_data.get_type(0).node_name, "Pump")
+		assert_eq(loaded_data.get_type(0).type_name, "Pump")
 	else:
 		fail_test("Error loading node data.")
 
@@ -11,7 +11,7 @@ func test_load_json() -> void:
 func test_write_to_json() -> void:
 	# Pump equipment data
 	var pump_data = NodeType.new()
-	pump_data.node_name = "Pump"
+	pump_data.type_name = "Pump"
 	pump_data.sprite_path = "res://assets/pump.svg"
 	pump_data.short_desc = "Centrifugal fluid transfer device"
 	pump_data.long_desc = """\
@@ -24,7 +24,7 @@ func test_write_to_json() -> void:
 
 	# Valve equipment data
 	var valve_data = NodeType.new()
-	valve_data.node_name = "4-Way Ball Valve"
+	valve_data.type_name = "4-Way Ball Valve"
 	valve_data.sprite_path = "res://assets/valve.svg"
 	valve_data.short_desc = "Stainless steel control valve"
 	valve_data.long_desc = """\

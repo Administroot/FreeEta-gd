@@ -9,8 +9,8 @@ func _ready() -> void:
 	set_properties("res://assets/pump.svg")
 	
 func set_properties(picture: String) -> void:
-	$photo.texture = load(picture)
-	var picture_size = $photo.texture.get_size()
+	$Photo.texture = load(picture)
+	var picture_size = $Photo.texture.get_size()
 	$CollisionShape.shape.size = picture_size
 	$Button.size = picture_size
 	$Button.position = - picture_size / 2.
@@ -51,6 +51,8 @@ func _on_button_pressed() -> void:
 func _on_right_button_pressed() -> void:
 	if not panel:
 		panel = load("res://CU_node_scene.tscn").instantiate()
+		# Increase priority
+		panel.z_index = 100
 		add_child(panel)
 		await panel.tree_exited
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://yfu4xjhobuqb"]
 
-[ext_resource type="Script" uid="uid://d0yur1rro3d4t" path="res://common_node.gd" id="1_2vvs8"]
+[ext_resource type="Script" uid="uid://dlfg5q3l2g40" path="res://component.gd" id="1_vwh44"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8xu3x"]
 resource_local_to_scene = true
@@ -24,12 +24,12 @@ Button/styles/pressed = SubResource("StyleBoxFlat_ykgni")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2vvs8"]
 size = Vector2(50, 50)
 
-[node name="CommonNode" type="RigidBody2D"]
+[node name="Component" type="RigidBody2D"]
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_8xu3x")
 gravity_scale = 0.0
 lock_rotation = true
-script = ExtResource("1_2vvs8")
+script = ExtResource("1_vwh44")
 
 [node name="Button" type="Button" parent="."]
 offset_left = -25.0
@@ -38,7 +38,7 @@ offset_right = 25.0
 offset_bottom = 25.0
 theme = SubResource("Theme_ykgni")
 
-[node name="photo" type="Sprite2D" parent="."]
+[node name="Photo" type="Sprite2D" parent="."]
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(1, 0.75)

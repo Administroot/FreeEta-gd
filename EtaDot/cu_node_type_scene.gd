@@ -8,13 +8,13 @@ func _ready() -> void:
 	if modetitle:
 		# Update Mode
 		title = "🖋 Edit Node Type ..."
-	else :
+	else:
 		# Create Mode
 		title = "➕ Add Node Type ..."
 
 func _on_confirm_button_pressed() -> void:
 	choice = true
-	nodetype.node_name = $"VBoxContainer/VBox/Grid/NameEdit".text
+	nodetype.type_name = $"VBoxContainer/VBox/Grid/NameEdit".text
 	nodetype.short_desc = $"VBoxContainer/VBox/Grid/ShortDescEdit".text
 	nodetype.long_desc = $"VBoxContainer/VBox/Grid/LongDescEdit".text
 	queue_free()
