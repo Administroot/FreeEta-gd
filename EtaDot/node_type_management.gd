@@ -73,6 +73,7 @@ func add_node(new_type_name: String) -> void:
 		save_nodes(add_node_type_panel.nodetype, true)
 		# Print success info
 		LogUtil.info(info.format({"name": new_type_name}))
+#endregion
 
 #region Edit Node
 func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_button_index: int) -> void:
@@ -103,6 +104,7 @@ func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_
 	else :
 		LogUtil.error("Item not found")
 		push_error("Item not found")
+#endregion
 
 #region Recent
 func create_recent_member(parent: TreeItem, label_name: String, path: String = "res://assets/dim-star.png") -> void:
@@ -112,6 +114,7 @@ func create_recent_member(parent: TreeItem, label_name: String, path: String = "
 	label.add_button(0, load(path), -1, false, "")
 	label.set_editable(0, false)
 	label.set_metadata(0, {"favor_flag": false})
+#endregion
 
 # Favor or not
 func _on_recent_list_button_clicked(item: TreeItem, column: int, id: int, _mouse_button_index: int) -> void:
@@ -151,8 +154,9 @@ func _on_recent_list_button_clicked(item: TreeItem, column: int, id: int, _mouse
 func get_nodes() -> NodeTypes:
 	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://config/node_types.json")
 	if !loaded_data:
-		LogUtil.error("Error loading node data.")
-		push_error("Error loading node data.")
+		var msg = "Error loading [color=golden]NodeType[/color] data."
+		LogUtil.error(msg)
+		push_error(msg)
 	return loaded_data
 
 
@@ -172,3 +176,4 @@ func save_nodes(nodetype: NodeType, savemode: bool, node_id: int = 0) -> void:
 	var file_success: bool = JsonClassConverter.store_json_file("user://config/node_types.json", json_data)
 	if !file_success:
 		LogUtil.error_dialog($".", "Class --> Json Failed")
+#endregion

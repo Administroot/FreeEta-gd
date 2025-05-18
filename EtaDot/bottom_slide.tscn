@@ -7,6 +7,25 @@
 
 [sub_resource type="GDScript" id="GDScript_kdin5"]
 script/source = "extends Node2D
+
+# Process logic on `main.tscn`
+signal view_button_toggled
+signal eta_button_toggled
+signal code_button_toggled
+
+func _on_view_button_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		emit_signal(\"view_button_toggled\")
+
+
+func _on_eta_button_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		emit_signal(\"eta_button_toggled\")
+
+
+func _on_code_button_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		emit_signal(\"code_button_toggled\")
 "
 
 [sub_resource type="Gradient" id="Gradient_kadda"]
@@ -65,3 +84,7 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_aqo5o")
 text = "Code"
 icon = ExtResource("4_aqo5o")
+
+[connection signal="toggled" from="HBoxContainer/ViewButton" to="." method="_on_view_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/EtaButton" to="." method="_on_eta_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/CodeButton" to="." method="_on_code_button_toggled"]
