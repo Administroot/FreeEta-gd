@@ -1,14 +1,24 @@
 extends GutTest
 
-func test_load_json() -> void:
-	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://saves/node_types.json") 
+const error_msg = "Error loading node data."
+
+func test_load_nodetypes() -> void:
+	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "res://examples/config/node_types.json") 
 	if loaded_data:
 		assert_eq(loaded_data.get_type(0).type_name, "Pump")
 	else:
-		fail_test("Error loading node data.")
+		loaded_data.print_all_members("TEST:")
+		fail_test(error_msg)
 
+func test_load_components() -> void:
+	var loaded_data: Components = JsonClassConverter.json_file_to_class(Components, "res://examples/config/components.json")
+	if loaded_data:
+		assert_eq(loaded_data.get_component(0).node_id, 1)
+	else:
+		loaded_data.print_all_members("TEST:")
+		fail_test(error_msg)
 
-func test_write_to_json() -> void:
+func test_nodetypes_to_json() -> void:
 	# Pump equipment data
 	var pump_data = NodeType.new()
 	pump_data.type_name = "Pump"
@@ -41,7 +51,7 @@ func test_write_to_json() -> void:
 
 	var json_data = JsonClassConverter.class_to_json(node_types)
 
-	var file_success: bool = JsonClassConverter.store_json_file("user://saves/node_types.json", json_data)
+	var file_success: bool = JsonClassConverter.store_json_file("user://tests/node_types.json", json_data)
 
 	# Check if saving was successful:
 	if file_success:
@@ -49,4 +59,41 @@ func test_write_to_json() -> void:
 	else:
 		print("Error saving node types.") 
 
+	assert_eq(file_success, true)
+
+func test_components_to_json() -> void:
+	var comp1 = Component.new()
+	comp1.node_id = 1
+	comp1.node_name = "PumpA"
+	comp1.node_type = "Pump"
+	comp1.reliability = 0.98
+	comp1.prev_node = -1
+
+	var comp2 = Component.new()
+	comp2.node_id = 2
+	comp2.node_name = "ValveB"
+	comp2.node_type = "Valve"
+	comp2.reliability = 0.95
+	comp2.prev_node = 1
+	
+	var comp3 = Component.new()
+	comp3.node_id = 3
+	comp3.node_name = "SensorC"
+	comp3.node_type = "Sensor"
+	comp3.reliability = 0.99
+	comp3.prev_node = 2
+	
+	var components = Components.new()
+	components.add_component(comp1)
+	components.add_component(comp2)
+	components.add_component(comp3)
+	
+	var json_data = JsonClassConverter.class_to_json(components)
+	var file_success: bool = JsonClassConverter.store_json_file("user://tests/components.json", json_data)
+	
+	if file_success:
+		print("Components saved successfully!")
+	else:
+		print("Error saving components.")
+	
 	assert_eq(file_success, true)

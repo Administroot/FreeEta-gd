@@ -1,0 +1,25 @@
+{
+    "components": [
+        {
+            "node_id": 1,
+            "node_name": "PumpA",
+            "node_type": "Pump",
+            "reliability": 0.98,
+            "prev_node": -1
+        },
+        {
+            "node_id": 2,
+            "node_name": "ValveB",
+            "node_type": "Valve",
+            "reliability": 0.95,
+            "prev_node": 1
+        },
+        {
+            "node_id": 3,
+            "node_name": "SensorC",
+            "node_type": "Sensor",
+            "reliability": 0.99,
+            "prev_node": 2
+        }
+    ]
+}
