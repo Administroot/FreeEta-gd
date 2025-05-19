@@ -3,7 +3,7 @@ extends GutTest
 const error_msg = "Error loading node data."
 
 func test_load_nodetypes() -> void:
-	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "res://examples/config/node_types.json") 
+	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "res://examples/saves/node_types.json") 
 	if loaded_data:
 		assert_eq(loaded_data.get_type(0).type_name, "Pump")
 	else:
@@ -11,7 +11,7 @@ func test_load_nodetypes() -> void:
 		fail_test(error_msg)
 
 func test_load_components() -> void:
-	var loaded_data: Components = JsonClassConverter.json_file_to_class(Components, "res://examples/config/components.json")
+	var loaded_data: Components = JsonClassConverter.json_file_to_class(Components, "res://examples/saves/components.json")
 	if loaded_data:
 		assert_eq(loaded_data.get_component(0).node_id, 1)
 	else:

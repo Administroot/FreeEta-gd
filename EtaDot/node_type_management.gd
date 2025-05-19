@@ -152,7 +152,7 @@ func _on_recent_list_button_clicked(item: TreeItem, column: int, id: int, _mouse
 
 #region JSON Serialize and Deserialize
 func get_nodes() -> NodeTypes:
-	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://config/node_types.json")
+	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://saves/node_types.json")
 	if !loaded_data:
 		var msg = "Error loading [color=golden]NodeType[/color] data."
 		LogUtil.error(msg)
@@ -173,7 +173,7 @@ func save_nodes(nodetype: NodeType, savemode: bool, node_id: int = 0) -> void:
 	# Serialize
 	data.print_all_members("NodeTypes")
 	var json_data = JsonClassConverter.class_to_json(data)
-	var file_success: bool = JsonClassConverter.store_json_file("user://config/node_types.json", json_data)
+	var file_success: bool = JsonClassConverter.store_json_file("user://saves/node_types.json", json_data)
 	if !file_success:
 		LogUtil.error_dialog($".", "Class --> Json Failed")
 #endregion

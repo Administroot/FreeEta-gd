@@ -4,16 +4,16 @@ extends Node
 
 #region Boot Up
 func _init() -> void:
-	var dir = DirAccess.open("user://config")
+	var dir = DirAccess.open("user://saves")
 	if dir == null:
-		DirAccess.make_dir_absolute("user://config")
-	check_config("node_types.json")
-	check_config("components.json")
+		DirAccess.make_dir_absolute("user://saves")
+	check_saves("node_types.json")
+	check_saves("components.json")
 
-func check_config(config_name: String) -> void:
-	if not FileAccess.file_exists("user://config/" + config_name):
-		var source = FileAccess.open("res://examples/config/" + config_name, FileAccess.READ)
-		var target = FileAccess.open("user://config/" + config_name, FileAccess.WRITE)
+func check_saves(saves_name: String) -> void:
+	if not FileAccess.file_exists("user://saves/" + saves_name):
+		var source = FileAccess.open("res://examples/saves/" + saves_name, FileAccess.READ)
+		var target = FileAccess.open("user://saves/" + saves_name, FileAccess.WRITE)
 		target.store_string(source.get_as_text())
 		source.close()
 		target.close()
@@ -33,7 +33,7 @@ func on_view_button_toggled() -> void:
 
 #JSON Serialize and Deserialize
 func get_components() -> Components:
-	var loaded_data: Components = JsonClassConverter.json_file_to_class(Components, "user://config/components.json")
+	var loaded_data: Components = JsonClassConverter.json_file_to_class(Components, "user://saves/components.json")
 	if !loaded_data:
 		var msg = "Error loading [color=golden]Components[/color] data."
 		LogUtil.error(msg)
