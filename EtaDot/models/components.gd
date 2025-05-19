@@ -20,5 +20,5 @@ func print_all_members(components_name: String) -> void:
     LogUtil.info("-".repeat(50))
     LogUtil.info("%s includes:" % components_name)
     for component in components:
-        print_rich("[color=pink]&&&&&[/color] node_id: %s || node_name: %s || node_type: %s || reliability: %s || prev_node: %s [color=orange]&&&&&[/color]" % [component.node_id, component.node_name, component.node_type, component.reliability, component.prev_node])
+        component.printall()
     LogUtil.info("-".repeat(50))

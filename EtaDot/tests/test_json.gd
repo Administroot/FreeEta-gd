@@ -67,21 +67,21 @@ func test_components_to_json() -> void:
 	comp1.node_name = "PumpA"
 	comp1.node_type = "Pump"
 	comp1.reliability = 0.98
-	comp1.prev_node = -1
+	comp1.prev_node = [-1]
 
 	var comp2 = Component.new()
 	comp2.node_id = 2
 	comp2.node_name = "ValveB"
 	comp2.node_type = "Valve"
 	comp2.reliability = 0.95
-	comp2.prev_node = 1
+	comp2.prev_node = [1]
 	
 	var comp3 = Component.new()
 	comp3.node_id = 3
 	comp3.node_name = "SensorC"
 	comp3.node_type = "Sensor"
 	comp3.reliability = 0.99
-	comp3.prev_node = 2
+	comp3.prev_node = [2]
 	
 	var components = Components.new()
 	components.add_component(comp1)

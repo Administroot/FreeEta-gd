@@ -2,24 +2,38 @@
     "components": [
         {
             "node_id": 1,
-            "node_name": "PumpA",
+            "node_name": "Pump",
             "node_type": "Pump",
             "reliability": 0.98,
-            "prev_node": -1
+            "prev_node": [0]
         },
         {
             "node_id": 2,
-            "node_name": "ValveB",
+            "node_name": "ValveA",
             "node_type": "Valve",
             "reliability": 0.95,
-            "prev_node": 1
+            "prev_node": [1]
         },
         {
             "node_id": 3,
-            "node_name": "SensorC",
-            "node_type": "Sensor",
+            "node_name": "ValveB",
+            "node_type": "Valve",
             "reliability": 0.99,
-            "prev_node": 2
+            "prev_node": [2]
+        },
+        {
+            "node_id": 4,
+            "node_name": "ValveC",
+            "node_type": "Valve",
+            "reliability": 0.99,
+            "prev_node": [2]
+        },
+        {
+            "node_id": 5,
+            "node_name": "ValveD",
+            "node_type": "Valve",
+            "reliability": 0.85,
+            "prev_node": [3, 4]
         }
     ]
 }

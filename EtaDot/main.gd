@@ -29,7 +29,28 @@ func _ready() -> void:
 
 #region View
 func on_view_button_toggled() -> void:
-	LogUtil.info("View button toggled")
+	components_data.print_all_members("View")
+	for i in range(len(components_data.components)):
+		create_components(i)
+		# var new_node = load("res://component.tscn").instantiate()
+		# new_node.position = get_viewport().get_mouse_position()
+		# add_child(new_node)
+
+func create_components(index: int) -> void:
+	# Relocate `Marker`
+	if index:
+		var recent = components_data.get_component(index)
+		var prev = components_data.get_component(index - 1)
+		# TODO: Improve locate logic
+		if recent.prev_node == prev.node_id:
+			# Apposition
+			pass
+		else :
+			# Parent
+			pass
+		print(recent.prev_node)
+	# Visualize a component
+	
 
 #JSON Serialize and Deserialize
 func get_components() -> Components:

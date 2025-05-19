@@ -15,3 +15,6 @@ script = ExtResource("1_1bvp3")
 position = Vector2(959, 1003)
 
 [node name="CustomNodes" type="Node2D" parent="."]
+
+[node name="ComponentMarker" type="Marker2D" parent="CustomNodes"]
+position = Vector2(240, 540)
