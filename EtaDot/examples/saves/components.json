@@ -1,6 +1,13 @@
 {
     "components": [
         {
+            "node_id": 0,
+            "node_name": "Initial",
+            "node_type": "Initial",
+            "reliability": 1.0,
+            "prev_node": [-1]
+        },
+        {
             "node_id": 1,
             "node_name": "Pump",
             "node_type": "Pump",
