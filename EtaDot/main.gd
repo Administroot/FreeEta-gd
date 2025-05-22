@@ -37,7 +37,7 @@ func on_view_button_toggled() -> void:
 		# new_node.position = get_viewport().get_mouse_position()
 		# add_child(new_node)
 
-const X_SPACING := 120
+const X_SPACING := 200
 const Y_SPACING := 80
 
 # Assume：
@@ -56,15 +56,17 @@ func build_tree_structure() -> Dictionary:
 			"component": comp,
 			"children": []
 		}
-	# Establish parent relationship
+	# Establish parent relationship and find roots
 	for comp in components_data.components:
-		for prev in comp.prev_node:
-			if prev != -1 and id_to_node.has(prev):
-				id_to_node[prev]["children"].append(id_to_node[comp.node_id])
-	# Find all root nodes
-	for comp in components_data.components:
-		if comp.prev_node.size() == 0 or comp.prev_node[0] == -1:
+		if comp.prev_node[0] == -1:
+			# This is a root node
 			roots.append(id_to_node[comp.node_id])
+		else:
+			# Add to parent's children
+			for prev in comp.prev_node:
+				if id_to_node.has(prev):
+					id_to_node[prev]["children"].append(id_to_node[comp.node_id])
+	
 	return {"roots": roots, "id_to_node": id_to_node}
 
 # Recursively calculating `width` of each `Component`
@@ -126,13 +128,11 @@ func create_components() -> void:
 			child.queue_free()
 	# Build tree structure
 	var tree = build_tree_structure()
-	LogUtil.info("Tree: %s" % tree)
 	var marker = $CustomNodes/ComponentMarker
 	var root_pos = marker.position
 	# Draw all root positions
 	for root in tree["roots"]:
 		draw_tree(root, root_pos)
-
 
 # func create_components(index: int) -> void:
 # 	# Relocate `Marker`

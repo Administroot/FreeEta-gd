@@ -13,7 +13,7 @@ func test_load_nodetypes() -> void:
 func test_load_components() -> void:
 	var loaded_data: Components = JsonClassConverter.json_file_to_class(Components, "res://examples/saves/components.json")
 	if loaded_data:
-		assert_eq(loaded_data.get_component(0).node_id, 1)
+		assert_eq(loaded_data.get_component(0).node_id, 0)
 	else:
 		loaded_data.print_all_members("TEST:")
 		fail_test(error_msg)
@@ -67,7 +67,7 @@ func test_components_to_json() -> void:
 	comp1.node_name = "PumpA"
 	comp1.node_type = "Pump"
 	comp1.reliability = 0.98
-	comp1.prev_node = [-1]
+	comp1.prev_node = [1]
 
 	var comp2 = Component.new()
 	comp2.node_id = 2

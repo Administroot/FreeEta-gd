@@ -5,7 +5,7 @@
             "node_name": "Initial",
             "node_type": "Initial",
             "reliability": 1.0,
-            "prev_node": [-1]
+            "prev_node": []
         },
         {
             "node_id": 1,
