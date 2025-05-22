@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 @export var Id := get_instance_id()
+@export var size := Vector2()
 var dragging := false
 var drag_offset := Vector2()
 var panel: Node = null
@@ -10,10 +11,10 @@ func _ready() -> void:
 	
 func set_properties(picture: String) -> void:
 	$Photo.texture = load(picture)
-	var picture_size = $Photo.texture.get_size()
-	$CollisionShape.shape.size = picture_size
-	$Button.size = picture_size
-	$Button.position = - picture_size / 2.
+	size = $Photo.texture.get_size()
+	$CollisionShape.shape.size = size
+	$Button.size = size
+	$Button.position = - size / 2.
 
 func _on_mouse_entered() -> void:
 	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)

@@ -28,23 +28,6 @@ func create_adjacency_list() -> Dictionary:
 	
 	return component_graph
 
-func print_adjacency_list(dict: Dictionary) -> String:
-	var output = "Component Graph Structure:\n"
-	for node_id in dict:
-		var node = dict[node_id]
-		var prev_str = str(node["prev"]).replace(" ", "")
-		var next_str = str(node["next"]).replace(" ", "")
-		output += "Node %d (%s): prev=%s, next=%s, type=%s, reliability=%.2f\n" % [
-			node_id,
-			node["name"],
-			prev_str,
-			next_str,
-			node["type"],
-			node["reliability"]
-		]
-	LogUtil.info(output)
-	return output
-
 func test_adjacency_list() -> void:
 	var component_graph = {
 		0: {

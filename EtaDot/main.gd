@@ -31,125 +31,82 @@ func _ready() -> void:
 func on_view_button_toggled() -> void:
 	components_data.print_all_members("View")
 	create_components()
-	# for i in range(len(components_data.components)):
-	# 	create_components(i)
-		# var new_node = load("res://component.tscn").instantiate()
-		# new_node.position = get_viewport().get_mouse_position()
-		# add_child(new_node)
 
-const X_SPACING := 200
-const Y_SPACING := 80
-
-# Assume：
-# `ComponentMarker` as a anchor of root node
-# `component.tscn` as node `Component` prefab
-# `TreeBranch.tscn` as `Line` prefab
-# `components_data` has loaded
-
-# Recursive constructing tree structure
-func build_tree_structure() -> Dictionary:
-	var id_to_node = {}
-	var roots = []
-	# Build node map
+# Adjacency list algorithm
+func create_adjacency_list() -> Dictionary:
+	var component_graph = {}
+	# Initialize graph with basic component info
 	for comp in components_data.components:
-		id_to_node[comp.node_id] = {
-			"component": comp,
-			"children": []
-		}
-	# Establish parent relationship and find roots
+		component_graph[comp.node_id
+] = {
+	"name": comp.node_name,
+	"type": comp.node_type,
+	"reliability": comp.reliability,
+	"prev": comp.prev_node,
+	"next": [] # Will be populated below
+}
+	# Populate the next nodes list
 	for comp in components_data.components:
-		if comp.prev_node[0] == -1:
-			# This is a root node
-			roots.append(id_to_node[comp.node_id])
-		else:
-			# Add to parent's children
-			for prev in comp.prev_node:
-				if id_to_node.has(prev):
-					id_to_node[prev]["children"].append(id_to_node[comp.node_id])
-	
-	return {"roots": roots, "id_to_node": id_to_node}
+		# For each node that has this as prev, add this node to their prev's next list
+		for prev_id in comp.prev_node:
+			if prev_id != -1 and prev_id in component_graph:
+				component_graph[prev_id
+][
+	"next"
+].append(comp.node_id)
+	return component_graph
 
-# Recursively calculating `width` of each `Component`
-func get_max_child_num(node: Dictionary) -> int:
-	if node["children"].size() == 0:
-		return 1
-	var num = 0
-	for child in node["children"]:
-		num += get_max_child_num(child)
-	return num
-
-# Draw tree recursively
-func draw_tree(node: Dictionary, position: Vector2, parent_marker: Node = null) -> Node:
-	# Initialize `Component` nodes
-	var comp_scene = load("res://component.tscn")
-	var comp_node = comp_scene.instantiate()
-	comp_node.position = position
-	$CustomNodes.add_child(comp_node)
-	# Set node info (Optional)
-	# comp_node.set_component_info(node["component"])
-	# Draw line
-	if parent_marker:
-		draw_tree_branch(parent_marker, comp_node)
-	# Draw child nodes recursively
-	if node["children"].size() == 0:
-		return comp_node
-	var width = get_max_child_num(node)
-	var width_size = width * Y_SPACING
-	var size_start = - width_size / 2.0
-	for child in node["children"]:
-		var child_width = get_max_child_num(child)
-		var rate = max(child_width, 1) / width
-		size_start += rate * width_size / 2
-		var child_pos = position + Vector2(X_SPACING, size_start)
-		draw_tree(child, child_pos, comp_node)
-		size_start += rate * width_size / 2
-	return comp_node
-		
-# Draw line (Optional: `TreeBranch.tscn` exists)
-func draw_tree_branch(a: Node, b: Node) -> void:
-	if not ResourceLoader.exists("res://TreeBranch.tscn"):
-		return
-	var branch_scene = load("res://TreeBranch.tscn")
-	var branch = branch_scene.instantiate()
-	add_child(branch)
-	# If $"Line2D" exists
-	var line = branch.get_node("Line2D")
-	line.clear_points()
-	line.add_point(a.position)
-	line.add_point(b.position)
+const MIN_X_SPACING := 100
+const MAX_Y_SPACING := 40
 
 # Main Entrance
+# TODO: Test more datasets
 func create_components() -> void:
-	# Clean old components.
-	for child in $CustomNodes.get_children():
-		# TODO: Delete old tree
-		if child.name.begins_with("ComponentInstance"):
-			remove_child(child)
-			child.queue_free()
-	# Build tree structure
-	var tree = build_tree_structure()
-	var marker = $CustomNodes/ComponentMarker
-	var root_pos = marker.position
-	# Draw all root positions
-	for root in tree["roots"]:
-		draw_tree(root, root_pos)
-
-# func create_components(index: int) -> void:
-# 	# Relocate `Marker`
-# 	var marker = $CustomNodes/ComponentMarker
-# 	if index:
-# 		var recent = components_data.get_component(index)
-# 		var prev = components_data.get_component(index - 1)
-# 		# TODO: Improve locate logic. When `Apposition` situation, 
-# 		if recent.prev_node[0] != prev.node_id:
-# 			# Apposition
-# 			marker.position = Vector2(marker.position.x, marker.position.y)
-# 			LogUtil.info("marker.position=%s" % marker.position)
-# 		else :
-# 			# Parent
-# 			marker.position = marker.position + Vector2(100, 0)
-# 	# Visualize a component
+	var graph = create_adjacency_list()
+	print_adjacency_list(graph)
 	
+	# Start from root nodes (nodes with empty prev)
+	var root_nodes = find_root_nodes(graph)
+	var pos = Vector2(100, 300)  # Starting position
+	
+	# Create and position nodes using recursive traversal
+	for root in root_nodes:
+		visualize_node(root, graph, pos, {})
+
+func find_root_nodes(graph: Dictionary) -> Array:
+	var roots = []
+	for node_id in graph:
+		if graph[node_id]["prev"].is_empty():
+			roots.append(node_id)
+	return roots
+
+func visualize_node(node_id: int, graph: Dictionary, pos: Vector2, visited: Dictionary) -> void:
+	if node_id in visited:
+		return
+		
+	visited[node_id] = true
+	
+	# Create component node
+	var new_node = load("res://component.tscn").instantiate()
+	new_node.position = pos
+	add_child(new_node)
+	
+	# Calculate positions for child nodes
+	var next_nodes = graph[node_id]["next"]
+	
+	# Calculate vertical offset based on number of parallel components
+	var total_height = (len(next_nodes) - 1) * MAX_Y_SPACING
+	var start_y = pos.y - (total_height / 2.)  # Center the parallel components
+	
+	for i in range(len(next_nodes)):
+		var next_id = next_nodes[i]
+		var new_node_size = new_node.size
+		var next_pos = Vector2(
+			pos.x + MIN_X_SPACING + new_node_size.x, 
+			start_y + (i * MAX_Y_SPACING)
+		)
+		
+		visualize_node(next_id, graph, next_pos, visited)
 
 #JSON Serialize and Deserialize
 func get_components() -> Components:
@@ -176,4 +133,23 @@ func _input(event):
 		var new_node = load("res://component.tscn").instantiate()
 		new_node.position = get_viewport().get_mouse_position()
 		add_child(new_node)
+#endregion
+
+#region Debugging
+func print_adjacency_list(dict: Dictionary) -> String:
+	var output = "Component Graph Structure:\n"
+	for node_id in dict:
+		var node = dict[node_id]
+		var prev_str = str(node["prev"]).replace(" ", "")
+		var next_str = str(node["next"]).replace(" ", "")
+		output += "Node %d (%s): prev=%s, next=%s, type=%s, reliability=%.2f\n" % [
+			node_id,
+			node["name"],
+			prev_str,
+			next_str,
+			node["type"],
+			node["reliability"]
+		]
+	LogUtil.info(output)
+	return output
 #endregion
