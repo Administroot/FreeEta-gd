@@ -29,8 +29,14 @@ func _ready() -> void:
 
 #region View
 func on_view_button_toggled() -> void:
-	components_data.print_all_members("View")
+	clean_components()
 	create_components()
+
+func clean_components() -> void:
+	var custom_nodes = $"CustomNodes"
+	if custom_nodes:
+		for child in custom_nodes.get_children():
+			child.queue_free()
 
 # Adjacency list algorithm
 func create_adjacency_list() -> Dictionary:
@@ -59,8 +65,7 @@ func create_adjacency_list() -> Dictionary:
 const MIN_X_SPACING := 100
 const MAX_Y_SPACING := 40
 
-# Main Entrance
-# TODO: Test more datasets
+##### Main Entrance #####
 func create_components() -> void:
 	var graph = create_adjacency_list()
 	print_adjacency_list(graph)
@@ -89,13 +94,13 @@ func visualize_node(node_id: int, graph: Dictionary, pos: Vector2, visited: Dict
 	# Create component node
 	var new_node = load("res://component.tscn").instantiate()
 	new_node.position = pos
-	add_child(new_node)
+	$CustomNodes.add_child(new_node)
 	
 	# Calculate positions for child nodes
 	var next_nodes = graph[node_id]["next"]
 	
 	# Calculate vertical offset based on number of parallel components
-	var total_height = (len(next_nodes) - 1) * MAX_Y_SPACING
+	var total_height = (len(next_nodes) - 1) * (MAX_Y_SPACING + new_node.size.y)
 	var start_y = pos.y - (total_height / 2.)  # Center the parallel components
 	
 	for i in range(len(next_nodes)):
@@ -103,7 +108,7 @@ func visualize_node(node_id: int, graph: Dictionary, pos: Vector2, visited: Dict
 		var new_node_size = new_node.size
 		var next_pos = Vector2(
 			pos.x + MIN_X_SPACING + new_node_size.x, 
-			start_y + (i * MAX_Y_SPACING)
+			start_y + (i * (MAX_Y_SPACING + new_node_size.y))
 		)
 		
 		visualize_node(next_id, graph, next_pos, visited)
