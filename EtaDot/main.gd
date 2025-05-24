@@ -66,9 +66,11 @@ const MIN_X_SPACING := 100
 const MAX_Y_SPACING := 40
 
 ##### Main Entrance #####
+## FIXME: More tests to testify the algorithm
 func create_components() -> void:
 	var graph = create_adjacency_list()
 	print_adjacency_list(graph)
+	print(graph)
 	
 	# Start from root nodes (nodes with empty prev)
 	var root_nodes = find_root_nodes(graph)
@@ -94,6 +96,11 @@ func visualize_node(node_id: int, graph: Dictionary, pos: Vector2, visited: Dict
 	# Create component node
 	var new_node = load("res://component.tscn").instantiate()
 	new_node.position = pos
+	# Potential bug: Name duplicated
+	new_node.component = components_data.get_component_by_name(graph[node_id]["name"])
+	# Potential bug: Json won't automatically sort
+	# new_node.component = components_data.get_component(node_id)
+	LogUtil.info("new_node.component: %s" % new_node.component.node_name)
 	$CustomNodes.add_child(new_node)
 	
 	# Calculate positions for child nodes
@@ -118,7 +125,7 @@ func get_components() -> Components:
 	var loaded_data: Components = JsonClassConverter.json_file_to_class(Components, "user://saves/components.json")
 	if !loaded_data:
 		var msg = "Error loading [color=golden]Components[/color] data."
-		LogUtil.error(msg)
+		LogUtil.error_dialog($".", msg)
 		push_error(msg)
 	return loaded_data
 #endregion

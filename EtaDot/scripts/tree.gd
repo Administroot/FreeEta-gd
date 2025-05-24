@@ -1,3 +1,4 @@
+# Utility for `Tree` nodetype in `Godot`
 class_name TreeUtil
 
 static func get_column_item_names(tree: Tree, column: int = 0) -> PackedStringArray:

@@ -1,14 +1,15 @@
 extends RigidBody2D
 
-@export var Id := get_instance_id()
 @export var size := Vector2()
+@export var component: Component
 var dragging := false
 var drag_offset := Vector2()
 var panel: Node = null
 
 func _ready() -> void:
+	# TODO: Read sprite from `NodeTypes`
 	set_properties("res://assets/pump.svg")
-	
+
 func set_properties(picture: String) -> void:
 	$Photo.texture = load(picture)
 	size = $Photo.texture.get_size()
@@ -51,7 +52,9 @@ func _on_button_pressed() -> void:
 
 func _on_right_button_pressed() -> void:
 	if not panel:
+		# Init component
 		panel = load("res://CU_node_scene.tscn").instantiate()
+		panel.component = component
 		# Increase priority
 		panel.z_index = 100
 		add_child(panel)
