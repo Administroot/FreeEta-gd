@@ -1,7 +1,7 @@
 extends Node
 
 #region Components
-var components_data := get_components()
+var components_data: Components
 
 #JSON Serialize
 func get_components() -> Components:
@@ -13,7 +13,7 @@ func get_components() -> Components:
 	return loaded_data
 
 #region NodeTypes
-var nodetypes_data := get_nodetypes()
+var nodetypes_data : NodeTypes
 
 #JSON Serialize and Deserialize
 func get_nodetypes() -> NodeTypes:
@@ -23,7 +23,6 @@ func get_nodetypes() -> NodeTypes:
 		LogUtil.error(msg)
 		push_error(msg)
 	return loaded_data
-#endregion
 
 ## Serialize `NodeType` and save into file.
 ## Params:
@@ -41,4 +40,10 @@ func save_nodetypes(nodetype: NodeType, savemode: bool, node_id: int = 0) -> voi
 	var file_success: bool = JsonClassConverter.store_json_file("user://saves/node_types.json", json_data)
 	if !file_success:
 		LogUtil.error("Error saving [color=golden]NodeType[/color] data.")
+#endregion
+
+#region Testify
+func print_global_data() -> void:
+	components_data.print_all_members("@Global: Components Data: ")
+	nodetypes_data.print_all_members("@Global: NodeTypes Data: ")
 #endregion

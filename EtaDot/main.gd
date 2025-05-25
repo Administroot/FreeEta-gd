@@ -1,14 +1,16 @@
 extends Node
 
-var components_data = GlobalData.components_data
-
 #region Boot Up
 func _init() -> void:
+	# Check saves
 	var dir = DirAccess.open("user://saves")
 	if dir == null:
 		DirAccess.make_dir_absolute("user://saves")
 	check_saves("node_types.json")
 	check_saves("components.json")
+	# Mannually assign global varients
+	GlobalData.components_data = GlobalData.get_components()
+	GlobalData.nodetypes_data = GlobalData.get_nodetypes()
 
 func check_saves(saves_name: String) -> void:
 	if not FileAccess.file_exists("user://saves/" + saves_name):
@@ -25,6 +27,8 @@ func _ready() -> void:
 	$"Scenes/BottomSlide".view_button_toggled.connect(on_view_button_toggled)
 	$"Scenes/BottomSlide".eta_button_toggled.connect(on_eta_button_toggled)
 	$"Scenes/BottomSlide".code_button_toggled.connect(on_code_button_toggled)
+	# Print GlobalData
+	GlobalData.print_global_data()
 #endregion
 
 #region View
@@ -42,7 +46,7 @@ func clean_components() -> void:
 func create_adjacency_list() -> Dictionary:
 	var component_graph = {}
 	# Initialize graph with basic component info
-	for comp in components_data.components:
+	for comp in GlobalData.components_data.components:
 		component_graph[comp.node_id
 ] = {
 	"name": comp.node_name,
@@ -52,7 +56,7 @@ func create_adjacency_list() -> Dictionary:
 	"next": [] # Will be populated below
 }
 	# Populate the next nodes list
-	for comp in components_data.components:
+	for comp in GlobalData.components_data.components:
 		# For each node that has this as prev, add this node to their prev's next list
 		for prev_id in comp.prev_node:
 			if prev_id != -1 and prev_id in component_graph:
@@ -97,10 +101,10 @@ func visualize_node(node_id: int, graph: Dictionary, pos: Vector2, visited: Dict
 	var new_node = load("res://component.tscn").instantiate()
 	new_node.position = pos
 	# Potential bug: Name duplicated
-	new_node.component = components_data.get_component_by_name(graph[node_id]["name"])
+	new_node.component = GlobalData.components_data.get_component_by_name(graph[node_id]["name"])
 	# Potential bug: Json won't automatically sort
 	# new_node.component = components_data.get_component(node_id)
-	LogUtil.info("new_node.component: %s" % new_node.component.node_name)
+	# LogUtil.info("new_node.component: %s" % new_node.component.node_name)
 	$CustomNodes.add_child(new_node)
 	
 	# Calculate positions for child nodes
@@ -123,13 +127,12 @@ func visualize_node(node_id: int, graph: Dictionary, pos: Vector2, visited: Dict
 
 #region ETA
 func on_eta_button_toggled() -> void:
-	components_data.print_all_members("Components")
-	LogUtil.info("ETA button toggled")
+	GlobalData.components_data.print_all_members("Components")
 #endregion
 
 #region Code
 func on_code_button_toggled() -> void:
-	LogUtil.info("Code button toggled")
+	pass
 
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
@@ -153,6 +156,5 @@ func print_adjacency_list(dict: Dictionary) -> String:
 			node["type"],
 			node["reliability"]
 		]
-	LogUtil.info(output)
 	return output
 #endregion

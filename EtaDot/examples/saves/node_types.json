@@ -11,6 +11,12 @@
 			"type_name": "4-Way Ball Valve",
 			"short_desc": "Stainless steel control valve",
 			"sprite_path": "res://assets/valve.svg"
+		},
+		{
+			"long_desc": "\tThe initiating event that starts the event tree analysis",
+			"type_name": "Initial",
+			"short_desc": "Starting point of event tree analysis",
+			"sprite_path": "res://assets/empty.png"
 		}
 	]
 }
