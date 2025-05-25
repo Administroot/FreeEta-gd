@@ -1,6 +1,6 @@
 extends PopupPanel
 
-@export var data = get_nodes()
+var data = GlobalData.nodetypes_data
 @onready var node_list = $"HSplit1/NodeBox/NodeList"
 @onready var desc_box = $"HSplit1/NodeBox/DescBox"
 @onready var label_list = $"HSplit1/RecentBox/RecentList"
@@ -70,7 +70,7 @@ func add_node(new_type_name: String) -> void:
 		# Add node to tree
 		create_nodelist_member(node_list.get_root(), add_node_type_panel.nodetype, "res://assets/pen.png")
 		# Serialize new node to Json
-		save_nodes(add_node_type_panel.nodetype, true)
+		GlobalData.save_nodetypes(add_node_type_panel.nodetype, true)
 		# Print success info
 		LogUtil.info(info.format({"name": new_type_name}))
 #endregion
@@ -98,7 +98,7 @@ func _on_node_list_button_clicked(item: TreeItem, column: int, _id: int, _mouse_
 			# Update node in tree
 			item.set_text(column, add_node_type_panel.nodetype.type_name)
 			# Save the updated node to data
-			save_nodes(add_node_type_panel.nodetype, false, item_id)
+			GlobalData.save_nodetypes(add_node_type_panel.nodetype, false, item_id)
 			# Print success info
 			LogUtil.info(info.format({"name": add_node_type_panel.nodetype.type_name}))
 	else :
@@ -148,32 +148,4 @@ func _on_recent_list_button_clicked(item: TreeItem, column: int, id: int, _mouse
 			last_child = last_child.get_next()
 		item.move_after(last_child)
 	item.add_button(column, load(sprite_path), id, false, "")
-
-
-#region JSON Serialize and Deserialize
-func get_nodes() -> NodeTypes:
-	var loaded_data: NodeTypes = JsonClassConverter.json_file_to_class(NodeTypes, "user://saves/node_types.json")
-	if !loaded_data:
-		var msg = "Error loading [color=golden]NodeType[/color] data."
-		LogUtil.error(msg)
-		push_error(msg)
-	return loaded_data
-
-
-## Serialize `NodeType` and save into file.
-## Params:
-##	`nodetype`(NodeType): The nodetype you want to update or add.
-##	`savemode`(bool): `false` for Update, `true` for Add.
-func save_nodes(nodetype: NodeType, savemode: bool, node_id: int = 0) -> void:
-	if savemode:
-		# Add mode
-		data.add_type(nodetype)
-	else:
-		data.types[node_id] = nodetype
-	# Serialize
-	data.print_all_members("NodeTypes")
-	var json_data = JsonClassConverter.class_to_json(data)
-	var file_success: bool = JsonClassConverter.store_json_file("user://saves/node_types.json", json_data)
-	if !file_success:
-		LogUtil.error_dialog($".", "Class --> Json Failed")
 #endregion

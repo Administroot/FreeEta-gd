@@ -1,6 +1,6 @@
 extends Node
 
-@onready var components_data = get_components()
+var components_data = GlobalData.components_data
 
 #region Boot Up
 func _init() -> void:
@@ -119,15 +119,6 @@ func visualize_node(node_id: int, graph: Dictionary, pos: Vector2, visited: Dict
 		)
 		
 		visualize_node(next_id, graph, next_pos, visited)
-
-#JSON Serialize and Deserialize
-func get_components() -> Components:
-	var loaded_data: Components = JsonClassConverter.json_file_to_class(Components, "user://saves/components.json")
-	if !loaded_data:
-		var msg = "Error loading [color=golden]Components[/color] data."
-		LogUtil.error_dialog($".", msg)
-		push_error(msg)
-	return loaded_data
 #endregion
 
 #region ETA
