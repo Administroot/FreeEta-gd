@@ -16,6 +16,9 @@ func get_type_by_name(type_name: String) -> NodeType:
 			return types[index]
 	return null
 
+func get_all_typenames() -> Array:
+	return (types.map(func(type): return str(type.type_name)))
+
 func print_all_members(nodetypes_name: String) -> void:
 	LogUtil.info("-".repeat(50))
 	LogUtil.info("%s includes:" % nodetypes_name)

@@ -110,3 +110,5 @@ custom_minimum_size = Vector2(150, 25)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 placeholder_text = "Press <ENTER> to commit"
+
+[connection signal="item_selected" from="VBox/Grid1/OptionButton" to="." method="_on_option_button_item_selected"]

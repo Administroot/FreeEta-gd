@@ -56,7 +56,7 @@ func _on_right_button_pressed() -> void:
 		panel = load("res://CU_node_scene.tscn").instantiate()
 		panel.component = component
 		# Increase priority
-		panel.z_index = 100
+		panel.z_index = 5
 		add_child(panel)
 		await panel.tree_exited
 
