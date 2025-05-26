@@ -8,10 +8,6 @@ var panel: Node = null
 # var nodetype = component.get_nodetype_by_component()
 
 func _ready() -> void:
-	# TODO: Read sprite from `NodeTypes`
-	# set_texture(nodetype.sprite_path)
-	# LogUtil.error("spritepath = %s" % component.get_nodetype_by_component().sprite_path)
-	# set_texture("res://assets/pump.svg")
 	set_texture(component.get_nodetype_by_component().sprite_path)
 
 func set_texture(picture: String) -> void:

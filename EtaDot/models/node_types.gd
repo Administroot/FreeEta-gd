@@ -20,5 +20,5 @@ func print_all_members(nodetypes_name: String) -> void:
 	LogUtil.info("-".repeat(50))
 	LogUtil.info("%s includes:" % nodetypes_name)
 	for type in types:
-		print_rich("[color=orange]&&&&&[/color] type_name: %s || sprite_path: %s || short_desc: %s || long_desc: %s [color=orange]&&&&&[/color]" % [type.type_name, type.sprite_path, type.short_desc, type.long_desc])
+		type.print_all_members()
 	LogUtil.info("-".repeat(50))

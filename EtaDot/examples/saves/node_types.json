@@ -8,7 +8,7 @@
 		},
 		{
 			"long_desc": "\t316L stainless steel quarter-turn valve\n\t- Nominal diameter: DN50\n\t- Temperature range: -20°C to 180°C\n\t- Connection type: Flange\n\t- Seal material: PTFE\n\tSupports both actuator and manual operation modes",
-			"type_name": "4-Way Ball Valve",
+			"type_name": "Valve",
 			"short_desc": "Stainless steel control valve",
 			"sprite_path": "res://assets/valve.svg"
 		},
