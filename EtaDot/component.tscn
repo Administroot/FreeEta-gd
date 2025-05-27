@@ -36,7 +36,6 @@ offset_left = -25.0
 offset_top = -25.0
 offset_right = 25.0
 offset_bottom = 25.0
-mouse_filter = 2
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_ykgni")
 

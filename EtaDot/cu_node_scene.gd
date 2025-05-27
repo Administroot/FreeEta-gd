@@ -2,10 +2,13 @@ extends Panel
 
 @export var component: Component
 
+# ----- Structure -----
 # NodeName: String
 # NodeType: String
 # <Short Desc>
 # Reliability: float
+# Unreliability: float
+# ---------------------
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# FIXME: Priorize `textEdit` and `OptionButton`
