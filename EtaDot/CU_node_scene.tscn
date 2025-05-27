@@ -22,6 +22,10 @@ expand_margin_bottom = 20.0
 
 [node name="CuNodeScene" type="Panel"]
 custom_minimum_size = Vector2(300, 150)
+offset_right = 300.0
+offset_bottom = 150.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 tooltip_text = "Info"
 theme_override_styles/panel = SubResource("StyleBoxFlat_1te4q")
 script = ExtResource("1_l8sbo")
@@ -78,13 +82,11 @@ custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
 [node name="ShowDesc" type="RichTextLabel" parent="VBox"]
-custom_minimum_size = Vector2(150, 25)
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 theme = ExtResource("2_l2mki")
 bbcode_enabled = true
 text = "Short description of this node."
-fit_content = true
-scroll_active = false
 scroll_following = true
 autowrap_mode = 2
 
