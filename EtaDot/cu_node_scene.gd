@@ -15,16 +15,22 @@ func _ready() -> void:
 	# NodeName
 	$"VBox/Grid1/NameEdit".text = component.node_name
 	# NodeTypes
+	var selection = $"VBox/Grid1/TypeSelection"
 	for typename in GlobalData.nodetypes_data.get_all_typenames():
 		if typename != "Initial":
-			$VBox/Grid1/OptionButton.add_item(typename)
+			selection.add_item(typename)
+	## Initially select correspondent item
+	for typeidx in range(selection.item_count):
+		if selection.get_item_text(typeidx) == component.node_type:
+			selection.select(typeidx)
+			break
 	# Short Description
-	_on_option_button_item_selected($VBox/Grid1/OptionButton.selected)
+	_on_option_button_item_selected(selection.selected)
 	# Reliability
 	$"VBox/Grid2/ReliEdit".text = str(component.reliability)
 
 func _on_option_button_item_selected(index: int) -> void:
-	var typename = $VBox/Grid1/OptionButton.get_item_text(index)
+	var typename = $VBox/Grid1/TypeSelection.get_item_text(index)
 	var showdesc = $VBox/ShowDesc
 	showdesc.text = GlobalData.nodetypes_data.get_type_by_name(typename).short_desc
 
@@ -62,4 +68,3 @@ func _on_tree_exited() -> void:
 	# Sync with `GlobalData`
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
-	# GlobalData.components_data.print_all_members("Sync with `GlobalData`")

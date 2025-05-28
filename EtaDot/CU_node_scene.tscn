@@ -82,7 +82,7 @@ scroll_following = true
 autowrap_mode = 2
 vertical_alignment = 1
 
-[node name="OptionButton" type="OptionButton" parent="VBox/Grid1"]
+[node name="TypeSelection" type="OptionButton" parent="VBox/Grid1"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -144,6 +144,6 @@ shortcut_keys_enabled = false
 scroll_fit_content_height = true
 
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
-[connection signal="item_selected" from="VBox/Grid1/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="VBox/Grid1/TypeSelection" to="." method="_on_option_button_item_selected"]
 [connection signal="text_changed" from="VBox/Grid2/ReliEdit" to="." method="_on_reli_edit_text_changed"]
 [connection signal="text_changed" from="VBox/Grid2/FailEdit" to="." method="_on_fail_edit_text_changed"]
