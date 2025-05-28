@@ -27,3 +27,28 @@ func _on_option_button_item_selected(index: int) -> void:
 	var typename = $VBox/Grid1/OptionButton.get_item_text(index)
 	var showdesc = $VBox/ShowDesc
 	showdesc.text = GlobalData.nodetypes_data.get_type_by_name(typename).short_desc
+
+
+#region Sync Reli & Fail
+func _update_values(source_edit: Node, target_edit: Node, is_reliability: bool) -> void:
+	var text = source_edit.text
+	if text.is_valid_float():
+		var value = float(text)
+		if is_valid_value(value):
+			component.reliability = value if is_reliability else 1 - value
+			target_edit.text = str(1 - value)
+		else:
+			target_edit.text = "Invalid data"
+	else:
+		target_edit.text = "Invalid data"
+	# LogUtil.info("%s updated: %s" % ["Reliability" if is_reliability else "Failure", text])
+
+func _on_reli_edit_text_changed() -> void:
+	_update_values($VBox/Grid2/ReliEdit, $VBox/Grid2/FailEdit, true)
+
+func _on_fail_edit_text_changed() -> void:
+	_update_values($VBox/Grid2/FailEdit, $VBox/Grid2/ReliEdit, false)
+
+func is_valid_value(value: float) -> bool:
+	return value > 0.0 and value <= 1.0
+#endregion
