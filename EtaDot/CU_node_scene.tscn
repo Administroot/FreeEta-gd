@@ -143,6 +143,7 @@ context_menu_enabled = false
 shortcut_keys_enabled = false
 scroll_fit_content_height = true
 
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
 [connection signal="item_selected" from="VBox/Grid1/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="text_changed" from="VBox/Grid2/ReliEdit" to="." method="_on_reli_edit_text_changed"]
 [connection signal="text_changed" from="VBox/Grid2/FailEdit" to="." method="_on_fail_edit_text_changed"]

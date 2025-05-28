@@ -52,3 +52,14 @@ func _on_fail_edit_text_changed() -> void:
 func is_valid_value(value: float) -> bool:
 	return value > 0.0 and value <= 1.0
 #endregion
+
+
+func _on_tree_exited() -> void:
+	# Check valid data
+	# FIXME: Make it takes effect.
+	if $VBox/Grid2/ReliEdit.text.is_valid_float() == false or $VBox/Grid2/FailEdit.text.is_valid_float() == false:
+		LogUtil.error_dialog($".","[color=white]Reliability / Failure [/color] invalid!")
+	# Sync with `GlobalData`
+	GlobalData.components_data.update_component(component)
+	GlobalData.save_components()
+	# GlobalData.components_data.print_all_members("Sync with `GlobalData`")

@@ -22,6 +22,15 @@ func get_component_by_nodeid(node_id: int) -> Component:
             return components[index]
     return null
 
+func update_component(component: Component) -> void:
+    for index in range(len(components)):
+        if components[index].node_id == component.node_id:
+            # Update old node
+            components[index] = component
+            return
+    # Append new node
+    components.append(component)
+
 func print_all_members(components_name: String) -> void:
     LogUtil.info("-".repeat(50))
     LogUtil.info("%s includes:" % components_name)
