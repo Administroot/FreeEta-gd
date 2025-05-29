@@ -17,12 +17,6 @@ func set_texture(picture: String) -> void:
 	$Button.size = size
 	$Button.position = - size / 2.
 
-func _on_mouse_entered() -> void:
-	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
-
-func _on_mouse_exited() -> void:
-	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
-
 ## While pressing MOUSE_BUTTON_LEFT and dragging: dragging
 ## While pressing MOUSE_BUTTON_RIGHT: show node statics
 ## While pressing ENTER: create a brother bode
