@@ -134,11 +134,13 @@ func on_eta_button_toggled() -> void:
 func on_code_button_toggled() -> void:
 	pass
 
-func _input(event):
-	if event.is_action_pressed("ui_accept"):
-		var new_node = load("res://component.tscn").instantiate()
-		new_node.position = get_viewport().get_mouse_position()
-		add_child(new_node)
+# func _input(event):
+# 	# Create a `Component`
+# 	if event.is_action_pressed("ui_accept"):
+# 		# `Component`(apposition)
+# 		var new_node = load("res://component.tscn").instantiate()
+# 		new_node.position = get_viewport().get_mouse_position()
+# 		add_child(new_node)
 #endregion
 
 #region Debugging

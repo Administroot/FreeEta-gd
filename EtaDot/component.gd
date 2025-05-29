@@ -8,6 +8,7 @@ var panel: Node = null
 # var nodetype = component.get_nodetype_by_component()
 
 func _ready() -> void:
+	component.printall()
 	set_texture(component.get_nodetype_by_component().sprite_path)
 
 func set_texture(picture: String) -> void:
@@ -57,4 +58,30 @@ func _on_right_button_pressed() -> void:
 
 func _on_button_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		# Show panel
 		_on_right_button_pressed()
+	elif event is InputEventKey and event.keycode == KEY_ENTER and event.pressed:
+		# Create a `Component` (apposition)
+		create_component_by_panel(true)
+		LogUtil.error("Enter key pressed while hovering over button")
+	elif event is InputEventKey and event.keycode == KEY_TAB and event.pressed:
+		LogUtil.error("Tab key pressed while hovering over button")
+
+# `mode`(bool): `True` for Apposition ; `False` for tadem
+func create_component_by_panel(mode: bool) -> void:
+	if not panel:
+		panel = load("res://CU_node_scene.tscn").instantiate()
+	else :
+		return
+	var pos: Vector2
+	if mode:
+		# `True` for Apposition
+		pos = get_parent().global_position + Vector2(-0.5 * size.x - 0.25 * panel.size.x, 0.5 * size.y + 0.25 * panel.size.y)
+	else :
+		# `False` for tadem
+		pos = get_parent().global_position + Vector2(0.5 * size.x + 0.25 * panel.size.x, -0.5 * size.y - 0.25 * panel.size.y)
+	panel.component = component
+	panel.position = pos
+	panel.z_index = 5
+	add_child(panel)
+	await panel.tree_exited
