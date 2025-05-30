@@ -80,8 +80,7 @@ func create_component_by_panel(mode: bool) -> void:
 		# `True` for Apposition
 		pos = get_parent().global_position + Vector2(-0.5 * size.x - 0.25 * panel.size.x, 0.5 * size.y + 0.25 * panel.size.y)
 		var new_comp = Component.new()
-		# TODO: Unique `node_id`
-		new_comp.node_id = 255
+		new_comp.node_id = get_instance_id()
 		# TODO: Group function
 		new_comp.prev_node = component.prev_node
 		panel.component = new_comp
@@ -89,8 +88,7 @@ func create_component_by_panel(mode: bool) -> void:
 		# `False` for tadem
 		pos = get_parent().global_position + Vector2(0.5 * size.x + 0.25 * panel.size.x, -0.5 * size.y - 0.25 * panel.size.y)
 		var new_comp = Component.new()
-		# TODO: Unique `node_id`
-		new_comp.node_id = 255
+		new_comp.node_id = get_instance_id()
 		# TODO: Group function
 		new_comp.prev_node = [component.node_id]
 		panel.component = new_comp
