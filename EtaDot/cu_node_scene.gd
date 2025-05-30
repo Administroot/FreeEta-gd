@@ -67,6 +67,9 @@ func _on_confirm_button_pressed() -> void:
 	if $VBox/Grid2/ReliEdit.text.is_valid_float() == false or $VBox/Grid2/FailEdit.text.is_valid_float() == false:
 		LogUtil.error_dialog($".","[color=white]Reliability / Failure [/color] invalid!")
 	# Update `Component` (Except reliability)
+	component.node_name = $"VBox/Grid1/NameEdit".text
+	var option_button = $"VBox/Grid1/TypeSelection"
+	component.node_type = option_button.get_item_text(option_button.selected)
 	# Sync with `GlobalData`
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
