@@ -60,7 +60,7 @@ func is_valid_value(value: float) -> bool:
 #endregion
 
 
-func _on_tree_exited() -> void:
+func _on_confirm_button_pressed() -> void:
 	# Check valid data
 	# FIXME: Make it takes effect.
 	if $VBox/Grid2/ReliEdit.text.is_valid_float() == false or $VBox/Grid2/FailEdit.text.is_valid_float() == false:
@@ -68,3 +68,8 @@ func _on_tree_exited() -> void:
 	# Sync with `GlobalData`
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
+	queue_free()
+
+
+func _on_cancel_button_pressed() -> void:
+	queue_free()

@@ -8,8 +8,10 @@ var panel: Node = null
 # var nodetype = component.get_nodetype_by_component()
 
 func _ready() -> void:
-	component.printall()
-	set_texture(component.get_nodetype_by_component().sprite_path)
+	# component.printall()
+	var res = component.get_nodetype_by_component()
+	if res:
+		set_texture(res.sprite_path)
 
 func set_texture(picture: String) -> void:
 	$Photo.texture = load(picture)
@@ -63,9 +65,9 @@ func _on_button_gui_input(event: InputEvent) -> void:
 	elif event is InputEventKey and event.keycode == KEY_ENTER and event.pressed:
 		# Create a `Component` (apposition)
 		create_component_by_panel(true)
-		LogUtil.error("Enter key pressed while hovering over button")
 	elif event is InputEventKey and event.keycode == KEY_TAB and event.pressed:
-		LogUtil.error("Tab key pressed while hovering over button")
+		# Create a `Component` (tadem)
+		create_component_by_panel(false)
 
 # `mode`(bool): `True` for Apposition ; `False` for tadem
 func create_component_by_panel(mode: bool) -> void:
@@ -77,10 +79,21 @@ func create_component_by_panel(mode: bool) -> void:
 	if mode:
 		# `True` for Apposition
 		pos = get_parent().global_position + Vector2(-0.5 * size.x - 0.25 * panel.size.x, 0.5 * size.y + 0.25 * panel.size.y)
+		var new_comp = Component.new()
+		# TODO: Unique `node_id`
+		new_comp.node_id = 255
+		# TODO: Group function
+		new_comp.prev_node = component.prev_node
+		panel.component = new_comp
 	else :
 		# `False` for tadem
 		pos = get_parent().global_position + Vector2(0.5 * size.x + 0.25 * panel.size.x, -0.5 * size.y - 0.25 * panel.size.y)
-	panel.component = component
+		var new_comp = Component.new()
+		# TODO: Unique `node_id`
+		new_comp.node_id = 255
+		# TODO: Group function
+		new_comp.prev_node = [component.node_id]
+		panel.component = new_comp
 	panel.position = pos
 	panel.z_index = 5
 	add_child(panel)
