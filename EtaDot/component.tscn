@@ -25,6 +25,7 @@ Button/styles/pressed = SubResource("StyleBoxFlat_ykgni")
 size = Vector2(50, 50)
 
 [node name="Component" type="RigidBody2D"]
+texture_filter = 2
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_8xu3x")
 gravity_scale = 0.0

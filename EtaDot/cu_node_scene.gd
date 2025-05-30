@@ -26,8 +26,9 @@ func _ready() -> void:
 			break
 	# Short Description
 	_on_option_button_item_selected(selection.selected)
-	# Reliability
+	# Reliability and Failure
 	$"VBox/Grid2/ReliEdit".text = str(component.reliability)
+	$"VBox/Grid2/FailEdit".text = str(1-component.reliability)
 
 func _on_option_button_item_selected(index: int) -> void:
 	var typename = $VBox/Grid1/TypeSelection.get_item_text(index)
@@ -65,6 +66,7 @@ func _on_confirm_button_pressed() -> void:
 	# FIXME: Make it takes effect.
 	if $VBox/Grid2/ReliEdit.text.is_valid_float() == false or $VBox/Grid2/FailEdit.text.is_valid_float() == false:
 		LogUtil.error_dialog($".","[color=white]Reliability / Failure [/color] invalid!")
+	# Update `Component` (Except reliability)
 	# Sync with `GlobalData`
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
