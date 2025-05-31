@@ -63,9 +63,9 @@ func is_valid_value(value: float) -> bool:
 
 func _on_confirm_button_pressed() -> void:
 	# Check valid data
-	# FIXME: Make it takes effect.
 	if $VBox/Grid2/ReliEdit.text.is_valid_float() == false or $VBox/Grid2/FailEdit.text.is_valid_float() == false:
-		LogUtil.error_dialog($".","[color=white]Reliability / Failure [/color] invalid!")
+		LogUtil.error_dialog(get_parent().get_parent(),"[color=yellow]Reliability / Failure [/color] invalid!")
+		return
 	# Update `Component` (Except reliability)
 	component.node_name = $"VBox/Grid1/NameEdit".text
 	var option_button = $"VBox/Grid1/TypeSelection"
