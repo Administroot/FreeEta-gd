@@ -41,6 +41,7 @@ script = ExtResource("1_l8sbo")
 
 [node name="VBox" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(300, 0)
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/separation = 10

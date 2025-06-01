@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 #region Boot Up
 func _init() -> void:
@@ -142,6 +142,27 @@ func on_code_button_toggled() -> void:
 # 		new_node.position = get_viewport().get_mouse_position()
 # 		add_child(new_node)
 #endregion
+
+#region Multiple Selection
+var selection_mode = false
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.keycode == KEY_CTRL and event.pressed:
+		selection_mode = true
+		$"SelectedLabel".text = "NotSelected"
+	elif event is InputEventMouseButton and selection_mode == true:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+			print("Button Index = ", event.button_index)
+			$"SelectedLabel".text = "Selected"
+	elif event is InputEventMouseMotion:
+		$"SelectedLabel".text = "NotSelected"
+		pass
+	else :
+		$"SelectedLabel".text = "NotSelected"
+		selection_mode = false
+
+	$"SelectionLabel".text = "selection_mode = {status}".format({"status": selection_mode})
+#endregion 
 
 #region Debugging
 func print_adjacency_list(dict: Dictionary) -> String:
