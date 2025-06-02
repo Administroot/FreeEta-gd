@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://yfu4xjhobuqb"]
+[gd_scene load_steps=9 format=3 uid="uid://yfu4xjhobuqb"]
 
 [ext_resource type="Script" uid="uid://dlfg5q3l2g40" path="res://component.gd" id="1_vwh44"]
 
@@ -21,6 +21,10 @@ Button/styles/hover = SubResource("StyleBoxFlat_2vvs8")
 Button/styles/normal = SubResource("StyleBoxEmpty_2vvs8")
 Button/styles/pressed = SubResource("StyleBoxFlat_ykgni")
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_vwh44"]
+resource_name = "Comp_Button"
+allow_unpress = true
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2vvs8"]
 size = Vector2(50, 50)
 
@@ -39,6 +43,8 @@ offset_right = 25.0
 offset_bottom = 25.0
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_ykgni")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_vwh44")
 
 [node name="Photo" type="Sprite2D" parent="."]
 

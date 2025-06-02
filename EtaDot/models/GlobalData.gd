@@ -2,6 +2,7 @@ extends Node
 
 #region Components
 var components_data: Components
+var selected_components := Components.new()
 
 ## JSON Serialize
 func get_components() -> Components:

@@ -81,7 +81,7 @@ func create_component_by_panel(mode: bool) -> void:
 		pos = get_parent().global_position + Vector2(-0.5 * size.x - 0.25 * panel.size.x, 0.5 * size.y + 0.25 * panel.size.y)
 		var new_comp = Component.new()
 		new_comp.node_id = get_instance_id()
-		# TODO: Group function
+		# TODO: Customize `prev_node`
 		new_comp.prev_node = component.prev_node
 		panel.component = new_comp
 	else :
@@ -89,7 +89,7 @@ func create_component_by_panel(mode: bool) -> void:
 		pos = get_parent().global_position + Vector2(0.5 * size.x + 0.25 * panel.size.x, -0.5 * size.y - 0.25 * panel.size.y)
 		var new_comp = Component.new()
 		new_comp.node_id = get_instance_id()
-		# TODO: Group function
+		# TODO: Customize `prev_node`
 		new_comp.prev_node = [component.node_id]
 		panel.component = new_comp
 	panel.position = pos

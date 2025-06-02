@@ -31,6 +31,9 @@ func update_component(component: Component) -> void:
     # Append new node
     components.append(component)
 
+func clear_all_components() -> void:
+    components.clear()
+
 func print_all_members(components_name: String) -> void:
     LogUtil.info("-".repeat(50))
     LogUtil.info("%s includes:" % components_name)

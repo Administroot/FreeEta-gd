@@ -31,6 +31,7 @@ text = "selection_mode = false"
 horizontal_alignment = 1
 
 [node name="SelectedLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = -23.0
 offset_top = 346.0
 offset_right = 304.0

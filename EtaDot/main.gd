@@ -94,7 +94,6 @@ func find_root_nodes(graph: Dictionary) -> Array:
 func visualize_node(node_id: int, graph: Dictionary, pos: Vector2, visited: Dictionary) -> void:
 	if node_id in visited:
 		return
-		
 	visited[node_id] = true
 	
 	# Create component node
@@ -133,14 +132,6 @@ func on_eta_button_toggled() -> void:
 #region Code
 func on_code_button_toggled() -> void:
 	pass
-
-# func _input(event):
-# 	# Create a `Component`
-# 	if event.is_action_pressed("ui_accept"):
-# 		# `Component`(apposition)
-# 		var new_node = load("res://component.tscn").instantiate()
-# 		new_node.position = get_viewport().get_mouse_position()
-# 		add_child(new_node)
 #endregion
 
 #region Multiple Selection
@@ -151,17 +142,40 @@ func _input(event: InputEvent) -> void:
 		selection_mode = true
 		$"SelectedLabel".text = "NotSelected"
 	elif event is InputEventMouseButton and selection_mode == true:
+		# CTRL + LEFT_CLICK Selected
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-			print("Button Index = ", event.button_index)
+			multiple_selection_mode(event)
 			$"SelectedLabel".text = "Selected"
 	elif event is InputEventMouseMotion:
 		$"SelectedLabel".text = "NotSelected"
 		pass
 	else :
+		single_selection_mode()
 		$"SelectedLabel".text = "NotSelected"
 		selection_mode = false
 
 	$"SelectionLabel".text = "selection_mode = {status}".format({"status": selection_mode})
+
+func multiple_selection_mode(event: InputEvent) -> void:
+	var clicked_pos = event.position
+	# TODO: Deliver `selected_components` to `component.gd`
+	for comp_scene in $CustomNodes.get_children():
+		var button = comp_scene.get_node("Button")
+		if button.get_rect().has_point(clicked_pos - comp_scene.position):
+			if button:
+				button.toggle_mode = true
+				# Add component to group when selected
+				GlobalData.selected_components.add_component(comp_scene.component)
+
+func single_selection_mode() -> void:
+	# Clear status
+	for comp_scene in $CustomNodes.get_children():
+		var button = comp_scene.get_node("Button")
+		if button:
+			button.toggle_mode = false
+			# Clear components and add component when selected
+			GlobalData.selected_components.clear_all_components()
+			# GlobalData.selected_components.add_component(comp_scene.component)
 #endregion 
 
 #region Debugging
