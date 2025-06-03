@@ -66,7 +66,10 @@ func _on_confirm_button_pressed() -> void:
 	if $VBox/Grid2/ReliEdit.text.is_valid_float() == false or $VBox/Grid2/FailEdit.text.is_valid_float() == false:
 		LogUtil.error_dialog(get_parent().get_parent(),"[color=yellow]Reliability / Failure [/color] invalid!")
 		return
-	# TODO: Check null
+	# Check `NULL` value
+	if $VBox/Grid1/NameEdit.text == "" or $VBox/Grid2/ReliEdit.text == "" or $VBox/Grid2/FailEdit.text == "":
+		LogUtil.error_dialog(get_parent().get_parent(), "[color=red]NULL[/color] value exists, please fill in!")
+		return
 	# Update `Component` (Except reliability)
 	component.node_name = $"VBox/Grid1/NameEdit".text
 	var option_button = $"VBox/Grid1/TypeSelection"
