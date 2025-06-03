@@ -34,6 +34,12 @@ func update_component(component: Component) -> void:
 func clear_all_components() -> void:
     components.clear()
 
+func get_components_id() -> Array[int]:
+    var ids: Array[int] = []
+    for component in components:
+        ids.append(component.node_id)
+    return ids
+
 func print_all_members(components_name: String) -> void:
     LogUtil.info("-".repeat(50))
     LogUtil.info("%s includes:" % components_name)

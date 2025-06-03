@@ -161,7 +161,6 @@ func _input(event: InputEvent) -> void:
 
 func multiple_selection_mode(event: InputEvent) -> void:
 	var clicked_pos = event.position
-	# TODO: Deliver `selected_components` to `component.gd`
 	for comp_scene in $CustomNodes.get_children():
 		var button = comp_scene.get_node("Button")
 		if button.get_rect().has_point(clicked_pos - comp_scene.position):

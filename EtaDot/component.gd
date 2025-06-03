@@ -5,7 +5,6 @@ extends RigidBody2D
 var dragging := false
 var drag_offset := Vector2()
 var panel: Node = null
-# var nodetype = component.get_nodetype_by_component()
 
 func _ready() -> void:
 	# component.printall()
@@ -76,18 +75,12 @@ func create_component_by_panel(mode: bool) -> void:
 	else :
 		return
 	var pos: Vector2
-	# selection mode == true, single selection mode;
-	# selection mode == false, multiple selection mode
 	var selection_mode = GlobalData.selected_components.components.is_empty()
-	# TODO: Read `selected_components` from global data and classify discussion.
-	GlobalData.selected_components.print_all_members("Selection Mode")
-	print("selection mode == ", selection_mode)
 	if mode:
 		# `True` for Apposition
 		pos = get_parent().global_position + Vector2(-0.5 * size.x - 0.25 * panel.size.x, 0.5 * size.y + 0.25 * panel.size.y)
 		var new_comp = Component.new()
 		new_comp.node_id = get_instance_id()
-		# TODO: Customize `prev_node`
 		new_comp.prev_node = component.prev_node
 		panel.component = new_comp
 	else :
@@ -95,8 +88,14 @@ func create_component_by_panel(mode: bool) -> void:
 		pos = get_parent().global_position + Vector2(0.5 * size.x + 0.25 * panel.size.x, -0.5 * size.y - 0.25 * panel.size.y)
 		var new_comp = Component.new()
 		new_comp.node_id = get_instance_id()
-		# TODO: Customize `prev_node`
-		new_comp.prev_node = [component.node_id]
+		# selection mode == true, single selection mode;
+		# selection mode == false, multiple selection mode
+		if selection_mode:
+			# TODO: Customize `prev_node`
+			new_comp.prev_node = [component.node_id]
+		else :
+			# TODO: Customize `prev_node`
+			new_comp.prev_node = GlobalData.selected_components.get_components_id()
 		panel.component = new_comp
 	panel.position = pos
 	panel.z_index = 5
