@@ -76,6 +76,12 @@ func create_component_by_panel(mode: bool) -> void:
 	else :
 		return
 	var pos: Vector2
+	# selection mode == true, single selection mode;
+	# selection mode == false, multiple selection mode
+	var selection_mode = GlobalData.selected_components.components.is_empty()
+	# TODO: Read `selected_components` from global data and classify discussion.
+	GlobalData.selected_components.print_all_members("Selection Mode")
+	print("selection mode == ", selection_mode)
 	if mode:
 		# `True` for Apposition
 		pos = get_parent().global_position + Vector2(-0.5 * size.x - 0.25 * panel.size.x, 0.5 * size.y + 0.25 * panel.size.y)

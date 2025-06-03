@@ -141,6 +141,9 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.keycode == KEY_CTRL and event.pressed:
 		selection_mode = true
 		$"SelectedLabel".text = "NotSelected"
+	elif event is InputEventKey and event.pressed:
+		if event.keycode == KEY_ENTER or event.keycode == KEY_TAB:
+			pass
 	elif event is InputEventMouseButton and selection_mode == true:
 		# CTRL + LEFT_CLICK Selected
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
