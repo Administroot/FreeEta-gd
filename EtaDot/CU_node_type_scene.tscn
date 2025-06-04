@@ -105,7 +105,6 @@ text = "❎Cancel"
 title = "Open a File"
 initial_position = 2
 size = Vector2i(1210, 748)
-visible = true
 unresizable = true
 always_on_top = true
 popup_window = true

@@ -1,7 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dksjj5kiaw8v2"]
+[gd_scene load_steps=10 format=3 uid="uid://dksjj5kiaw8v2"]
 
 [ext_resource type="Script" uid="uid://dp2lrb383s6x6" path="res://cu_node_scene.gd" id="1_l8sbo"]
 [ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="2_l2mki"]
+[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="3_1te4q"]
+[ext_resource type="Texture2D" uid="uid://cbqil404uays8" path="res://assets/delete.svg" id="4_g66il"]
+[ext_resource type="Texture2D" uid="uid://i2v27av08ql5" path="res://assets/add.svg" id="5_ibphl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1te4q"]
 resource_local_to_scene = true
@@ -32,9 +35,7 @@ bg_color = Color(0.25098, 0.25098, 0.25098, 1)
 [node name="CuNodeScene" type="Panel"]
 custom_minimum_size = Vector2(300, 150)
 offset_right = 300.0
-offset_bottom = 251.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
+offset_bottom = 348.0
 tooltip_text = "Info"
 theme_override_styles/panel = SubResource("StyleBoxFlat_1te4q")
 script = ExtResource("1_l8sbo")
@@ -151,6 +152,41 @@ placeholder_text = "Press <ENTER> to commit"
 context_menu_enabled = false
 shortcut_keys_enabled = false
 scroll_fit_content_height = true
+
+[node name="PrevNode" type="RichTextLabel" parent="VBox/Grid2"]
+custom_minimum_size = Vector2(150, 25)
+layout_mode = 2
+theme = ExtResource("2_l2mki")
+bbcode_enabled = true
+text = "[b][color=pink]PrevNode[/color][/b]"
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 2
+vertical_alignment = 1
+
+[node name="NodeVBox" type="VBoxContainer" parent="VBox/Grid2"]
+layout_mode = 2
+
+[node name="NodeGrid" type="GridContainer" parent="VBox/Grid2/NodeVBox"]
+layout_mode = 2
+columns = 2
+
+[node name="NodeSelection" type="OptionButton" parent="VBox/Grid2/NodeVBox/NodeGrid"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DelPrevButton" type="Button" parent="VBox/Grid2/NodeVBox/NodeGrid"]
+layout_mode = 2
+theme = ExtResource("3_1te4q")
+icon = ExtResource("4_g66il")
+
+[node name="AddPrevButton" type="Button" parent="VBox/Grid2/NodeVBox"]
+layout_mode = 2
+theme = ExtResource("3_1te4q")
+icon = ExtResource("5_ibphl")
+icon_alignment = 1
 
 [node name="Grid3" type="GridContainer" parent="VBox"]
 layout_mode = 2
