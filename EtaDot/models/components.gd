@@ -40,6 +40,12 @@ func get_components_id() -> Array[int]:
         ids.append(component.node_id)
     return ids
 
+func get_all_component_names() -> Array[String]:
+    var names: Array[String] = []
+    for component in components:
+        names.append(component.node_name)
+    return names
+
 func print_all_members(components_name: String) -> void:
     LogUtil.info("-".repeat(50))
     LogUtil.info("%s includes:" % components_name)

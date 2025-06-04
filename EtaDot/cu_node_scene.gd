@@ -29,6 +29,21 @@ func _ready() -> void:
 	# Reliability and Failure
 	$"VBox/Grid2/ReliEdit".text = str(component.reliability)
 	$"VBox/Grid2/FailEdit".text = str(1-component.reliability)
+	# Prev Node
+	var node_grid = $"VBox/Grid2/NodeVBox/NodeGrid"
+	var node_selection = node_grid.get_node("NodeSelection")
+	var del_prev_button = node_grid.get_node("DelPrevButton")
+	for num in len(component.prev_node):
+		var new_selection = node_selection.duplicate()
+		new_selection.show()
+		for node_name in GlobalData.components_data.get_all_component_names():
+			new_selection.add_item(node_name)
+		node_grid.add_child(new_selection)
+		var new_del_button = del_prev_button.duplicate()
+		new_del_button.show()
+		node_grid.add_child(new_del_button)
+	remove_child(node_selection)
+	remove_child(del_prev_button)
 
 func _on_option_button_item_selected(index: int) -> void:
 	var typename = $VBox/Grid1/TypeSelection.get_item_text(index)

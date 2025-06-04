@@ -173,11 +173,13 @@ layout_mode = 2
 columns = 2
 
 [node name="NodeSelection" type="OptionButton" parent="VBox/Grid2/NodeVBox/NodeGrid"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="DelPrevButton" type="Button" parent="VBox/Grid2/NodeVBox/NodeGrid"]
+visible = false
 layout_mode = 2
 theme = ExtResource("3_1te4q")
 icon = ExtResource("4_g66il")
