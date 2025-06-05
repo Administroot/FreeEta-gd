@@ -39,8 +39,9 @@ func _ready() -> void:
 		var new_selection = node_selection.duplicate()
 		new_selection.show()
 		for node_name in GlobalData.components_data.get_all_component_names():
-			new_selection.add_item(node_name)
-			# FIXME: Remove itself `node_id`
+			# Neglect itself `node_id`
+			if component.node_name != node_name:
+				new_selection.add_item(node_name)
 		node_grid.add_child(new_selection)
 		all_node_selections.append(new_selection)
 		var new_del_button = del_prev_button.duplicate()
@@ -56,7 +57,6 @@ func _ready() -> void:
 			LogUtil.error_dialog(get_parent().get_parent(),"Node id [color=red]%s[/color] Not Found!" % node_id)
 		else:
 			all_node_selections[i].select(idx)
-	print("ALL NODE SELECTIONS:", all_node_selections)
 
 func _on_option_button_item_selected(index: int) -> void:
 	var typename = $VBox/Grid1/TypeSelection.get_item_text(index)
