@@ -1,6 +1,7 @@
 extends Panel
 
 @export var component: Component
+var all_node_selections = []
 
 # ----- Structure -----
 # NodeName: String
@@ -34,12 +35,12 @@ func _ready() -> void:
 	var node_grid = $"VBox/Grid2/NodeVBox/NodeGrid"
 	var node_selection = node_grid.get_node("NodeSelection")
 	var del_prev_button = node_grid.get_node("DelPrevButton")
-	var all_node_selections = []
 	for num in len(component.prev_node):
 		var new_selection = node_selection.duplicate()
 		new_selection.show()
 		for node_name in GlobalData.components_data.get_all_component_names():
 			new_selection.add_item(node_name)
+			# FIXME: Remove itself `node_id`
 		node_grid.add_child(new_selection)
 		all_node_selections.append(new_selection)
 		var new_del_button = del_prev_button.duplicate()
@@ -48,13 +49,14 @@ func _ready() -> void:
 	remove_child(node_selection)
 	remove_child(del_prev_button)
 	## Initially select correspondening `Prev Node`
-	for node_id in component.prev_node:
+	for i in range(len(all_node_selections)):
+		var node_id = component.prev_node[i]
 		var idx = GlobalData.components_data.get_components_id().find(node_id)
 		if idx < 0:
 			LogUtil.error_dialog(get_parent().get_parent(),"Node id [color=red]%s[/color] Not Found!" % node_id)
-		else :
-			var new_selection = all_node_selections.pop_front()
-			new_selection.select(idx)
+		else:
+			all_node_selections[i].select(idx)
+	print("ALL NODE SELECTIONS:", all_node_selections)
 
 func _on_option_button_item_selected(index: int) -> void:
 	var typename = $VBox/Grid1/TypeSelection.get_item_text(index)
@@ -100,8 +102,10 @@ func _on_confirm_button_pressed() -> void:
 	component.node_name = $"VBox/Grid1/NameEdit".text
 	var option_button = $"VBox/Grid1/TypeSelection"
 	component.node_type = option_button.get_item_text(option_button.selected)
-	# TODO: Update `Prev Node`
-	
+	# Update `Prev Node`
+	component.prev_node.clear()
+	for nodeselection in all_node_selections:
+		component.prev_node.append(nodeselection.selected)
 	# Sync with `GlobalData`
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
