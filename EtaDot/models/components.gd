@@ -22,6 +22,12 @@ func get_component_by_nodeid(node_id: int) -> Component:
             return components[index]
     return null
 
+func get_name_by_nodeid(node_id: int) -> String:
+    for component in components:
+        if component.node_id == node_id:
+            return component.node_name
+    return ""
+
 func update_component(component: Component) -> void:
     for index in range(len(components)):
         if components[index].node_id == component.node_id:

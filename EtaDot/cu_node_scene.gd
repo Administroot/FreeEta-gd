@@ -19,7 +19,7 @@ func _ready() -> void:
 	for typename in GlobalData.nodetypes_data.get_all_typenames():
 		if typename != "Initial":
 			selection.add_item(typename)
-	## Initially select correspondent item
+	## Initially select correspondening item
 	for typeidx in range(selection.item_count):
 		if selection.get_item_text(typeidx) == component.node_type:
 			selection.select(typeidx)
@@ -30,20 +30,31 @@ func _ready() -> void:
 	$"VBox/Grid2/ReliEdit".text = str(component.reliability)
 	$"VBox/Grid2/FailEdit".text = str(1-component.reliability)
 	# Prev Node
+	## Create corresponding number of `Prev Node` blocks
 	var node_grid = $"VBox/Grid2/NodeVBox/NodeGrid"
 	var node_selection = node_grid.get_node("NodeSelection")
 	var del_prev_button = node_grid.get_node("DelPrevButton")
+	var all_node_selections = []
 	for num in len(component.prev_node):
 		var new_selection = node_selection.duplicate()
 		new_selection.show()
 		for node_name in GlobalData.components_data.get_all_component_names():
 			new_selection.add_item(node_name)
 		node_grid.add_child(new_selection)
+		all_node_selections.append(new_selection)
 		var new_del_button = del_prev_button.duplicate()
 		new_del_button.show()
 		node_grid.add_child(new_del_button)
 	remove_child(node_selection)
 	remove_child(del_prev_button)
+	## Initially select correspondening `Prev Node`
+	for node_id in component.prev_node:
+		var idx = GlobalData.components_data.get_components_id().find(node_id)
+		if idx < 0:
+			LogUtil.error_dialog(get_parent().get_parent(),"Node id [color=red]%s[/color] Not Found!" % node_id)
+		else :
+			var new_selection = all_node_selections.pop_front()
+			new_selection.select(idx)
 
 func _on_option_button_item_selected(index: int) -> void:
 	var typename = $VBox/Grid1/TypeSelection.get_item_text(index)
@@ -89,6 +100,8 @@ func _on_confirm_button_pressed() -> void:
 	component.node_name = $"VBox/Grid1/NameEdit".text
 	var option_button = $"VBox/Grid1/TypeSelection"
 	component.node_type = option_button.get_item_text(option_button.selected)
+	# TODO: Update `Prev Node`
+	
 	# Sync with `GlobalData`
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
@@ -97,3 +110,12 @@ func _on_confirm_button_pressed() -> void:
 
 func _on_cancel_button_pressed() -> void:
 	queue_free()
+
+
+# TODO: Delete a `Prev Node` relation
+func _on_del_prev_button_pressed() -> void:
+	pass # Replace with function body.
+
+# TODO: Add a `Prev Node` relation
+func _on_add_prev_button_pressed() -> void:
+	pass # Replace with function body.

@@ -216,5 +216,7 @@ text = "❌ Cancel"
 [connection signal="item_selected" from="VBox/Grid1/TypeSelection" to="." method="_on_option_button_item_selected"]
 [connection signal="text_changed" from="VBox/Grid2/ReliEdit" to="." method="_on_reli_edit_text_changed"]
 [connection signal="text_changed" from="VBox/Grid2/FailEdit" to="." method="_on_fail_edit_text_changed"]
+[connection signal="pressed" from="VBox/Grid2/NodeVBox/NodeGrid/DelPrevButton" to="." method="_on_del_prev_button_pressed"]
+[connection signal="pressed" from="VBox/Grid2/NodeVBox/AddPrevButton" to="." method="_on_add_prev_button_pressed"]
 [connection signal="pressed" from="VBox/Grid3/ConfirmButton" to="." method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="VBox/Grid3/CancelButton" to="." method="_on_cancel_button_pressed"]
