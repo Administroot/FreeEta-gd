@@ -2,6 +2,7 @@ extends Panel
 
 @export var component: Component
 var all_node_selections = []
+var all_del_prev_buttons = []
 
 # ----- Structure -----
 # NodeName: String
@@ -31,10 +32,10 @@ func _ready() -> void:
 	$"VBox/Grid2/ReliEdit".text = str(component.reliability)
 	$"VBox/Grid2/FailEdit".text = str(1-component.reliability)
 	# Prev Node
-	## Create corresponding number of `Prev Node` blocks
 	var node_grid = $"VBox/Grid2/NodeVBox/NodeGrid"
 	var node_selection = node_grid.get_node("NodeSelection")
 	var del_prev_button = node_grid.get_node("DelPrevButton")
+	## Create corresponding number of `Prev Node` blocks
 	for num in len(component.prev_node):
 		var new_selection = node_selection.duplicate()
 		new_selection.show()
@@ -47,6 +48,7 @@ func _ready() -> void:
 		var new_del_button = del_prev_button.duplicate()
 		new_del_button.show()
 		node_grid.add_child(new_del_button)
+		all_del_prev_buttons.append(new_del_button)
 	remove_child(node_selection)
 	remove_child(del_prev_button)
 	## Initially select correspondening `Prev Node`
@@ -116,9 +118,18 @@ func _on_cancel_button_pressed() -> void:
 	queue_free()
 
 
-# TODO: Delete a `Prev Node` relation
+# Delete a `Prev Node` relation
 func _on_del_prev_button_pressed() -> void:
-	pass # Replace with function body.
+	var seq = 0
+	for button in all_del_prev_buttons:
+		if button.is_pressed() == true:
+			LogUtil.info("Button %s Pressed!" % seq)
+			all_node_selections[seq].queue_free()
+			all_del_prev_buttons[seq].queue_free()
+			all_node_selections.remove_at(seq)
+			all_del_prev_buttons.remove_at(seq)
+			break
+		seq += 1
 
 # TODO: Add a `Prev Node` relation
 func _on_add_prev_button_pressed() -> void:
