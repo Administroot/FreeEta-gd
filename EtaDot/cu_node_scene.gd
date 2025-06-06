@@ -49,8 +49,6 @@ func _ready() -> void:
 		new_del_button.show()
 		node_grid.add_child(new_del_button)
 		all_del_prev_buttons.append(new_del_button)
-	remove_child(node_selection)
-	remove_child(del_prev_button)
 	## Initially select correspondening `Prev Node`
 	for i in range(len(all_node_selections)):
 		var node_id = component.prev_node[i]
@@ -108,6 +106,13 @@ func _on_confirm_button_pressed() -> void:
 	component.prev_node.clear()
 	for nodeselection in all_node_selections:
 		component.prev_node.append(nodeselection.selected)
+	## Check if there are any duplicates in `prev_node`
+	var seen_nodes = []
+	for node_id in component.prev_node:
+		if node_id in seen_nodes:
+			LogUtil.error_dialog(get_parent().get_parent(), "[color=red]Duplicated[/color] [color=pink]PrevNode[/color] are not allowed!")
+			return
+		seen_nodes.append(node_id)
 	# Sync with `GlobalData`
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
@@ -131,6 +136,20 @@ func _on_del_prev_button_pressed() -> void:
 			break
 		seq += 1
 
-# TODO: Add a `Prev Node` relation
+# Add a `Prev Node` relation
 func _on_add_prev_button_pressed() -> void:
-	pass # Replace with function body.
+	var node_grid = $"VBox/Grid2/NodeVBox/NodeGrid"
+	var node_selection = node_grid.get_node("NodeSelection")
+	var del_prev_button = node_grid.get_node("DelPrevButton")
+	var new_selection = node_selection.duplicate()
+	var new_del_button = del_prev_button.duplicate()
+	for node_name in GlobalData.components_data.get_all_component_names():
+		# Neglect itself `node_id`
+		if component.node_name != node_name:
+			new_selection.add_item(node_name)
+	new_selection.show()
+	new_del_button.show()
+	all_node_selections.append(new_selection)
+	all_del_prev_buttons.append(new_del_button)
+	node_grid.add_child(new_selection)
+	node_grid.add_child(new_del_button)
