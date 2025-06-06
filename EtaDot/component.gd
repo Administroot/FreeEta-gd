@@ -7,17 +7,22 @@ var drag_offset := Vector2()
 var panel: Node = null
 
 func _ready() -> void:
-	# component.printall()
 	var res = component.get_nodetype_by_component()
 	if res:
-		set_texture(res.sprite_path)
+		var pic_size = set_texture(res.sprite_path)
+		set_text(component.node_name, pic_size)
 
-func set_texture(picture: String) -> void:
+func set_texture(picture: String) -> Vector2:
 	$Photo.texture = load(picture)
 	size = $Photo.texture.get_size()
 	$CollisionShape.shape.size = size
 	$Button.size = size
 	$Button.position = - size / 2.
+	return size
+
+func set_text(text: String, pos: Vector2) -> void:
+	$NameLabel.text = text
+	$NameLabel.position = Vector2(- pos.x / 2. + $NameLabel.get_size().x / 2., pos.y / 2.)
 
 ## While pressing MOUSE_BUTTON_LEFT and dragging: dragging
 ## While pressing MOUSE_BUTTON_RIGHT: show node statics
