@@ -116,12 +116,12 @@ func _on_confirm_button_pressed() -> void:
 	# Sync with `GlobalData`
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
+	# TODO: Refresh GUI
 	queue_free()
 
 
 func _on_cancel_button_pressed() -> void:
 	queue_free()
-
 
 # Delete a `Prev Node` relation
 func _on_del_prev_button_pressed() -> void:
