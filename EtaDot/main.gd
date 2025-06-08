@@ -34,7 +34,7 @@ func _ready() -> void:
 #region View
 func on_view_button_toggled() -> void:
 	clean_components()
-	Algor.create_components($"CustomNodes")
+	Algor.tree_layout($"CustomNodes")
 
 func clean_components() -> void:
 	var custom_nodes = $"CustomNodes"
