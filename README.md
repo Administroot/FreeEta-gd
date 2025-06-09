@@ -1,11 +1,11 @@
 <div align="center">
 
-# ![LOGO](assets/logo.svg) FreeEta-gd
+# ![LOGO](raw/logo.svg) FreeEta-gd
 
 [![Crates.io](https://img.shields.io/crates/v/FreeEta.svg)](https://crates.io/crates/FreeEta)
 ![GitHub License](https://img.shields.io/github/license/Administroot/FreeEta)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Administroot/FreeEta/rust.yml)
-[![Made with Godot](https://godotengine.org/assets/logo_dark.svg)](https://github.com/godotengine/godot)
+![Made with Godot](https://github.com/godotengine/godot)
 
 A fast, elegant & free `Event Tree Analysis`(ETA) utility powered by 🤖Godot.
 
