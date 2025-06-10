@@ -34,7 +34,8 @@ func _ready() -> void:
 #region View
 func on_view_button_toggled() -> void:
 	clean_components()
-	Algor.tree_layout($"CustomNodes")
+	var scene = preload("res://CompTreeLayout.tscn").instantiate()
+	add_child(scene)
 
 func clean_components() -> void:
 	var custom_nodes = $"CustomNodes"

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbho8tfxtindy"]
+
+[ext_resource type="Script" uid="uid://c2p5dv0cj8hik" path="res://comp_tree_layout.gd" id="1_7lo4k"]
+
+[node name="CompTreeLayout" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_7lo4k")
+
+[node name="CompScenes" type="Node2D" parent="."]
