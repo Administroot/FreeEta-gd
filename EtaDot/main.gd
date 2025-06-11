@@ -21,7 +21,7 @@ func check_saves(saves_name: String) -> void:
 		target.close()
 #endregion
 
-#region CustomNodes
+#region TreeComps
 func _ready() -> void:
 	# Connect signals from scene `BottomSlide`
 	$"Scenes/BottomSlide".view_button_toggled.connect(on_view_button_toggled)
@@ -38,9 +38,9 @@ func on_view_button_toggled() -> void:
 	add_child(scene)
 
 func clean_components() -> void:
-	var custom_nodes = $"CustomNodes"
-	if custom_nodes:
-		for child in custom_nodes.get_children():
+	var tree_comps = $"TreeComps"
+	if tree_comps:
+		for child in tree_comps.get_children():
 			child.queue_free()
 #endregion
 
@@ -81,7 +81,7 @@ func _input(event: InputEvent) -> void:
 
 func multiple_selection_mode(event: InputEvent) -> void:
 	var clicked_pos = event.position
-	for comp_scene in $CustomNodes.get_children():
+	for comp_scene in $TreeComps.get_children():
 		var button = comp_scene.get_node("Button")
 		if button.get_rect().has_point(clicked_pos - comp_scene.position):
 			if button:
@@ -91,11 +91,10 @@ func multiple_selection_mode(event: InputEvent) -> void:
 
 func single_selection_mode() -> void:
 	# Clear status
-	for comp_scene in $CustomNodes.get_children():
+	for comp_scene in $TreeComps.get_children():
 		var button = comp_scene.get_node("Button")
 		if button:
 			button.toggle_mode = false
 			# Clear components and add component when selected
 			GlobalData.selected_components.clear_all_components()
-			# GlobalData.selected_components.add_component(comp_scene.component)
 #endregion 

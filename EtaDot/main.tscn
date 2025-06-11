@@ -17,7 +17,7 @@ script = ExtResource("1_1bvp3")
 [node name="BottomSlide" parent="Scenes" instance=ExtResource("3_h2yge")]
 position = Vector2(959, 1003)
 
-[node name="CustomNodes" type="Node2D" parent="."]
+[node name="TreeComps" type="Node2D" parent="."]
 
 [node name="SelectionLabel" type="Label" parent="."]
 layout_mode = 0

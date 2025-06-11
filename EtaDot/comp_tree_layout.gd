@@ -187,7 +187,7 @@ func refresh_node_position(node: TreeNode):
 	var scene = load("res://component.tscn").instantiate()
 	scene.position = node.position
 	scene.component = node.comp
-	$CompScenes.add_child(scene)
+	get_parent().get_node("TreeComps").add_child(scene)
 
 # Handle node overlapping
 func layout_overlaps():
