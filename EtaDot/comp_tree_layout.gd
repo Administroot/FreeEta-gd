@@ -43,7 +43,6 @@ func dataset() -> void:
 		var current_node = TreeNode.new()
 		current_node.name = str(comp.node_id)
 		current_node.comp = comp
-		# current_node.texture = preload("res://assets/pump.svg")
 		add_child(current_node)
 		for prev_id in comp.prev_node:
 			var prev_node = get_node(str(prev_id))
@@ -164,7 +163,10 @@ func get_center_y_by_parents(parents: Array) -> float:
 	return (parents[0].y + parents[parents.size() - 1].y) / 2.0
 
 # Refresh node positions (update actual display position)
-func refresh_node_position(node: TreeNode):
+func refresh_node_position(node: TreeNode, processed_nodes: Dictionary = {}):
+	if processed_nodes.has(node.name):
+		return
+	processed_nodes[node.name] = true
 	# Set node rectangle position
 	node.position = Vector2(node.x, node.y)
 	
@@ -182,7 +184,7 @@ func refresh_node_position(node: TreeNode):
 		# Add line to scene
 		add_child(line)
 		# Recursively refresh child node
-		refresh_node_position(child)
+		refresh_node_position(child, processed_nodes)
 	LogUtil.info("NodeName: %s ; NodePosition: %s" % [node.name, node.get_position()])
 	var scene = load("res://component.tscn").instantiate()
 	scene.position = node.position
