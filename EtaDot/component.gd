@@ -21,7 +21,10 @@ func set_texture(picture: String) -> Vector2:
 	return size
 
 func set_text(text: String, pos: Vector2) -> void:
-	$NameLabel.text = text
+	if text != "Initial":
+		$NameLabel.text = text
+	else :
+		$NameLabel.text = ""
 	$NameLabel.position = Vector2(- pos.x / 2. + $NameLabel.get_size().x / 2., pos.y / 2.)
 
 ## While pressing MOUSE_BUTTON_LEFT and dragging: dragging

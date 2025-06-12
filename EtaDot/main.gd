@@ -43,6 +43,10 @@ func clean_components() -> void:
 	if tree_comps:
 		for child in tree_comps.get_children():
 			child.queue_free()
+	var lines = $"LineMaps"
+	if lines:
+		for child in lines.get_children():
+			child.queue_free()
 #endregion
 
 #region ETA
@@ -99,3 +103,8 @@ func single_selection_mode() -> void:
 			# Clear components and add component when selected
 			GlobalData.selected_components.clear_all_components()
 #endregion 
+
+# Refresh node status and position
+func _on_refresh_button_pressed() -> void:
+	if $"Scenes/BottomSlide".get_node("HBoxContainer/ViewButton").is_pressed():
+		on_view_button_toggled()

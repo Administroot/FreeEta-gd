@@ -113,10 +113,11 @@ func _on_confirm_button_pressed() -> void:
 			LogUtil.error_dialog(get_parent().get_parent(), "[color=red]Duplicated[/color] [color=pink]PrevNode[/color] are not allowed!")
 			return
 		seen_nodes.append(node_id)
-	# Sync with `GlobalData`
+	#### Sync with `GlobalData` ####
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
-	# TODO: Refresh GUI
+	################################
+	# Refresh GUI
 	queue_free()
 
 
