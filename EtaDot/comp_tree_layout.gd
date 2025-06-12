@@ -3,6 +3,7 @@ extends Control
 # Layout parameters
 @export var spacing_x: float = 200.0 # Horizontal spacing between nodes
 @export var spacing_y: float = 50.0 # Vertical spacing between nodes
+# TODO: Dynamically adjust width / height
 @export var node_width: float = 200.0 # Node width
 @export var node_height: float = 200.0 # Node height
 
@@ -172,20 +173,15 @@ func refresh_node_position(node: TreeNode, processed_nodes: Dictionary = {}):
 	
 	# Draw lines to child nodes
 	for child in node.childs:
-		# Create line from current node to child
-		var line = Line2D.new()
-		line.default_color = Color.DARK_GRAY
-		line.width = 2.0
-		
+		####################################################
 		# Set line points from parent center to child center
-		var start = node.position + Vector2(node_width/2, node_height/2)
-		var end = Vector2(child.x + node_width/2, child.y + node_height/2)
-		line.points = [start, end]
-		# Add line to scene
-		add_child(line)
+		var gap_y = Vector2(node_width / 2., 0.)
+		var start = node.position + gap_y
+		var end = Vector2(child.x + node_width/2., child.y + node_height/2.) - Vector2(node_width, 0.5 * node_height)
+		draw_linemap(start, end)
+		####################################################
 		# Recursively refresh child node
 		refresh_node_position(child, processed_nodes)
-	LogUtil.info("NodeName: %s ; NodePosition: %s" % [node.name, node.get_position()])
 	var scene = load("res://component.tscn").instantiate()
 	scene.position = node.position
 	scene.component = node.comp
@@ -281,3 +277,14 @@ func get_center_y_by_childs(childs: Array) -> float:
 	
 	# Return center value
 	return (min_y + max_y) / 2.0
+
+func draw_linemap(start_point: Vector2, end_point: Vector2) -> void:
+	var linemap = load("res://linemap.tscn").instantiate()
+	if start_point.y == end_point.y:
+		linemap.points = [start_point, end_point]
+	else :
+		var middle_point = (start_point + end_point) / 2.
+		var gap_y = Vector2(0., (end_point.y - start_point.y) / 2.)
+		var points = [start_point, middle_point-gap_y, middle_point+gap_y, end_point]
+		linemap.points = points
+	get_parent().add_child(linemap)

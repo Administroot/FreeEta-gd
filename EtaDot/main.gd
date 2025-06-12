@@ -35,6 +35,7 @@ func _ready() -> void:
 func on_view_button_toggled() -> void:
 	clean_components()
 	var scene = preload("res://CompTreeLayout.tscn").instantiate()
+	scene.position = Vector2(90, 540)
 	add_child(scene)
 
 func clean_components() -> void:
