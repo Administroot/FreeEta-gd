@@ -17,28 +17,6 @@ script = ExtResource("1_1bvp3")
 [node name="BottomSlide" parent="Scenes" instance=ExtResource("3_h2yge")]
 position = Vector2(959, 1003)
 
-[node name="SelectionLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 53.0
-offset_top = 298.0
-offset_right = 380.0
-offset_bottom = 340.0
-theme = ExtResource("4_1bvp3")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "selection_mode = false"
-horizontal_alignment = 1
-
-[node name="SelectedLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = -23.0
-offset_top = 346.0
-offset_right = 304.0
-offset_bottom = 388.0
-theme = ExtResource("4_1bvp3")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "NotSelected"
-horizontal_alignment = 1
-
 [node name="TreeComps" type="Node2D" parent="."]
 
 [node name="LineMaps" type="Node2D" parent="."]
