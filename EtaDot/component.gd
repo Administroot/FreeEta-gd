@@ -1,6 +1,6 @@
-extends RigidBody2D
+extends Node2D
 
-@export var size := Vector2()
+var size := Vector2()
 @export var component: Component
 var dragging := false
 var drag_offset := Vector2()
@@ -15,7 +15,6 @@ func _ready() -> void:
 func set_texture(picture: String) -> Vector2:
 	$Photo.texture = load(picture)
 	size = $Photo.texture.get_size()
-	$CollisionShape.shape.size = size
 	$Button.size = size
 	$Button.position = - size / 2.
 	return size

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7iskwgu5aphr"]
+[gd_scene load_steps=6 format=3 uid="uid://c7iskwgu5aphr"]
 
 [ext_resource type="Script" uid="uid://bbjwopgui8pw4" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://dbn3upoctkldp" path="res://top_slide.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://dknierfavh8um" path="res://bottom_slide.tscn" id="3_h2yge"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="4_1bvp3"]
+[ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="5_lquwl"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -17,9 +18,39 @@ script = ExtResource("1_1bvp3")
 [node name="BottomSlide" parent="Scenes" instance=ExtResource("3_h2yge")]
 position = Vector2(959, 1003)
 
-[node name="TreeComps" type="Node2D" parent="."]
+[node name="ContentControl" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="LineMaps" type="Node2D" parent="."]
+[node name="TreeComps" type="Control" parent="ContentControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LineMaps" type="Control" parent="ContentControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="RefreshButton" type="Button" parent="."]
 layout_mode = 0
@@ -29,5 +60,16 @@ offset_right = 1919.0
 offset_bottom = 970.0
 theme = ExtResource("4_1bvp3")
 text = "Refresh"
+
+[node name="ZoomLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 58.0
+offset_right = 79.0
+offset_bottom = 100.0
+theme = ExtResource("5_lquwl")
+theme_override_colors/font_color = Color(0.631373, 0.623529, 0.615686, 1)
+theme_override_font_sizes/font_size = 30
+text = "100%"
 
 [connection signal="pressed" from="RefreshButton" to="." method="_on_refresh_button_pressed"]

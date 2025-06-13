@@ -1,13 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://yfu4xjhobuqb"]
+[gd_scene load_steps=8 format=3 uid="uid://yfu4xjhobuqb"]
 
 [ext_resource type="Script" uid="uid://dlfg5q3l2g40" path="res://component.gd" id="1_vwh44"]
 [ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="2_cyri3"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8xu3x"]
-resource_local_to_scene = true
-friction = 0.5
-bounce = 0.5
-absorbent = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2vvs8"]
 bg_color = Color(0.752941, 0.87451, 0.898039, 1)
@@ -26,15 +20,8 @@ Button/styles/pressed = SubResource("StyleBoxFlat_ykgni")
 resource_name = "Comp_Button"
 allow_unpress = true
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2vvs8"]
-size = Vector2(50, 50)
-
-[node name="Component" type="RigidBody2D"]
+[node name="Component" type="Node2D"]
 texture_filter = 2
-input_pickable = true
-physics_material_override = SubResource("PhysicsMaterial_8xu3x")
-gravity_scale = 0.0
-lock_rotation = true
 script = ExtResource("1_vwh44")
 
 [node name="Button" type="Button" parent="."]
@@ -48,10 +35,6 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_vwh44")
 
 [node name="Photo" type="Sprite2D" parent="."]
-
-[node name="CollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(1, 0.75)
-shape = SubResource("RectangleShape2D_2vvs8")
 
 [node name="NameLabel" type="RichTextLabel" parent="."]
 offset_left = -50.0

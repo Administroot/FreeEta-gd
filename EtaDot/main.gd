@@ -1,5 +1,9 @@
 extends Control
 
+var min_scale: Vector2 = Vector2(0.1, 0.1)
+var max_scale: Vector2 = Vector2(5.0, 5.0)
+var zoom_step: float = 0.1
+
 #region Boot Up
 func _init() -> void:
 	# Check saves
@@ -21,7 +25,7 @@ func check_saves(saves_name: String) -> void:
 		target.close()
 #endregion
 
-#region TreeComps
+#region Ready
 func _ready() -> void:
 	# Connect signals from scene `BottomSlide`
 	$"Scenes/BottomSlide".view_button_toggled.connect(on_view_button_toggled)
@@ -35,16 +39,15 @@ func _ready() -> void:
 func on_view_button_toggled() -> void:
 	clean_components()
 	var scene = preload("res://CompTreeLayout.tscn").instantiate()
-	# TODO: ZOOM function
 	scene.position = Vector2(-200, 540)
 	add_child(scene)
 
 func clean_components() -> void:
-	var tree_comps = $"TreeComps"
+	var tree_comps = $"ContentControl/TreeComps"
 	if tree_comps:
 		for child in tree_comps.get_children():
 			child.queue_free()
-	var lines = $"LineMaps"
+	var lines = $"ContentControl/LineMaps"
 	if lines:
 		for child in lines.get_children():
 			child.queue_free()
@@ -64,6 +67,7 @@ func on_code_button_toggled() -> void:
 var selection_mode = false
 
 func _input(event: InputEvent) -> void:
+	########## Selection Function ##########
 	if event is InputEventKey and event.keycode == KEY_CTRL and event.pressed:
 		selection_mode = true
 	elif event is InputEventKey and event.pressed:
@@ -78,10 +82,29 @@ func _input(event: InputEvent) -> void:
 	else :
 		single_selection_mode()
 		selection_mode = false
+	########################################
+	########### Scroll Function ############
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom_scene(1+zoom_step)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom_scene(1-zoom_step)
+	########################################
+	# TODO: Using scroll to move `ContentControl`
+
+func zoom_scene(factor: float):
+	var content = $ContentControl
+	if not content:
+		return
+	var new_scale = content.scale * factor
+	new_scale.x = clamp(new_scale.x, min_scale.x, max_scale.x)
+	new_scale.y = clamp(new_scale.y, min_scale.y, max_scale.y)
+	content.scale = new_scale
+	$ZoomLabel.text = "%.1f%%" % (new_scale.x * 100)
 
 func multiple_selection_mode(event: InputEvent) -> void:
 	var clicked_pos = event.position
-	for comp_scene in $TreeComps.get_children():
+	for comp_scene in $ContentControl/TreeComps.get_children():
 		var button = comp_scene.get_node("Button")
 		if button.get_rect().has_point(clicked_pos - comp_scene.position):
 			if button:
@@ -91,7 +114,7 @@ func multiple_selection_mode(event: InputEvent) -> void:
 
 func single_selection_mode() -> void:
 	# Clear status
-	for comp_scene in $TreeComps.get_children():
+	for comp_scene in $ContentControl/TreeComps.get_children():
 		var button = comp_scene.get_node("Button")
 		if button:
 			button.toggle_mode = false
