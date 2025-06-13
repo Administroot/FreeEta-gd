@@ -21,7 +21,7 @@ func set_texture(picture: String) -> Vector2:
 	return size
 
 func set_text(text: String, pos: Vector2) -> void:
-	if text != "Initial":
+	if text not in ["Initial", "Ending"]:
 		$NameLabel.text = text
 	else :
 		$NameLabel.text = ""

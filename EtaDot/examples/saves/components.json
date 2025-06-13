@@ -41,6 +41,15 @@
             "node_type": "Valve",
             "reliability": 0.85,
             "prev_node": [3, 4]
+        },
+        {
+            "node_id": -1,
+            "node_name": "Ending",
+            "node_type": "Initial",
+            "prev_node": [
+                5
+            ],
+            "reliability": 1.0
         }
     ]
 }

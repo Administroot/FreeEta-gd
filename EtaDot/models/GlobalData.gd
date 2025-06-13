@@ -14,12 +14,32 @@ func get_components() -> Components:
 	return loaded_data
 
 func save_components() -> void:
+	# Calculate `Ending` component status
+	reorganize_ending_comp()
 	var json_data = JsonClassConverter.class_to_json(components_data)
 	# Serialize
 	components_data.print_all_members("Components")
 	var file_success: bool = JsonClassConverter.store_json_file("user://saves/components.json", json_data)
 	if !file_success:
 		LogUtil.error("Error saving [color=golden]Components[/color] data.")
+
+func reorganize_ending_comp() -> void:
+	var orphans = components_data.get_all_component_ids()
+	for comp in components_data.components:
+		if comp.node_id == -1:
+			continue
+		for prev in comp.prev_node:
+			if prev in orphans:
+				orphans.erase(prev)
+	# Erase self
+	orphans.erase(-1)
+	var ending_comp = Component.new()
+	ending_comp.node_id = -1
+	ending_comp.node_name = "Ending"
+	ending_comp.node_type = "Initial"
+	ending_comp.reliability = 1.
+	ending_comp.prev_node = orphans
+	components_data.update_component(ending_comp)
 
 #region NodeTypes
 var nodetypes_data : NodeTypes

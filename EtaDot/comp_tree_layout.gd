@@ -185,7 +185,7 @@ func refresh_node_position(node: TreeNode, processed_nodes: Dictionary = {}):
 	var scene = load("res://component.tscn").instantiate()
 	scene.position = node.position
 	scene.component = node.comp
-	LogUtil.info("Node.Name: %s; Parents: %s; Childs: %s" % [node.name, node.parents, node.childs])
+	# LogUtil.info("Node.Name: %s; Parents: %s; Childs: %s" % [node.name, node.parents, node.childs])
 	get_parent().get_node("TreeComps").add_child(scene)
 
 # Handle node overlapping
