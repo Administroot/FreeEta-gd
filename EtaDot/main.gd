@@ -63,8 +63,12 @@ func on_code_button_toggled() -> void:
 	pass
 #endregion
 
-#region Multiple Selection
+#region Keybinding
 var selection_mode = false
+var is_dragging := false
+var content_position := Vector2()
+var move_speed: float = 5.0
+var smoothing: float = 0.2
 
 func _input(event: InputEvent) -> void:
 	########## Selection Function ##########
@@ -89,9 +93,23 @@ func _input(event: InputEvent) -> void:
 			zoom_scene(1+zoom_step)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			zoom_scene(1-zoom_step)
+		# Using scroll to move `ContentControl`
+		elif event.button_index == MOUSE_BUTTON_MIDDLE:
+			is_dragging = event.pressed
+			if is_dragging:
+				content_position = position
+	if is_dragging and event is InputEventMouseMotion:
+		content_position += event.relative * move_speed
 	########################################
-	# TODO: Using scroll to move `ContentControl`
 
+#region Scroll
+func _process(_delta: float) -> void:
+	if is_dragging:
+		$ContentControl.position = position.lerp(content_position, smoothing)
+	else :
+		content_position = position
+
+#region Multiple Selection
 func zoom_scene(factor: float):
 	var content = $ContentControl
 	if not content:
@@ -120,6 +138,7 @@ func single_selection_mode() -> void:
 			button.toggle_mode = false
 			# Clear components and add component when selected
 			GlobalData.selected_components.clear_all_components()
+#endregion
 #endregion 
 
 # Refresh node status and position
