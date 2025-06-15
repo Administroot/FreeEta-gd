@@ -32,28 +32,30 @@ bg_color = Color(0.25098, 0.25098, 0.25098, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3yc1"]
 bg_color = Color(0.25098, 0.25098, 0.25098, 1)
 
-[node name="CuNodeScene" type="Panel"]
-custom_minimum_size = Vector2(300, 150)
-offset_right = 300.0
-offset_bottom = 348.0
-tooltip_text = "Info"
-theme_override_styles/panel = SubResource("StyleBoxFlat_1te4q")
+[node name="CuNodeScene" type="CanvasLayer"]
+layer = 99
 script = ExtResource("1_l8sbo")
 
-[node name="VBox" type="VBoxContainer" parent="."]
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(300, 150)
+offset_right = 300.0
+offset_bottom = 358.0
+tooltip_text = "Info"
+theme_override_styles/panel = SubResource("StyleBoxFlat_1te4q")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
 custom_minimum_size = Vector2(300, 0)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 300.0
+offset_bottom = 307.0
 theme_override_constants/separation = 10
 
-[node name="Grid1" type="GridContainer" parent="VBox"]
+[node name="Grid1" type="GridContainer" parent="Panel/VBox"]
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 10
 columns = 2
 
-[node name="NodeName" type="RichTextLabel" parent="VBox/Grid1"]
+[node name="NodeName" type="RichTextLabel" parent="Panel/VBox/Grid1"]
 custom_minimum_size = Vector2(150, 25)
 layout_mode = 2
 theme = ExtResource("2_l2mki")
@@ -66,7 +68,7 @@ autowrap_mode = 2
 shortcut_keys_enabled = false
 vertical_alignment = 1
 
-[node name="NameEdit" type="TextEdit" parent="VBox/Grid1"]
+[node name="NameEdit" type="TextEdit" parent="Panel/VBox/Grid1"]
 custom_minimum_size = Vector2(150, 30)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -75,7 +77,7 @@ context_menu_enabled = false
 shortcut_keys_enabled = false
 scroll_fit_content_height = true
 
-[node name="NodeType" type="RichTextLabel" parent="VBox/Grid1"]
+[node name="NodeType" type="RichTextLabel" parent="Panel/VBox/Grid1"]
 custom_minimum_size = Vector2(150, 25)
 layout_mode = 2
 theme = ExtResource("2_l2mki")
@@ -92,11 +94,11 @@ scroll_following = true
 autowrap_mode = 2
 vertical_alignment = 1
 
-[node name="TypeSelection" type="OptionButton" parent="VBox/Grid1"]
+[node name="TypeSelection" type="OptionButton" parent="Panel/VBox/Grid1"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="ShowDesc" type="RichTextLabel" parent="VBox"]
+[node name="ShowDesc" type="RichTextLabel" parent="Panel/VBox"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 theme = ExtResource("2_l2mki")
@@ -105,13 +107,13 @@ text = "Short description of this node."
 scroll_following = true
 autowrap_mode = 2
 
-[node name="Grid2" type="GridContainer" parent="VBox"]
+[node name="Grid2" type="GridContainer" parent="Panel/VBox"]
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 10
 columns = 2
 
-[node name="ReliLabel" type="RichTextLabel" parent="VBox/Grid2"]
+[node name="ReliLabel" type="RichTextLabel" parent="Panel/VBox/Grid2"]
 custom_minimum_size = Vector2(150, 25)
 layout_mode = 2
 theme = ExtResource("2_l2mki")
@@ -123,7 +125,7 @@ scroll_following = true
 autowrap_mode = 2
 vertical_alignment = 1
 
-[node name="ReliEdit" type="TextEdit" parent="VBox/Grid2"]
+[node name="ReliEdit" type="TextEdit" parent="Panel/VBox/Grid2"]
 custom_minimum_size = Vector2(150, 25)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -132,7 +134,7 @@ context_menu_enabled = false
 shortcut_keys_enabled = false
 scroll_fit_content_height = true
 
-[node name="FailLabel" type="RichTextLabel" parent="VBox/Grid2"]
+[node name="FailLabel" type="RichTextLabel" parent="Panel/VBox/Grid2"]
 custom_minimum_size = Vector2(150, 25)
 layout_mode = 2
 theme = ExtResource("2_l2mki")
@@ -144,7 +146,7 @@ scroll_following = true
 autowrap_mode = 2
 vertical_alignment = 1
 
-[node name="FailEdit" type="TextEdit" parent="VBox/Grid2"]
+[node name="FailEdit" type="TextEdit" parent="Panel/VBox/Grid2"]
 custom_minimum_size = Vector2(150, 25)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -153,7 +155,7 @@ context_menu_enabled = false
 shortcut_keys_enabled = false
 scroll_fit_content_height = true
 
-[node name="PrevNode" type="RichTextLabel" parent="VBox/Grid2"]
+[node name="PrevNode" type="RichTextLabel" parent="Panel/VBox/Grid2"]
 custom_minimum_size = Vector2(150, 25)
 layout_mode = 2
 theme = ExtResource("2_l2mki")
@@ -165,37 +167,37 @@ scroll_following = true
 autowrap_mode = 2
 vertical_alignment = 1
 
-[node name="NodeVBox" type="VBoxContainer" parent="VBox/Grid2"]
+[node name="NodeVBox" type="VBoxContainer" parent="Panel/VBox/Grid2"]
 layout_mode = 2
 
-[node name="NodeGrid" type="GridContainer" parent="VBox/Grid2/NodeVBox"]
+[node name="NodeGrid" type="GridContainer" parent="Panel/VBox/Grid2/NodeVBox"]
 layout_mode = 2
 columns = 2
 
-[node name="NodeSelection" type="OptionButton" parent="VBox/Grid2/NodeVBox/NodeGrid"]
+[node name="NodeSelection" type="OptionButton" parent="Panel/VBox/Grid2/NodeVBox/NodeGrid"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="DelPrevButton" type="Button" parent="VBox/Grid2/NodeVBox/NodeGrid"]
+[node name="DelPrevButton" type="Button" parent="Panel/VBox/Grid2/NodeVBox/NodeGrid"]
 visible = false
 layout_mode = 2
 theme = ExtResource("3_1te4q")
 icon = ExtResource("4_g66il")
 
-[node name="AddPrevButton" type="Button" parent="VBox/Grid2/NodeVBox"]
+[node name="AddPrevButton" type="Button" parent="Panel/VBox/Grid2/NodeVBox"]
 layout_mode = 2
 theme = ExtResource("3_1te4q")
 icon = ExtResource("5_ibphl")
 icon_alignment = 1
 
-[node name="Grid3" type="GridContainer" parent="VBox"]
+[node name="Grid3" type="GridContainer" parent="Panel/VBox"]
 layout_mode = 2
 theme_override_constants/h_separation = 20
 columns = 2
 
-[node name="ConfirmButton" type="Button" parent="VBox/Grid3"]
+[node name="ConfirmButton" type="Button" parent="Panel/VBox/Grid3"]
 custom_minimum_size = Vector2(140, 30)
 layout_mode = 2
 theme = SubResource("Theme_m27af")
@@ -204,7 +206,7 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_l2mki")
 theme_override_styles/normal = SubResource("StyleBoxFlat_g3yc1")
 text = "✔️ Confirm"
 
-[node name="CancelButton" type="Button" parent="VBox/Grid3"]
+[node name="CancelButton" type="Button" parent="Panel/VBox/Grid3"]
 custom_minimum_size = Vector2(140, 30)
 layout_mode = 2
 theme = SubResource("Theme_m27af")
@@ -213,10 +215,10 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_l2mki")
 theme_override_styles/normal = SubResource("StyleBoxFlat_g3yc1")
 text = "❌ Cancel"
 
-[connection signal="item_selected" from="VBox/Grid1/TypeSelection" to="." method="_on_option_button_item_selected"]
-[connection signal="text_changed" from="VBox/Grid2/ReliEdit" to="." method="_on_reli_edit_text_changed"]
-[connection signal="text_changed" from="VBox/Grid2/FailEdit" to="." method="_on_fail_edit_text_changed"]
-[connection signal="pressed" from="VBox/Grid2/NodeVBox/NodeGrid/DelPrevButton" to="." method="_on_del_prev_button_pressed"]
-[connection signal="pressed" from="VBox/Grid2/NodeVBox/AddPrevButton" to="." method="_on_add_prev_button_pressed"]
-[connection signal="pressed" from="VBox/Grid3/ConfirmButton" to="." method="_on_confirm_button_pressed"]
-[connection signal="pressed" from="VBox/Grid3/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="item_selected" from="Panel/VBox/Grid1/TypeSelection" to="." method="_on_type_selection_item_selected"]
+[connection signal="text_changed" from="Panel/VBox/Grid2/ReliEdit" to="." method="_on_reli_edit_text_changed"]
+[connection signal="text_changed" from="Panel/VBox/Grid2/FailEdit" to="." method="_on_fail_edit_text_changed"]
+[connection signal="pressed" from="Panel/VBox/Grid2/NodeVBox/NodeGrid/DelPrevButton" to="." method="_on_del_prev_button_pressed"]
+[connection signal="pressed" from="Panel/VBox/Grid2/NodeVBox/AddPrevButton" to="." method="_on_add_prev_button_pressed"]
+[connection signal="pressed" from="Panel/VBox/Grid3/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="Panel/VBox/Grid3/CancelButton" to="." method="_on_cancel_button_pressed"]

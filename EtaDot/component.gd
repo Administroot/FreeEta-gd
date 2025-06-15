@@ -53,13 +53,12 @@ func _on_button_pressed() -> void:
 		panel.queue_free()
 		panel = null
 
-func _on_right_button_pressed() -> void:
+func _on_right_button_pressed(pos: Vector2) -> void:
 	if not panel:
 		# Init component
 		panel = load("res://CU_node_scene.tscn").instantiate()
+		panel.get_node("Panel").position = pos
 		panel.component = component
-		# Increase priority
-		panel.z_index = 5
 		add_child(panel)
 		await panel.tree_exited
 
@@ -67,7 +66,7 @@ func _on_right_button_pressed() -> void:
 func _on_button_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		# Show panel
-		_on_right_button_pressed()
+		_on_right_button_pressed(event.global_position)
 	elif event is InputEventKey and event.keycode == KEY_ENTER and event.pressed:
 		# Create a `Component` (apposition)
 		create_component_by_panel(true)
