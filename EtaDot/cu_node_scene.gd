@@ -56,6 +56,8 @@ func _ready() -> void:
 			LogUtil.error_dialog(get_parent().get_parent(),"Node id [color=red]%s[/color] Not Found!" % node_id)
 		else:
 			all_node_selections[i].select(idx)
+	# Adjust `Panel`'s height
+	adjust_height(0)
 
 func _on_type_selection_item_selected(index: int) -> void:
 	var typename = $"Panel/VBox/Grid1/TypeSelection".get_item_text(index)
@@ -126,13 +128,13 @@ func _on_del_prev_button_pressed() -> void:
 	var seq = 0
 	for button in all_del_prev_buttons:
 		if button.is_pressed() == true:
-			LogUtil.info("Button %s Pressed!" % seq)
 			all_node_selections[seq].queue_free()
 			all_del_prev_buttons[seq].queue_free()
 			all_node_selections.remove_at(seq)
 			all_del_prev_buttons.remove_at(seq)
 			break
 		seq += 1
+	adjust_height(-1)
 
 # Add a `Prev Node` relation
 func _on_add_prev_button_pressed() -> void:
@@ -151,3 +153,27 @@ func _on_add_prev_button_pressed() -> void:
 	all_del_prev_buttons.append(new_del_button)
 	node_grid.add_child(new_selection)
 	node_grid.add_child(new_del_button)
+	adjust_height(1)
+
+# Automatically adjust `Panel`'s height
+# `choice`:
+#	- `-1` : delete a `prev_node`
+#   - `0` : recalculate `Panel` height
+#   - `1`: add a `prev_node` 
+func adjust_height(choice: int) -> void:
+	const grid_height := 38
+	const v_sep := 4
+	var grid = $"Panel/VBox/Grid2/NodeVBox/NodeGrid"
+	var panel_h = $Panel.size.y
+	match choice:
+		0: 
+			var child_count = grid.get_child_count()
+			panel_h += (child_count / 2. - 1.) * grid_height
+			panel_h += v_sep
+		-1:
+			panel_h -= grid_height
+			panel_h -= v_sep
+		1:
+			panel_h += grid_height
+			panel_h += v_sep
+	$Panel.size.y = panel_h
