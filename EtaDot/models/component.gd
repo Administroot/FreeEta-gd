@@ -9,7 +9,9 @@ class_name Component
 @export var prev_node: PackedInt32Array
 
 func printall() -> void:
-    print_rich("[color=pink]&&&&&[/color] node_id: %s || node_name: %s || node_type: %s || reliability: %s || prev_node: %s [color=pink]&&&&&[/color]" % [node_id, node_name, node_type, reliability, prev_node])
+    var logger = "[color=pink]&&&&&[/color] node_id: {node_id} || node_name: {node_name} || node_type: {node_type} || reliability: {reliability} || prev_node: {prev_node} [color=pink]&&&&&[/color]".format({"node_id": node_id, "node_name": node_name, "node_type": node_type, "reliability": reliability, "prev_node": prev_node})
+    print_rich(logger)
+    LogUtil.write_to_log(logger)
 
 func get_nodetype_by_component() -> NodeType:
     return GlobalData.nodetypes_data.get_type_by_name(node_type)
