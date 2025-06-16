@@ -2,18 +2,24 @@ class_name LogUtil
 
 
 static func info(msg: String) -> void:
-	var logger = "[color=blue]「INFO」[/color] {msg}".format({"msg": msg})
+	var datetime = Time.get_datetime_dict_from_system()
+	var timestamp = "{year}-{month}-{day} {hour}:{minute}:{second}".format(datetime)
+	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=green][info][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
 	print_rich(logger)
 	write_to_log(logger)
 
 static func warning(msg: String) -> void:
-	var logger = "[color=yellow]「WARNING」[/color] {msg}".format({"msg": msg})
+	var datetime = Time.get_datetime_dict_from_system()
+	var timestamp = "{year}-{month}-{day} {hour}:{minute}:{second}".format(datetime)
+	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=yellow][warning][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
 	print_rich(logger)
 	write_to_log(logger)
 
 static func error(msg: String) -> void:
-	var logger = "[color=red]「ERROR」[/color] {msg}".format({"msg": msg})
-	print_rich(logger.format({"msg": msg}))
+	var datetime = Time.get_datetime_dict_from_system()
+	var timestamp = "{year}-{month}-{day} {hour}:{minute}:{second}".format(datetime)
+	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=red][error][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
+	print_rich(logger)
 	write_to_log(logger)
 
 static func error_dialog(node: Node, msg: String) -> void:
@@ -45,9 +51,9 @@ static func write_to_log(msg: String) -> void:
 	file.close()
 
 # TODO: Why RegEx Failed
-# static var color_regex = RegEx.new()
+# static var regex = RegEx.new()
 # func _ready():
-# 	color_regex.compile("/\\[.*\\]/Um")
+# 	regex.compile("\\[.*?\\]")
 
 static func convert_bbcode(code: String) -> String:
 	var text = code
@@ -56,8 +62,12 @@ static func convert_bbcode(code: String) -> String:
 	text = text.replace("[color=pink]", "")
 	text = text.replace("[color=red]", "")
 	text = text.replace("[color=yellow]", "")
+	text = text.replace("[color=purple]", "")
 	text = text.replace("[/color]", "")
 	text = text.replace("[b]", "")
 	text = text.replace("[/b]", "")
+	text = text.replace("[i]","")
+	text = text.replace("[/i]","")
+	# var text = regex.sub(code, "", true)
 	text += "\n\r"
 	return text

@@ -13,7 +13,7 @@
 			"sprite_path": "res://assets/valve.svg"
 		},
 		{
-			"long_desc": "\tThe initiating event that starts the event tree analysis",
+			"long_desc": "\tThe initiating event that start/end event tree analysis (ETA)",
 			"type_name": "Initial",
 			"short_desc": "Starting point of event tree analysis",
 			"sprite_path": "res://assets/empty.png"
