@@ -65,6 +65,8 @@ func _on_type_selection_item_selected(index: int) -> void:
 	showdesc.text = GlobalData.nodetypes_data.get_type_by_name(typename).short_desc
 
 #region Sync Reli & Fail
+var flag := false
+
 func _update_values(source_edit: Node, target_edit: Node, is_reliability: bool) -> void:
 	var text = source_edit.text
 	if text.is_valid_float():
@@ -72,6 +74,7 @@ func _update_values(source_edit: Node, target_edit: Node, is_reliability: bool) 
 		if is_valid_value(value):
 			component.reliability = value if is_reliability else 1 - value
 			target_edit.text = str(1 - value)
+			flag = true
 		else:
 			target_edit.text = "Invalid data"
 	else:
@@ -115,8 +118,9 @@ func _on_confirm_button_pressed() -> void:
 			return
 		seen_nodes.append(node_id)
 	# Check if new component is the same as the old one
-	if old_comp.equal(component):
-		LogUtil.error("The new comp is the same as old one")
+	# Node `Component` didn't change and reli/fail didn't change
+	if old_comp.equal(component) and !flag:
+		LogUtil.warning("The new [color=blue]Component[/color] is the same as old one. Do nothing")
 		queue_free()
 		return
 	#### Sync with `GlobalData` ####
