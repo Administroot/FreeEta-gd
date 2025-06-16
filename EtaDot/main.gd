@@ -30,7 +30,7 @@ func _ready() -> void:
 	# Connect signals from scene `BottomSlide`
 	$"Scenes/BottomSlide".view_button_toggled.connect(on_view_button_toggled)
 	$"Scenes/BottomSlide".eta_button_toggled.connect(on_eta_button_toggled)
-	$"Scenes/BottomSlide".code_button_toggled.connect(on_code_button_toggled)
+	$"Scenes/BottomSlide".console_button_toggled.connect(on_console_button_toggled)
 	# Print GlobalData
 	GlobalData.print_global_data()
 #endregion
@@ -58,8 +58,8 @@ func on_eta_button_toggled() -> void:
 	GlobalData.components_data.print_all_members("Components")
 #endregion
 
-#region Code
-func on_code_button_toggled() -> void:
+#region Console
+func on_console_button_toggled() -> void:
 	pass
 #endregion
 
