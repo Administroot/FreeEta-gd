@@ -45,6 +45,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_1te4q")
 
 [node name="VBox" type="VBoxContainer" parent="Panel"]
 custom_minimum_size = Vector2(300, 0)
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 307.0
 theme_override_constants/separation = 10

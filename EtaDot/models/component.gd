@@ -15,3 +15,16 @@ func printall() -> void:
 
 func get_nodetype_by_component() -> NodeType:
     return GlobalData.nodetypes_data.get_type_by_name(node_type)
+
+func equal(other: Component) -> bool:
+    if node_id != other.node_id:
+        return false
+    if node_name != other.node_name:
+        return false
+    if node_type != other.node_type:
+        return false
+    if reliability != other.reliability:
+        return false
+    if prev_node != other.prev_node:
+        return false
+    return true

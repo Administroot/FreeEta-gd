@@ -90,6 +90,7 @@ func is_valid_value(value: float) -> bool:
 
 
 func _on_confirm_button_pressed() -> void:
+	var old_comp = component.duplicate()
 	# Check valid data
 	if $"Panel/VBox/Grid2/ReliEdit".text.is_valid_float() == false or $"Panel/VBox/Grid2/FailEdit".text.is_valid_float() == false:
 		LogUtil.error_dialog(get_parent().get_parent(),"[color=yellow]Reliability / Failure [/color] invalid!")
@@ -106,13 +107,18 @@ func _on_confirm_button_pressed() -> void:
 	component.prev_node.clear()
 	for nodeselection in all_node_selections:
 		component.prev_node.append(nodeselection.selected)
-	## Check if there are any duplicates in `prev_node`
+	# Check if there are any duplicates in `prev_node`
 	var seen_nodes = []
 	for node_id in component.prev_node:
 		if node_id in seen_nodes:
 			LogUtil.error_dialog(get_parent().get_parent(), "[color=red]Duplicated[/color] [color=pink]PrevNode[/color] are not allowed!")
 			return
 		seen_nodes.append(node_id)
+	# Check if new component is the same as the old one
+	if old_comp.equal(component):
+		LogUtil.error("The new comp is the same as old one")
+		queue_free()
+		return
 	#### Sync with `GlobalData` ####
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
