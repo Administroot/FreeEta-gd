@@ -31,6 +31,7 @@ func _ready() -> void:
 	$"Scenes/BottomSlide".view_button_toggled.connect(on_view_button_toggled)
 	$"Scenes/BottomSlide".eta_button_toggled.connect(on_eta_button_toggled)
 	$"Scenes/BottomSlide".data_button_toggled.connect(on_data_button_toggled)
+	$"Scenes/BottomSlide".log_button_toggled.connect(on_log_button_toggled)
 	# Print GlobalData
 	GlobalData.print_global_data()
 #endregion
@@ -64,6 +65,12 @@ func on_data_button_toggled() -> void:
 	data.position = Vector2(0, 57)
 	add_child(data)
 #endregion
+
+#region Logger
+func on_log_button_toggled() -> void:
+	LogUtil.info("Log button toggled")
+#endregion
+
 
 #region Keybinding
 var selection_mode = false

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dknierfavh8um"]
+[gd_scene load_steps=10 format=3 uid="uid://dknierfavh8um"]
 
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="1_r83t7"]
 [ext_resource type="Texture2D" uid="uid://mljkviguqxb1" path="res://assets/pen.png" id="2_r83t7"]
 [ext_resource type="Texture2D" uid="uid://dw60xuigtybal" path="res://assets/node.png" id="3_kdin5"]
 [ext_resource type="Texture2D" uid="uid://botbbmg85qoai" path="res://assets/programming.png" id="4_aqo5o"]
+[ext_resource type="Texture2D" uid="uid://dvuaa3414fy0o" path="res://assets/log.png" id="5_aqo5o"]
 
 [sub_resource type="GDScript" id="GDScript_kdin5"]
 script/source = "extends Node2D
@@ -12,6 +13,7 @@ script/source = "extends Node2D
 signal view_button_toggled
 signal eta_button_toggled
 signal data_button_toggled
+signal log_button_toggled
 
 func _on_view_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
@@ -24,6 +26,11 @@ func _on_eta_button_toggled(toggled_on: bool) -> void:
 func _on_data_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		emit_signal(\"data_button_toggled\")
+
+
+func _on_log_button_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		emit_signal(\"log_button_toggled\")
 "
 
 [sub_resource type="Gradient" id="Gradient_kadda"]
@@ -84,6 +91,15 @@ button_group = SubResource("ButtonGroup_aqo5o")
 text = "Data"
 icon = ExtResource("4_aqo5o")
 
+[node name="LogButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_r83t7")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_aqo5o")
+text = "Log"
+icon = ExtResource("5_aqo5o")
+
 [connection signal="toggled" from="HBoxContainer/ViewButton" to="." method="_on_view_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/EtaButton" to="." method="_on_eta_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/DataButton" to="." method="_on_data_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/LogButton" to="." method="_on_log_button_toggled"]
