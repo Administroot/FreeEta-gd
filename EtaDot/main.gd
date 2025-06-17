@@ -30,7 +30,7 @@ func _ready() -> void:
 	# Connect signals from scene `BottomSlide`
 	$"Scenes/BottomSlide".view_button_toggled.connect(on_view_button_toggled)
 	$"Scenes/BottomSlide".eta_button_toggled.connect(on_eta_button_toggled)
-	$"Scenes/BottomSlide".console_button_toggled.connect(on_console_button_toggled)
+	$"Scenes/BottomSlide".data_button_toggled.connect(on_data_button_toggled)
 	# Print GlobalData
 	GlobalData.print_global_data()
 #endregion
@@ -58,11 +58,11 @@ func on_eta_button_toggled() -> void:
 	GlobalData.components_data.print_all_members("Components")
 #endregion
 
-#region Console
-func on_console_button_toggled() -> void:
-	var console = preload("res://ConsoleScene.tscn").instantiate()
-	console.position = Vector2(0, 57)
-	add_child(console)
+#region RawData
+func on_data_button_toggled() -> void:
+	var data = preload("res://RawDataScene.tscn").instantiate()
+	data.position = Vector2(0, 57)
+	add_child(data)
 #endregion
 
 #region Keybinding

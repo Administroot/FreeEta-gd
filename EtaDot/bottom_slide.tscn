@@ -11,7 +11,7 @@ script/source = "extends Node2D
 # Process logic on `main.tscn`
 signal view_button_toggled
 signal eta_button_toggled
-signal console_button_toggled
+signal data_button_toggled
 
 func _on_view_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
@@ -21,9 +21,9 @@ func _on_eta_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		emit_signal(\"eta_button_toggled\")
 
-func _on_console_button_toggled(toggled_on: bool) -> void:
+func _on_data_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		emit_signal(\"console_button_toggled\")
+		emit_signal(\"data_button_toggled\")
 "
 
 [sub_resource type="Gradient" id="Gradient_kadda"]
@@ -76,14 +76,14 @@ button_group = SubResource("ButtonGroup_aqo5o")
 text = "ETA"
 icon = ExtResource("3_kdin5")
 
-[node name="ConsoleButton" type="Button" parent="HBoxContainer"]
+[node name="DataButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_r83t7")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_aqo5o")
-text = "Console"
+text = "Data"
 icon = ExtResource("4_aqo5o")
 
 [connection signal="toggled" from="HBoxContainer/ViewButton" to="." method="_on_view_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/EtaButton" to="." method="_on_eta_button_toggled"]
-[connection signal="toggled" from="HBoxContainer/ConsoleButton" to="." method="_on_console_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/DataButton" to="." method="_on_data_button_toggled"]

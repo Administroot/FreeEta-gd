@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://dh4tyq4inqf43"]
 
-[ext_resource type="Script" uid="uid://bvj6ps6p06dcv" path="res://console_scene.gd" id="1_gikk4"]
-[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_06dd8"]
-[ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="3_dj7m6"]
+[ext_resource type="Script" uid="uid://bvj6ps6p06dcv" path="res://raw_data_scene.gd" id="1_d5cob"]
+[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_ispqb"]
+[ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="3_hvvkw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_06dd8"]
 bg_color = Color(0.101961, 0.101961, 0.101961, 1)
@@ -24,14 +24,14 @@ color_regions = {
 "\" :": Color(0.309804, 0.839216, 0.745098, 1)
 }
 
-[node name="ConsoleScene" type="Node2D"]
-script = ExtResource("1_gikk4")
+[node name="RawDataScene" type="Node2D"]
+script = ExtResource("1_d5cob")
 
 [node name="VSplit" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 916)
 offset_right = 1920.0
 offset_bottom = 570.0
-theme = ExtResource("2_06dd8")
+theme = ExtResource("2_ispqb")
 theme_override_constants/separation = 0
 
 [node name="FileHBox" type="HBoxContainer" parent="VSplit"]
@@ -78,7 +78,7 @@ text = " × "
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("3_dj7m6")
+theme = ExtResource("3_hvvkw")
 indent_wrapped_lines = true
 scroll_smooth = true
 scroll_fit_content_width = true
