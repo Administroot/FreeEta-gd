@@ -4,21 +4,21 @@ class_name LogUtil
 static func info(msg: String) -> void:
 	var datetime = Time.get_datetime_dict_from_system()
 	var timestamp = "{year}-{month}-{day} {hour}:{minute}:{second}".format(datetime)
-	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=green][info][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
+	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=green][INFO][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
 	print_rich(logger)
 	write_to_log(logger)
 
 static func warning(msg: String) -> void:
 	var datetime = Time.get_datetime_dict_from_system()
 	var timestamp = "{year}-{month}-{day} {hour}:{minute}:{second}".format(datetime)
-	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=yellow][warning][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
+	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=yellow][WARNING][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
 	print_rich(logger)
 	write_to_log(logger)
 
 static func error(msg: String) -> void:
 	var datetime = Time.get_datetime_dict_from_system()
 	var timestamp = "{year}-{month}-{day} {hour}:{minute}:{second}".format(datetime)
-	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=red][error][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
+	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=red][ERROR][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
 	print_rich(logger)
 	write_to_log(logger)
 
@@ -63,6 +63,7 @@ static func convert_bbcode(code: String) -> String:
 	text = text.replace("[color=red]", "")
 	text = text.replace("[color=yellow]", "")
 	text = text.replace("[color=purple]", "")
+	text = text.replace("[color=green]", "")
 	text = text.replace("[/color]", "")
 	text = text.replace("[b]", "")
 	text = text.replace("[/b]", "")

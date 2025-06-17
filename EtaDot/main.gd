@@ -60,7 +60,9 @@ func on_eta_button_toggled() -> void:
 
 #region Console
 func on_console_button_toggled() -> void:
-	pass
+	var console = preload("res://ConsoleScene.tscn").instantiate()
+	console.position = Vector2(0, 57)
+	add_child(console)
 #endregion
 
 #region Keybinding

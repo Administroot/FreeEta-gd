@@ -35,6 +35,7 @@ colors = PackedColorArray(0.0784314, 0.0784314, 0.0784314, 1)
 gradient = SubResource("Gradient_kadda")
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_aqo5o"]
+resource_name = "bottom_slide"
 
 [node name="BottomSlide" type="Node2D"]
 script = SubResource("GDScript_kdin5")

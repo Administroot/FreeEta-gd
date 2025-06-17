@@ -1,7 +1,12 @@
-[gd_resource type="Theme" format=3 uid="uid://cnm886uwig4ku"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cnm886uwig4ku"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yvxr3"]
+bg_color = Color(0.101961, 0.105882, 0.14902, 1)
 
 [resource]
 resource_local_to_scene = true
 default_font_size = 20
+CodeEdit/font_sizes/font_size = 30
+CodeEdit/styles/normal = SubResource("StyleBoxFlat_yvxr3")
 RichTextLabel/colors/default_color = Color(0.784314, 0.784314, 0.784314, 1)
 RichTextLabel/colors/font_outline_color = Color(0.784314, 0.784314, 0.784314, 1)
