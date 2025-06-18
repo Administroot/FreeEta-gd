@@ -22,6 +22,9 @@ static func error(msg: String) -> void:
 	print_rich(logger)
 	write_to_log(logger)
 
+static func info_dialog(node: Node, msg: String) -> void:
+	pass
+
 static func error_dialog(node: Node, msg: String) -> void:
 	var dialog = preload("res://error_dialog.tscn").instantiate()
 	dialog.msg = msg

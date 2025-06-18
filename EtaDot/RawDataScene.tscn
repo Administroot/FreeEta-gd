@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dh4tyq4inqf43"]
+[gd_scene load_steps=12 format=3 uid="uid://dh4tyq4inqf43"]
 
 [ext_resource type="Script" uid="uid://bvj6ps6p06dcv" path="res://raw_data_scene.gd" id="1_d5cob"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_ispqb"]
@@ -24,6 +24,16 @@ member_variable_color = Color(0.45098, 0.854902, 0.792157, 1)
 color_regions = {
 "\" :": Color(0.309804, 0.839216, 0.745098, 1)
 }
+
+[sub_resource type="Gradient" id="Gradient_lex8q"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.223529, 0.223529, 0.223529, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_e4tyd"]
+gradient = SubResource("Gradient_lex8q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j5wn6"]
+texture = SubResource("GradientTexture1D_e4tyd")
 
 [node name="RawDataScene" type="Node2D"]
 script = ExtResource("1_d5cob")
@@ -82,5 +92,15 @@ code_completion_enabled = true
 auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
 
+[node name="SaveButton" type="Button" parent="."]
+offset_left = 1835.0
+offset_top = 863.0
+offset_right = 1920.0
+offset_bottom = 916.0
+theme = ExtResource("2_ispqb")
+theme_override_styles/normal = SubResource("StyleBoxTexture_j5wn6")
+text = "Save"
+
 [connection signal="toggled" from="VSplit/FileHBox/CompsButton" to="." method="_on_comps_button_toggled"]
 [connection signal="toggled" from="VSplit/FileHBox/NodeTypeButton" to="." method="_on_node_type_button_toggled"]
+[connection signal="pressed" from="SaveButton" to="." method="_on_save_button_pressed"]
