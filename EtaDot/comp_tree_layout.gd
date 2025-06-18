@@ -186,7 +186,7 @@ func refresh_node_position(node: TreeNode, processed_nodes: Dictionary = {}):
 	scene.position = node.position
 	scene.component = node.comp
 	# LogUtil.info("Node.Name: %s; Parents: %s; Childs: %s" % [node.name, node.parents, node.childs])
-	get_parent().get_node("ContentControl/TreeComps").add_child(scene)
+	get_parent().get_parent().get_node("ContentControl/TreeComps").add_child(scene)
 
 # Handle node overlapping
 func layout_overlaps():
@@ -288,4 +288,4 @@ func draw_linemap(start_point: Vector2, end_point: Vector2) -> void:
 		var gap_y = Vector2(0., (end_point.y - start_point.y) / 2.)
 		var points = [start_point, middle_point-gap_y, middle_point+gap_y, end_point]
 		linemap.points = points
-	get_parent().get_node("ContentControl/LineMaps").add_child(linemap)
+	get_parent().get_parent().get_node("ContentControl/LineMaps").add_child(linemap)

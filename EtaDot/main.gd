@@ -38,10 +38,10 @@ func _ready() -> void:
 
 #region View
 func on_view_button_toggled() -> void:
-	clean_components()
+	clear_scenetree()
 	var scene = preload("res://CompTreeLayout.tscn").instantiate()
 	scene.position = Vector2(-200, 540)
-	add_child(scene)
+	$Scenes.add_child(scene)
 
 func clean_components() -> void:
 	var tree_comps = $"ContentControl/TreeComps"
@@ -56,14 +56,16 @@ func clean_components() -> void:
 
 #region ETA
 func on_eta_button_toggled() -> void:
+	clear_scenetree()
 	GlobalData.components_data.print_all_members("Components")
 #endregion
 
 #region RawData
 func on_data_button_toggled() -> void:
+	clear_scenetree()
 	var data = preload("res://RawDataScene.tscn").instantiate()
 	data.position = Vector2(0, 57)
-	add_child(data)
+	$Scenes.add_child(data)
 #endregion
 
 #region Logger
@@ -71,6 +73,13 @@ func on_log_button_toggled() -> void:
 	LogUtil.info("Log button toggled")
 #endregion
 
+#region Utils
+func clear_scenetree() -> void:
+	clean_components()
+	for child in $Scenes.get_children():
+		if child.name != "TopSlide" and child.name != "BottomSlide":
+			child.queue_free()
+#endregion
 
 #region Keybinding
 var selection_mode = false
