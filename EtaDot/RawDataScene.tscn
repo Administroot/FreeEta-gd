@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dh4tyq4inqf43"]
+[gd_scene load_steps=9 format=3 uid="uid://dh4tyq4inqf43"]
 
 [ext_resource type="Script" uid="uid://bvj6ps6p06dcv" path="res://raw_data_scene.gd" id="1_d5cob"]
 [ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_ispqb"]
 [ext_resource type="Theme" uid="uid://cnm886uwig4ku" path="res://themes/PlaintextTheme.tres" id="3_hvvkw"]
+[ext_resource type="Texture2D" uid="uid://galhbv300t4b" path="res://assets/purplepoint.svg" id="3_lex8q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_06dd8"]
 bg_color = Color(0.101961, 0.101961, 0.101961, 1)
@@ -38,47 +39,30 @@ theme_override_constants/separation = 0
 layout_mode = 2
 theme_override_constants/separation = 1
 
-[node name="FileGroup" type="HBoxContainer" parent="VSplit/FileHBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 0
-
-[node name="FileButton" type="Button" parent="VSplit/FileHBox/FileGroup"]
+[node name="CompsButton" type="Button" parent="VSplit/FileHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_cjd1o")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_teviq")
-text = "hello"
+text = "components.json"
+icon = ExtResource("3_lex8q")
 
-[node name="DelButton" type="Button" parent="VSplit/FileHBox/FileGroup"]
-layout_mode = 2
-theme = SubResource("Theme_cjd1o")
-text = " × "
-
-[node name="FileGroup2" type="HBoxContainer" parent="VSplit/FileHBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 0
-
-[node name="FileButton2" type="Button" parent="VSplit/FileHBox/FileGroup2"]
+[node name="NodeTypeButton" type="Button" parent="VSplit/FileHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_cjd1o")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_teviq")
-text = "hello"
-
-[node name="DelButton2" type="Button" parent="VSplit/FileHBox/FileGroup2"]
-layout_mode = 2
-theme = SubResource("Theme_cjd1o")
-text = " × "
+text = "node_types.json"
+icon = ExtResource("3_lex8q")
 
 [node name="CodeEdit" type="CodeEdit" parent="VSplit"]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("3_hvvkw")
+wrap_mode = 1
 indent_wrapped_lines = true
 scroll_smooth = true
 scroll_fit_content_width = true
@@ -97,3 +81,6 @@ gutters_draw_fold_gutter = true
 code_completion_enabled = true
 auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
+
+[connection signal="toggled" from="VSplit/FileHBox/CompsButton" to="." method="_on_comps_button_toggled"]
+[connection signal="toggled" from="VSplit/FileHBox/NodeTypeButton" to="." method="_on_node_type_button_toggled"]

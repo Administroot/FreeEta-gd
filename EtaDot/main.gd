@@ -39,6 +39,7 @@ func _ready() -> void:
 #region View
 func on_view_button_toggled() -> void:
 	clear_scenetree()
+	$ZoomLabel.show()
 	var scene = preload("res://CompTreeLayout.tscn").instantiate()
 	scene.position = Vector2(-200, 540)
 	$Scenes.add_child(scene)
@@ -57,12 +58,14 @@ func clean_components() -> void:
 #region ETA
 func on_eta_button_toggled() -> void:
 	clear_scenetree()
+	$ZoomLabel.show()
 	GlobalData.components_data.print_all_members("Components")
 #endregion
 
 #region RawData
 func on_data_button_toggled() -> void:
 	clear_scenetree()
+	$ZoomLabel.hide()
 	var data = preload("res://RawDataScene.tscn").instantiate()
 	data.position = Vector2(0, 57)
 	$Scenes.add_child(data)
