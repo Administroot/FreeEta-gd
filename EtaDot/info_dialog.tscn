@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://c4jxxa7x8jfjp"]
+
+[ext_resource type="Script" uid="uid://d2yaest6fkxae" path="res://info_dialog.gd" id="1_ekop0"]
+[ext_resource type="Theme" uid="uid://cydiramlfc76f" path="res://themes/InfoDialog.tres" id="1_f4afk"]
+[ext_resource type="Theme" uid="uid://r35et6wncvi0" path="res://themes/BarTheme.tres" id="2_mpjrm"]
+
+[sub_resource type="Theme" id="Theme_f4afk"]
+Button/font_sizes/font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3hlx8"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0t8vg"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[node name="InfoDialog" type="PopupPanel"]
+title = "ℹ INFO"
+position = Vector2i(0, 36)
+size = Vector2i(800, 141)
+visible = true
+borderless = false
+always_on_top = true
+min_size = Vector2i(800, 0)
+content_scale_mode = 1
+theme = ExtResource("1_f4afk")
+script = ExtResource("1_ekop0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 780.0
+offset_bottom = 121.0
+theme = ExtResource("2_mpjrm")
+
+[node name="MsgLabel" type="RichTextLabel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(753, 47)
+layout_mode = 2
+bbcode_enabled = true
+text = "Hello, FreeEta!!"
+fit_content = true
+scroll_active = false
+
+[node name="ConfirmButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = SubResource("Theme_f4afk")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_3hlx8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t8vg")
+text = "GOT IT😉"

@@ -23,7 +23,11 @@ static func error(msg: String) -> void:
 	write_to_log(logger)
 
 static func info_dialog(node: Node, msg: String) -> void:
-	pass
+	var dialog = preload("res://info_dialog.tscn").instantiate()
+	dialog.msg = msg
+	node.add_child(dialog)
+	await dialog.tree_exited
+	LogUtil.error(msg)	
 
 static func error_dialog(node: Node, msg: String) -> void:
 	var dialog = preload("res://error_dialog.tscn").instantiate()
