@@ -14,7 +14,7 @@ bg_color = Color(0.25098, 0.25098, 0.25098, 1)
 bg_color = Color(0.25098, 0.25098, 0.25098, 1)
 
 [node name="AlertDialog" type="PopupPanel"]
-title = "⚠ Warning"
+title = "⚠ WARN"
 initial_position = 1
 size = Vector2i(800, 141)
 visible = true

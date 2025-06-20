@@ -47,3 +47,5 @@ theme = SubResource("Theme_f4afk")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_3hlx8")
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t8vg")
 text = "GOT IT😉"
+
+[connection signal="pressed" from="VBoxContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]

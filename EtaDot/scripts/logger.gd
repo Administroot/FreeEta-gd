@@ -27,7 +27,7 @@ static func info_dialog(node: Node, msg: String) -> void:
 	dialog.msg = msg
 	node.add_child(dialog)
 	await dialog.tree_exited
-	LogUtil.error(msg)	
+	LogUtil.info(msg)	
 
 static func error_dialog(node: Node, msg: String) -> void:
 	var dialog = preload("res://error_dialog.tscn").instantiate()
@@ -76,6 +76,8 @@ static func convert_bbcode(code: String) -> String:
 	text = text.replace("[/b]", "")
 	text = text.replace("[i]","")
 	text = text.replace("[/i]","")
+	text = text.replace("[bgcolor=f54ea2]", "")
+	text = text.replace("[/bgcolor]", "")
 	# var text = regex.sub(code, "", true)
 	text += "\n\r"
 	return text
