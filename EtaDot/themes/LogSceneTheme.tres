@@ -1,0 +1,37 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://c5nfbqg3h03jw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p5bx7"]
+bg_color = Color(0.117647, 0.117647, 0.247059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5xlub"]
+bg_color = Color(0.447059, 0.443137, 0.443137, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4d1c"]
+bg_color = Color(0.117647, 0.117647, 0.247059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b0n5p"]
+bg_color = Color(0.117647, 0.117647, 0.247059, 1)
+border_width_bottom = 2
+border_color = Color(0.878431, 0.788235, 0.592157, 1)
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78omn"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.117647, 0.117647, 0.247059, 1)
+expand_margin_left = 20.0
+expand_margin_top = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 20.0
+
+[resource]
+Button/font_sizes/font_size = 25
+Button/styles/hover = SubResource("StyleBoxFlat_p5bx7")
+Button/styles/hover_pressed = SubResource("StyleBoxFlat_5xlub")
+Button/styles/normal = SubResource("StyleBoxFlat_v4d1c")
+Button/styles/pressed = SubResource("StyleBoxFlat_b0n5p")
+PopupPanel/colors/title_color = Color(0, 0, 0, 1)
+PopupPanel/styles/panel = SubResource("StyleBoxFlat_78omn")
+RichTextLabel/font_sizes/mono_font_size = 30

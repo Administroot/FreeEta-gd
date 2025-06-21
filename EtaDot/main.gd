@@ -73,7 +73,9 @@ func on_data_button_toggled() -> void:
 
 #region Logger
 func on_log_button_toggled() -> void:
-	LogUtil.info("Log button toggled")
+	var log_scene = preload("res://log_scene.tscn").instantiate()
+	log_scene.position = Vector2(1344, 88)
+	$".".add_child(log_scene)
 #endregion
 
 #region Utils

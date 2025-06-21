@@ -23,7 +23,7 @@ func _on_save_button_pressed() -> void:
 		flag = write_json_config("user://saves/node_types.json", codeedit.text)
 		button_name = "node_types.json"
 	if flag:
-		LogUtil.info_dialog(get_parent(), "[bgcolor=f54ea2]%s[/bgcolor] saved successfully" % button_name)
+		LogUtil.info_dialog($".", "[bgcolor=f54ea2]%s[/bgcolor] saved successfully" % button_name)
 
 #region CRUD
 func read_json_config(path: String) -> String:

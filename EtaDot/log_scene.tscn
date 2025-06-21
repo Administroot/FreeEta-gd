@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgth0te8uuqc1"]
+
+[ext_resource type="Theme" uid="uid://c5nfbqg3h03jw" path="res://themes/LogSceneTheme.tres" id="1_tnto2"]
+[ext_resource type="Theme" uid="uid://cydiramlfc76f" path="res://themes/InfoDialog.tres" id="2_idsrs"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_idsrs"]
+resource_name = "option"
+
+[node name="LogScene" type="PopupPanel"]
+position = Vector2i(0, 36)
+size = Vector2i(566, 883)
+visible = true
+borderless = false
+always_on_top = true
+content_scale_mode = 1
+theme = ExtResource("1_tnto2")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 561.0
+offset_bottom = 878.0
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("1_tnto2")
+theme_override_constants/separation = 20
+
+[node name="ProblemButton" type="Button" parent="VBox/HBox"]
+layout_mode = 2
+theme = ExtResource("1_tnto2")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_idsrs")
+text = "Problem"
+
+[node name="OutputButton" type="Button" parent="VBox/HBox"]
+layout_mode = 2
+theme = ExtResource("1_tnto2")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_idsrs")
+text = "Output"
+
+[node name="VSeparator" type="VSeparator" parent="VBox"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("2_idsrs")
+text = "This is a richtext"
+fit_content = true
