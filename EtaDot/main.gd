@@ -38,6 +38,7 @@ func _ready() -> void:
 
 #region View
 func on_view_button_toggled() -> void:
+	# FIXME: Reset zooming or fix up zooming when enter other functions
 	clear_scenetree()
 	$ZoomLabel.show()
 	var scene = preload("res://CompTreeLayout.tscn").instantiate()

@@ -72,7 +72,7 @@ custom_minimum_size = Vector2(0, 350)
 layout_mode = 2
 theme = ExtResource("4_emt80")
 theme_override_styles/tabbar_background = SubResource("StyleBoxTexture_h6p58")
-current_tab = 2
+current_tab = 1
 
 [node name="Author" type="Button" parent="WindowTypeSetting/SelectTab"]
 visible = false
@@ -93,7 +93,6 @@ underline = 1
 uri = "https://github.com/Administroot"
 
 [node name="License" type="Button" parent="WindowTypeSetting/SelectTab"]
-visible = false
 layout_mode = 2
 theme = ExtResource("4_emt80")
 theme_override_font_sizes/font_size = 20
@@ -787,6 +786,7 @@ scroll_following = true
 autowrap_mode = 0
 
 [node name="Third-Party License" type="Button" parent="WindowTypeSetting/SelectTab"]
+visible = false
 layout_mode = 2
 theme = ExtResource("4_emt80")
 theme_override_font_sizes/font_size = 20

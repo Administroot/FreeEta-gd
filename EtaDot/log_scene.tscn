@@ -1,24 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://dgth0te8uuqc1"]
+[gd_scene load_steps=5 format=3 uid="uid://dgth0te8uuqc1"]
 
 [ext_resource type="Theme" uid="uid://c5nfbqg3h03jw" path="res://themes/LogSceneTheme.tres" id="1_tnto2"]
 [ext_resource type="Theme" uid="uid://cydiramlfc76f" path="res://themes/InfoDialog.tres" id="2_idsrs"]
+[ext_resource type="Script" uid="uid://caq8m8ejv2f1f" path="res://log_scene.gd" id="2_ncu7w"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_idsrs"]
 resource_name = "option"
 
 [node name="LogScene" type="PopupPanel"]
 position = Vector2i(0, 36)
-size = Vector2i(566, 883)
+size = Vector2i(540, 883)
 visible = true
 borderless = false
 always_on_top = true
 content_scale_mode = 1
 theme = ExtResource("1_tnto2")
+script = ExtResource("2_ncu7w")
 
 [node name="VBox" type="VBoxContainer" parent="."]
 offset_left = 5.0
 offset_top = 5.0
-offset_right = 561.0
+offset_right = 535.0
 offset_bottom = 878.0
 
 [node name="HBox" type="HBoxContainer" parent="VBox"]
@@ -43,8 +45,18 @@ text = "Output"
 [node name="VSeparator" type="VSeparator" parent="VBox"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBox"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MsgLabel" type="RichTextLabel" parent="VBox/ScrollContainer"]
 layout_mode = 2
 theme = ExtResource("2_idsrs")
-text = "This is a richtext"
+bbcode_enabled = true
 fit_content = true
+scroll_following = true
+autowrap_mode = 0
+
+[connection signal="toggled" from="VBox/HBox/ProblemButton" to="." method="_on_problem_button_toggled"]
+[connection signal="toggled" from="VBox/HBox/OutputButton" to="." method="_on_output_button_toggled"]

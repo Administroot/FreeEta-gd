@@ -11,6 +11,7 @@ func _on_node_type_button_toggled(toggled_on: bool) -> void:
 
 
 func _on_save_button_pressed() -> void:
+	# FIXME: Reread `GlobalData` from json files
 	var comps_button = $"VSplit/FileHBox/CompsButton"
 	var node_types_button = $"VSplit/FileHBox/NodeTypeButton"
 	var codeedit = $"VSplit/CodeEdit"

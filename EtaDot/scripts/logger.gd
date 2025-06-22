@@ -1,26 +1,28 @@
 class_name LogUtil
 
+static func msg_pipe(msg: String) -> void:
+	GlobalData.global_logger += msg + "\n"
+	print_rich(msg)
+	write_to_log(msg)
 
 static func info(msg: String) -> void:
 	var datetime = Time.get_datetime_dict_from_system()
 	var timestamp = "{year}-{month}-{day} {hour}:{minute}:{second}".format(datetime)
 	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=green][INFO][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
-	print_rich(logger)
-	write_to_log(logger)
+	msg_pipe(logger)
 
 static func warning(msg: String) -> void:
 	var datetime = Time.get_datetime_dict_from_system()
 	var timestamp = "{year}-{month}-{day} {hour}:{minute}:{second}".format(datetime)
 	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=yellow][WARNING][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
-	print_rich(logger)
-	write_to_log(logger)
+	msg_pipe(logger)
 
 static func error(msg: String) -> void:
 	var datetime = Time.get_datetime_dict_from_system()
 	var timestamp = "{year}-{month}-{day} {hour}:{minute}:{second}".format(datetime)
 	var logger = "[color=purple][i]{timestamp}[/i][/color] [color=red][ERROR][/color] > {msg}".format({"timestamp": timestamp, "msg": msg})
-	print_rich(logger)
-	write_to_log(logger)
+	GlobalData.error_logger += logger + "\n"
+	msg_pipe(logger)
 
 static func info_dialog(node: Node, msg: String) -> void:
 	var dialog = preload("res://info_dialog.tscn").instantiate()

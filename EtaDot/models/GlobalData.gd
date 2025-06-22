@@ -1,5 +1,8 @@
 extends Node
 
+var global_logger: String = ""
+var error_logger: String = ""
+
 #region Components
 var components_data: Components
 var selected_components := Components.new()
