@@ -38,10 +38,10 @@ func _ready() -> void:
 
 #region View
 func on_view_button_toggled() -> void:
-	# FIXME: Reset zooming or fix up zooming when enter other functions
 	clear_scenetree()
 	$ZoomLabel.show()
 	var scene = preload("res://CompTreeLayout.tscn").instantiate()
+	scene.name = "CompTreeLayout"
 	scene.position = Vector2(-200, 540)
 	$Scenes.add_child(scene)
 
@@ -112,18 +112,19 @@ func _input(event: InputEvent) -> void:
 		selection_mode = false
 	########################################
 	########### Scroll Function ############
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			zoom_scene(1+zoom_step)
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			zoom_scene(1-zoom_step)
-		# Using scroll to move `ContentControl`
-		elif event.button_index == MOUSE_BUTTON_MIDDLE:
-			is_dragging = event.pressed
-			if is_dragging:
-				content_position = position
-	if is_dragging and event is InputEventMouseMotion:
-		content_position += event.relative * move_speed
+	if $Scenes.has_node("CompTreeLayout"):
+		if event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				zoom_scene(1+zoom_step)
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				zoom_scene(1-zoom_step)
+			# Using scroll to move `ContentControl`
+			elif event.button_index == MOUSE_BUTTON_MIDDLE:
+				is_dragging = event.pressed
+				if is_dragging:
+					content_position = position
+		if is_dragging and event is InputEventMouseMotion:
+			content_position += event.relative * move_speed
 	########################################
 
 #region Scroll
