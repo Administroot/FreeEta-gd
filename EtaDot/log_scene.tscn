@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgth0te8uuqc1"]
+[gd_scene load_steps=6 format=3 uid="uid://dgth0te8uuqc1"]
 
 [ext_resource type="Theme" uid="uid://c5nfbqg3h03jw" path="res://themes/LogSceneTheme.tres" id="1_tnto2"]
 [ext_resource type="Theme" uid="uid://cydiramlfc76f" path="res://themes/InfoDialog.tres" id="2_idsrs"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_idsrs"]
 resource_name = "option"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ncu7w"]
+bg_color = Color(0.223529, 0.223529, 0.223529, 1)
 
 [node name="LogScene" type="PopupPanel"]
 position = Vector2i(0, 36)
@@ -42,21 +45,38 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_idsrs")
 text = "Output"
 
+[node name="TextureRect" type="TextureRect" parent="VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ClearButton" type="Button" parent="VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_ncu7w")
+text = "Clear"
+
 [node name="VSeparator" type="VSeparator" parent="VBox"]
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
 [node name="MsgLabel" type="RichTextLabel" parent="VBox/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("2_idsrs")
 bbcode_enabled = true
 fit_content = true
-scroll_following = true
 autowrap_mode = 0
+shortcut_keys_enabled = false
+drag_and_drop_selection_enabled = false
+text_direction = 1
 
 [connection signal="toggled" from="VBox/HBox/ProblemButton" to="." method="_on_problem_button_toggled"]
 [connection signal="toggled" from="VBox/HBox/OutputButton" to="." method="_on_output_button_toggled"]
+[connection signal="pressed" from="VBox/HBox/ClearButton" to="." method="_on_clear_button_pressed"]
