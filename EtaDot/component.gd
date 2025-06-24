@@ -1,6 +1,6 @@
 extends Node2D
 
-var size := Vector2()
+@export var size := Vector2()
 @export var component: Component
 var dragging := false
 var drag_offset := Vector2()
@@ -13,8 +13,10 @@ func _ready() -> void:
 		set_text(component.node_name, pic_size)
 
 func set_texture(picture: String) -> Vector2:
-	$Photo.texture = load(picture)
-	size = $Photo.texture.get_size()
+	var image = Image.load_from_file(picture)
+	var texture = ImageTexture.create_from_image(image)
+	texture.set_size_override(size)
+	$Photo.texture = texture
 	$Button.size = size
 	$Button.position = - size / 2.
 	return size

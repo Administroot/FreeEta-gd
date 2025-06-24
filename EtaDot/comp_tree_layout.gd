@@ -1,11 +1,11 @@
 extends Control
 
 # Layout parameters
-@export var spacing_x: float = 200.0 # Horizontal spacing between nodes
-@export var spacing_y: float = 50.0 # Vertical spacing between nodes
+var spacing_x: float = 200.0 # Horizontal spacing between nodes
+var spacing_y: float = 50.0 # Vertical spacing between nodes
 # TODO: Dynamically adjust width / height
-@export var node_width: float = 200.0 # Node width
-@export var node_height: float = 200.0 # Node height
+var node_width: float = 200.0 # Node width
+var node_height: float = 200.0 # Node height
 
 var x_interval: float # Node horizontal interval (width + spacing)
 var y_interval: float # Node vertical interval (height + spacing)
@@ -183,6 +183,7 @@ func refresh_node_position(node: TreeNode, processed_nodes: Dictionary = {}):
 		# Recursively refresh child node
 		refresh_node_position(child, processed_nodes)
 	var scene = load("res://component.tscn").instantiate()
+	scene.size = Vector2(node_width, node_height)
 	scene.position = node.position
 	scene.component = node.comp
 	# LogUtil.info("Node.Name: %s; Parents: %s; Childs: %s" % [node.name, node.parents, node.childs])
