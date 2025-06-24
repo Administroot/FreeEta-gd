@@ -59,7 +59,7 @@ func _on_right_button_pressed(pos: Vector2) -> void:
 	if not panel:
 		# Init component
 		panel = load("res://CU_node_scene.tscn").instantiate()
-		panel.get_node("Panel").position = pos
+		panel.get_node("Panel").size.position = pos
 		panel.component = component
 		add_child(panel)
 		await panel.tree_exited
@@ -82,18 +82,15 @@ func create_component_by_panel(mode: bool) -> void:
 		panel = load("res://CU_node_scene.tscn").instantiate()
 	else :
 		return
-	var pos: Vector2
 	var selection_mode = GlobalData.selected_components.components.is_empty()
 	if mode:
 		# `True` for Apposition
-		pos = get_parent().global_position + Vector2(-0.5 * size.x - 0.25 * panel.size.x, 0.5 * size.y + 0.25 * panel.size.y)
 		var new_comp = Component.new()
 		new_comp.node_id = get_instance_id()
 		new_comp.prev_node = component.prev_node
 		panel.component = new_comp
 	else :
 		# `False` for tadem
-		pos = get_parent().global_position + Vector2(0.5 * size.x + 0.25 * panel.size.x, -0.5 * size.y - 0.25 * panel.size.y)
 		var new_comp = Component.new()
 		new_comp.node_id = get_instance_id()
 		# selection mode == true, single selection mode;
@@ -105,7 +102,6 @@ func create_component_by_panel(mode: bool) -> void:
 			# TODO: Customize `prev_node`
 			new_comp.prev_node = GlobalData.selected_components.get_components_id()
 		panel.component = new_comp
-	panel.position = pos
-	panel.z_index = 5
+	panel.get_node("Panel").position = Vector2(960, 540)
 	add_child(panel)
 	await panel.tree_exited
