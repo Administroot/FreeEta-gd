@@ -186,4 +186,4 @@ func adjust_height(choice: int) -> void:
 		1:
 			panel_h += grid_height
 			panel_h += v_sep
-	$Panel.size.y = panel_h
+	$Panel.size.y = int(panel_h)

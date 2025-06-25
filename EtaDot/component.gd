@@ -59,7 +59,7 @@ func _on_right_button_pressed(pos: Vector2) -> void:
 	if not panel:
 		# Init component
 		panel = load("res://CU_node_scene.tscn").instantiate()
-		panel.get_node("Panel").size.position = pos
+		panel.get_node("Panel").position = pos
 		panel.component = component
 		add_child(panel)
 		await panel.tree_exited
@@ -89,12 +89,14 @@ func create_component_by_panel(mode: bool) -> void:
 		new_comp.node_id = get_instance_id()
 		new_comp.prev_node = component.prev_node
 		panel.component = new_comp
+		panel.get_node("Panel/VBox/title").text = "ℹ Create [u]Apposition[/u] Node"
 	else :
 		# `False` for tadem
 		var new_comp = Component.new()
 		new_comp.node_id = get_instance_id()
 		# selection mode == true, single selection mode;
 		# selection mode == false, multiple selection mode
+		panel.get_node("Panel/VBox/title").text = "ℹ Create [u]Tadem[/u] Node"
 		if selection_mode:
 			# TODO: Customize `prev_node`
 			new_comp.prev_node = [component.node_id]

@@ -8,6 +8,7 @@ var data = GlobalData.nodetypes_data
 func _ready() -> void:
 	var item_root = label_list.create_item()
 	item_root.set_metadata(0, {"favor_flag": false})
+	# TODO: Realize recent `NodeType` function
 	create_recent_member(item_root, "Pump")
 	create_recent_member(item_root, "Valve")
 	create_recent_member(item_root, "Switch")
