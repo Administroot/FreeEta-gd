@@ -72,4 +72,24 @@ theme_override_colors/font_color = Color(0.631373, 0.623529, 0.615686, 1)
 theme_override_font_sizes/font_size = 30
 text = "100%"
 
+[node name="SelectedComp" type="Label" parent="."]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 266.0
+offset_right = 249.0
+offset_bottom = 294.0
+theme = ExtResource("5_lquwl")
+theme_override_colors/font_color = Color(0.549745, 0.312752, 0.613126, 1)
+text = "Selected Component = "
+
+[node name="ToggleMode" type="Label" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 294.0
+offset_right = 173.0
+offset_bottom = 322.0
+theme = ExtResource("5_lquwl")
+theme_override_colors/font_color = Color(0.549745, 0.312752, 0.613126, 1)
+text = "Toggle Mode = "
+
 [connection signal="pressed" from="RefreshButton" to="." method="_on_refresh_button_pressed"]

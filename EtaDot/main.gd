@@ -113,6 +113,7 @@ func _input(event: InputEvent) -> void:
 	########################################
 	########### Scroll Function ############
 	if $Scenes.has_node("CompTreeLayout"):
+		# FIXME: After creating `component`, scroll function lose efficacy.
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				zoom_scene(1+zoom_step)
@@ -145,6 +146,9 @@ func zoom_scene(factor: float):
 	content.scale = new_scale
 	$ZoomLabel.text = "%.1f%%" % (new_scale.x * 100)
 
+@onready var selected_comps_label = $"SelectedComp"
+@onready var toggle_label = $"ToggleMode"
+
 func multiple_selection_mode(event: InputEvent) -> void:
 	var clicked_pos = event.position
 	for comp_scene in $ContentControl/TreeComps.get_children():
@@ -154,6 +158,9 @@ func multiple_selection_mode(event: InputEvent) -> void:
 				button.toggle_mode = true
 				# Add component to group when selected
 				GlobalData.selected_components.add_component(comp_scene.component)
+				## DEBUG
+				selected_comps_label.text = "Selected Component = " + ", ".join(GlobalData.selected_components.get_all_component_names())
+				toggle_label.text = "Toggle Mode = true"
 
 func single_selection_mode() -> void:
 	# Clear status
@@ -163,6 +170,9 @@ func single_selection_mode() -> void:
 			button.toggle_mode = false
 			# Clear components and add component when selected
 			GlobalData.selected_components.clear_all_components()
+			## DEBUG
+			selected_comps_label.text = "Selected Component = NULL"
+			toggle_label.text = "Toggle Mode = false"
 #endregion
 #endregion 
 

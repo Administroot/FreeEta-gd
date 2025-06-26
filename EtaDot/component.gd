@@ -12,6 +12,8 @@ func _ready() -> void:
 		var pic_size = set_texture(res.sprite_path)
 		set_text(component.node_name, pic_size)
 
+# FIXME:  set_texture(): Loaded resource as image file, this will not work on export: 'res://assets/valve.svg'.
+# Instead, import the image file as an Image resource and load it normally as a resource.
 func set_texture(picture: String) -> Vector2:
 	var image = Image.load_from_file(picture)
 	var texture = ImageTexture.create_from_image(image)
@@ -83,17 +85,15 @@ func create_component_by_panel(mode: bool) -> void:
 	else :
 		return
 	var selection_mode = GlobalData.selected_components.components.is_empty()
+	var new_comp = Component.new()
+	new_comp.node_id = get_instance_id()
 	if mode:
 		# `True` for Apposition
-		var new_comp = Component.new()
-		new_comp.node_id = get_instance_id()
 		new_comp.prev_node = component.prev_node
 		panel.component = new_comp
 		panel.get_node("Panel/VBox/title").text = "ℹ Create [u]Apposition[/u] Node"
 	else :
 		# `False` for tadem
-		var new_comp = Component.new()
-		new_comp.node_id = get_instance_id()
 		# selection mode == true, single selection mode;
 		# selection mode == false, multiple selection mode
 		panel.get_node("Panel/VBox/title").text = "ℹ Create [u]Tadem[/u] Node"
@@ -106,4 +106,5 @@ func create_component_by_panel(mode: bool) -> void:
 		panel.component = new_comp
 	panel.get_node("Panel").position = Vector2(960, 540)
 	add_child(panel)
+	GlobalData.push_recent_component_type(new_comp.get_nodetype_by_component())
 	await panel.tree_exited

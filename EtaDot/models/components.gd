@@ -53,7 +53,7 @@ func get_all_component_names() -> Array[String]:
     return names
 
 func get_all_component_ids() -> Array[int]:
-    var ids: Array[int] = []
+    var ids: Array[int]
     for component in components:
         ids.append(component.node_id)
     return ids

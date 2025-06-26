@@ -41,8 +41,20 @@ func reorganize_ending_comp() -> void:
 	ending_comp.node_name = "Ending"
 	ending_comp.node_type = "Initial"
 	ending_comp.reliability = 1.
-	ending_comp.prev_node = orphans
-	components_data.update_component(ending_comp)
+	ending_comp.prev_node = PackedInt64Array()
+	for elem in orphans:
+		ending_comp.prev_node.append(elem)
+	ending_comp.printall()
+	append_ending_comp(ending_comp)
+
+# Fix Bug: When `ending_comp` doesn't at bottom of `components_data`, program will crash
+func append_ending_comp(component: Component) -> void:
+	for index in range(len(components_data.components)):
+		if components_data.components[index].node_id == component.node_id:
+			# Erase old node
+			components_data.components.pop_at(index)
+			break
+	components_data.add_component(component)
 
 #region NodeTypes
 var nodetypes_data : NodeTypes
@@ -75,8 +87,22 @@ func save_nodetypes(nodetype: NodeType, savemode: bool, node_id: int = 0) -> voi
 		LogUtil.error("Error saving [color=golden]NodeType[/color] data.")
 #endregion
 
+#region Recent
+var recently_created_component_types := [Component]
+
+func push_recent_component_type(nodetype: NodeType) -> void:
+	if recently_created_component_types.size() <= 10:
+		recently_created_component_types.push_front(nodetype)
+#endregion
+
 #region Testify
 func print_global_data() -> void:
 	components_data.print_all_members("@Global: Components Data: ")
 	nodetypes_data.print_all_members("@Global: NodeTypes Data: ")
+
+func print_recent_compnent_type() -> void:
+	LogUtil.info("@Global: recently_created_component_types:")
+	for member in recently_created_component_types:
+		print(member)
+	LogUtil.info("------------------------------------------")
 #endregion

@@ -6,7 +6,7 @@ class_name Component
 @export var node_name: String = ""
 @export var node_type: String = ""
 @export var reliability: float = 0.0
-@export var prev_node: PackedInt32Array
+@export var prev_node: PackedInt64Array
 
 func printall() -> void:
     var logger = "[color=pink]&&&&&[/color] node_id: {node_id} || node_name: {node_name} || node_type: {node_type} || reliability: {reliability} || prev_node: {prev_node} [color=pink]&&&&&[/color]".format({"node_id": node_id, "node_name": node_name, "node_type": node_type, "reliability": reliability, "prev_node": prev_node})
