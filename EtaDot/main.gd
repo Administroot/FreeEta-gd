@@ -104,7 +104,7 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventMouseButton and selection_mode == true:
 		# CTRL + LEFT_CLICK Selected
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-			multiple_selection_mode(event)
+			multiple_selection_mode()
 	elif event is InputEventMouseMotion:
 		pass
 	else :
@@ -149,18 +149,23 @@ func zoom_scene(factor: float):
 @onready var selected_comps_label = $"SelectedComp"
 @onready var toggle_label = $"ToggleMode"
 
-func multiple_selection_mode(event: InputEvent) -> void:
-	var clicked_pos = event.position
+func multiple_selection_mode() -> void:
 	for comp_scene in $ContentControl/TreeComps.get_children():
 		var button = comp_scene.get_node("Button")
-		if button.get_rect().has_point(clicked_pos - comp_scene.position):
-			if button:
-				button.toggle_mode = true
-				# Add component to group when selected
-				GlobalData.selected_components.add_component(comp_scene.component)
-				## DEBUG
-				selected_comps_label.text = "Selected Component = " + ", ".join(GlobalData.selected_components.get_all_component_names())
-				toggle_label.text = "Toggle Mode = true"
+		# LogUtil.error("Selected button.name: %s" % comp_scene.get_node("NameLabel").text)
+		# Ensure button exists and is visible
+		if not button or not button.visible:
+			continue
+		# Convert global mouse position to button's local space, considering transforms
+		var global_mouse_pos = get_viewport().get_mouse_position()
+		var button_global_rect = button.get_global_rect()
+		if button_global_rect.has_point(global_mouse_pos):
+			button.toggle_mode = true
+			# Add component to group when selected
+			GlobalData.selected_components.add_component(comp_scene.component)
+			## DEBUG
+			selected_comps_label.text = "Selected Component = " + ", ".join(GlobalData.selected_components.get_all_component_names())
+			toggle_label.text = "Toggle Mode = true"
 
 func single_selection_mode() -> void:
 	# Clear status
