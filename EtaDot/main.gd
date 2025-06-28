@@ -107,7 +107,7 @@ func _input(event: InputEvent) -> void:
 			multiple_selection_mode()
 	elif event is InputEventMouseMotion:
 		pass
-	else :
+	else:
 		single_selection_mode()
 		selection_mode = false
 	########################################
@@ -116,9 +116,9 @@ func _input(event: InputEvent) -> void:
 		# FIXME: After creating `component`, scroll function lose efficacy.
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				zoom_scene(1+zoom_step)
+				zoom_scene(1 + zoom_step)
 			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				zoom_scene(1-zoom_step)
+				zoom_scene(1 - zoom_step)
 			# Using scroll to move `ContentControl`
 			elif event.button_index == MOUSE_BUTTON_MIDDLE:
 				is_dragging = event.pressed
@@ -132,7 +132,7 @@ func _input(event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	if is_dragging:
 		$ContentControl.position = position.lerp(content_position, smoothing)
-	else :
+	else:
 		content_position = position
 
 #region Multiple Selection
@@ -163,6 +163,7 @@ func multiple_selection_mode() -> void:
 			button.toggle_mode = true
 			# Add component to group when selected
 			GlobalData.selected_components.add_component(comp_scene.component)
+			GlobalData.selected_components.annihilation()
 			## DEBUG
 			selected_comps_label.text = "Selected Component = " + ", ".join(GlobalData.selected_components.get_all_component_names())
 			toggle_label.text = "Toggle Mode = true"

@@ -37,6 +37,17 @@ func update_component(component: Component) -> void:
     # Append new node
     components.append(component)
 
+# If there are two `Component` the same, remove them from `components`
+func annihilation() -> void:
+    var to_remove := []
+    for i in range(components.size()):
+        for j in range(i + 1, components.size()):
+            if components[i] == components[j]:
+                to_remove.append(components[i])
+                to_remove.append(components[j])
+    for comp in to_remove:
+        components.erase(comp)
+
 func clear_all_components() -> void:
     components.clear()
 
