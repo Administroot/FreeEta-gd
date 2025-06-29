@@ -236,6 +236,7 @@ func is_overlaps(node1: TreeNode, node2: TreeNode) -> bool:
 # Find node2's ancestor under the common ancestor of two nodes
 func get_common_parent_n2_parent(node1: TreeNode, node2: TreeNode) -> TreeNode:
 	# If direct parents are the same, return node2
+	# FIXME: Out of bounds get index '0' (on base: 'Array')
 	if node1.parents[0] == node2.parents[0]:
 		return node2
 	

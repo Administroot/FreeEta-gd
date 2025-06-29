@@ -1,8 +1,8 @@
 extends CanvasLayer
 
 @export var component: Component
-var all_node_selections = []
-var all_del_prev_buttons = []
+var all_node_selections: Array[Node] = []
+var all_del_prev_buttons: Array[Node] = []
 
 # ----- Structure -----
 # NodeName: String
@@ -109,7 +109,9 @@ func _on_confirm_button_pressed() -> void:
 	# Update `Prev Node`
 	component.prev_node.clear()
 	for nodeselection in all_node_selections:
-		component.prev_node.append(nodeselection.selected)
+		var prev_name = nodeselection.get_item_text(nodeselection.selected)
+		var prev_id = GlobalData.components_data.get_component_by_name(prev_name).node_id
+		component.prev_node.append(prev_id)
 	# Check if there are any duplicates in `prev_node`
 	var seen_nodes = []
 	for node_id in component.prev_node:
