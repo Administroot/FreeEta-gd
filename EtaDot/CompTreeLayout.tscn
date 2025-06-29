@@ -6,5 +6,3 @@
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_7lo4k")
-
-[node name="CompScenes" type="Node2D" parent="."]

@@ -1,5 +1,6 @@
 extends Node2D
 
+signal refresh
 @export var size := Vector2()
 @export var component: Component
 var dragging := false
@@ -108,3 +109,4 @@ func create_component_by_panel(mode: bool) -> void:
 	add_child(panel)
 	GlobalData.push_recent_component_type(new_comp.get_nodetype_by_component())
 	await panel.tree_exited
+	emit_signal("refresh")

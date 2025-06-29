@@ -32,8 +32,14 @@ func _ready() -> void:
 	$"Scenes/BottomSlide".eta_button_toggled.connect(on_eta_button_toggled)
 	$"Scenes/BottomSlide".data_button_toggled.connect(on_data_button_toggled)
 	$"Scenes/BottomSlide".log_button_toggled.connect(on_log_button_toggled)
+	# Connect signals from scene `component`
+	$"ContentControl/TreeComps".child_entered_tree.connect(_on_comp_added)
 	# Print GlobalData
 	GlobalData.print_global_data()
+
+func _on_comp_added(child: Node) -> void:
+	if child.has_signal("refresh"):
+		child.refresh.connect(_on_refresh_button_pressed, CONNECT_DEFERRED)
 #endregion
 
 #region View
@@ -152,7 +158,6 @@ func zoom_scene(factor: float):
 func multiple_selection_mode() -> void:
 	for comp_scene in $ContentControl/TreeComps.get_children():
 		var button = comp_scene.get_node("Button")
-		# LogUtil.error("Selected button.name: %s" % comp_scene.get_node("NameLabel").text)
 		# Ensure button exists and is visible
 		if not button or not button.visible:
 			continue

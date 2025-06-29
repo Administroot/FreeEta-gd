@@ -3,7 +3,6 @@ extends Control
 # Layout parameters
 var spacing_x: float = 200.0 # Horizontal spacing between nodes
 var spacing_y: float = 50.0 # Vertical spacing between nodes
-# TODO: Dynamically adjust width / height
 var node_width: float = 200.0 # Node width
 var node_height: float = 200.0 # Node height
 
