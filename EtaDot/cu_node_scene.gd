@@ -189,3 +189,17 @@ func adjust_height(choice: int) -> void:
 			panel_h += grid_height
 			panel_h += v_sep
 	$Panel.size.y = int(panel_h)
+
+
+func _on_del_button_pressed() -> void:
+	var dialog = preload("res://ConfirmDialog.tscn").instantiate()
+	dialog.msg = "Delete Node [color=red]{node_name}[/color]".format({"node_name": component.node_name})
+	dialog.confirmed.connect(_execute_delete)
+	dialog.canceled.connect(_cancel_delete)
+	add_child(dialog)
+
+func _execute_delete() -> void:
+	LogUtil.info("execute deletion")
+
+func _cancel_delete() -> void:
+	LogUtil.info("cancel deletion")

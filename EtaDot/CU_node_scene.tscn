@@ -247,3 +247,4 @@ icon = ExtResource("6_g66il")
 [connection signal="pressed" from="Panel/VBox/Grid2/NodeVBox/AddPrevButton" to="." method="_on_add_prev_button_pressed"]
 [connection signal="pressed" from="Panel/VBox/Grid3/ConfirmButton" to="." method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="Panel/VBox/Grid3/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="Panel/DelButton" to="." method="_on_del_button_pressed"]

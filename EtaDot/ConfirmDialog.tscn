@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://dwklp1g1wl5hn"]
+
+[ext_resource type="Theme" uid="uid://dh6xfus8ylw54" path="res://themes/ConfirmDialog.tres" id="1_7uq2i"]
+[ext_resource type="Script" uid="uid://cwpvy3dhblxcx" path="res://confirm_dialog.gd" id="2_ou0x1"]
+
+[sub_resource type="Theme" id="Theme_lmn6h"]
+Button/font_sizes/font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_25n3h"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fj7i0"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="Theme" id="Theme_mjusi"]
+Button/font_sizes/font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hw8fy"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qqpe"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[node name="ConfirmDialog" type="PopupPanel"]
+title = "❓Confirmation"
+initial_position = 1
+size = Vector2i(500, 134)
+visible = true
+borderless = false
+always_on_top = true
+min_size = Vector2i(500, 0)
+content_scale_mode = 1
+theme = ExtResource("1_7uq2i")
+script = ExtResource("2_ou0x1")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 480.0
+offset_bottom = 114.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MsgLabel" type="RichTextLabel" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 0
+bbcode_enabled = true
+text = "Hello, FreeEta!!"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="ConfirmLabel" type="Label" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Are you sure?"
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="VBox/HBox"]
+custom_minimum_size = Vector2(140, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_lmn6h")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_25n3h")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fj7i0")
+text = "✔️ Confirm"
+
+[node name="CancelButton" type="Button" parent="VBox/HBox"]
+custom_minimum_size = Vector2(140, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_mjusi")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_hw8fy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_3qqpe")
+text = "❌ Cancel"
+
+[connection signal="pressed" from="VBox/HBox/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="VBox/HBox/CancelButton" to="." method="_on_cancel_button_pressed"]
