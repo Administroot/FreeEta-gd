@@ -70,6 +70,9 @@ func _on_right_button_pressed(pos: Vector2) -> void:
 
 # Deliver "refresh" signal to `main` scene
 func _on_refresh_button_pressed() -> void:
+	# Check if has orphans after deletion
+	if GlobalData.components_data.has_orphans():
+		LogUtil.warning_dialog(get_parent().get_parent().get_parent(), "You has orphan [color=red]component(s)[/color]. Please fix it manually!")
 	emit_signal("refresh")
 
 func _on_button_gui_input(event: InputEvent) -> void:
