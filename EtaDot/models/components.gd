@@ -37,6 +37,15 @@ func update_component(component: Component) -> void:
     # Append new node
     components.append(component)
 
+func delete_component(component: Component) -> void:
+    # Remove the component from the components array
+    components.erase(component)
+    # Remove references to this component from other components' prev_node
+    for comp in components:
+        var idx := comp.prev_node.find(component.node_id)
+        if idx != -1:
+            comp.prev_node.remove_at(idx)
+
 # If there are two `Component` the same, remove them from `components`
 func annihilation() -> void:
     var to_remove := []

@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal refresh
+
 @export var component: Component
 var all_node_selections: Array[Node] = []
 var all_del_prev_buttons: Array[Node] = []
@@ -199,7 +201,10 @@ func _on_del_button_pressed() -> void:
 	add_child(dialog)
 
 func _execute_delete() -> void:
-	LogUtil.info("execute deletion")
+	GlobalData.components_data.delete_component(component)
+	GlobalData.save_components()
+	emit_signal("refresh")
 
 func _cancel_delete() -> void:
-	LogUtil.info("cancel deletion")
+	# DO NOTHING
+	pass

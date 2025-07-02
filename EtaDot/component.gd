@@ -61,12 +61,16 @@ func _on_button_pressed() -> void:
 func _on_right_button_pressed(pos: Vector2) -> void:
 	if not panel:
 		# Init component
-		panel = load("res://CU_node_scene.tscn").instantiate()
+		panel = preload("res://CU_node_scene.tscn").instantiate()
 		panel.get_node("Panel").position = pos
 		panel.component = component
+		panel.refresh.connect(_on_refresh_button_pressed)
 		add_child(panel)
 		await panel.tree_exited
 
+# Deliver "refresh" signal to `main` scene
+func _on_refresh_button_pressed() -> void:
+	emit_signal("refresh")
 
 func _on_button_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
