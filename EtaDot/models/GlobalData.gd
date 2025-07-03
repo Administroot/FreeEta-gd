@@ -3,6 +3,12 @@ extends Node
 var global_logger: String = ""
 var error_logger: String = ""
 
+
+func reload() -> void:
+	components_data = get_components()
+	reorganize_ending_comp()
+	nodetypes_data = get_nodetypes()
+
 #region Components
 var components_data: Components
 var selected_components := Components.new()

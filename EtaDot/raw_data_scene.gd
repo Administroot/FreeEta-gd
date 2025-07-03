@@ -11,7 +11,6 @@ func _on_node_type_button_toggled(toggled_on: bool) -> void:
 
 
 func _on_save_button_pressed() -> void:
-	# FIXME: Reread `GlobalData` from json files
 	var comps_button = $"VSplit/FileHBox/CompsButton"
 	var node_types_button = $"VSplit/FileHBox/NodeTypeButton"
 	var codeedit = $"VSplit/CodeEdit"
@@ -23,9 +22,12 @@ func _on_save_button_pressed() -> void:
 	elif node_types_button.is_pressed():
 		flag = write_json_config("user://saves/node_types.json", codeedit.text)
 		button_name = "node_types.json"
+	# `flag` == `true` means process successfully
 	if flag:
 		LogUtil.info_dialog($".", "[bgcolor=f54ea2]%s[/bgcolor] saved successfully" % button_name)
-
+		# Reload `GlobalData` from json files, otherwise other scenes will remain the same
+		GlobalData.reload()
+		
 #region CRUD
 func read_json_config(path: String) -> String:
 	var file = FileAccess.open(path, FileAccess.READ)
