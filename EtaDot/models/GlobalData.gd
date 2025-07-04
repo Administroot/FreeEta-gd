@@ -63,7 +63,7 @@ func append_ending_comp(component: Component) -> void:
 	components_data.add_component(component)
 
 #region NodeTypes
-var nodetypes_data : NodeTypes
+var nodetypes_data: NodeTypes
 
 #JSON Serialize and Deserialize
 func get_nodetypes() -> NodeTypes:
@@ -94,11 +94,13 @@ func save_nodetypes(nodetype: NodeType, savemode: bool, node_id: int = 0) -> voi
 #endregion
 
 #region Recent
-var recently_created_component_types := [Component]
+var recently_created_component_types: Array[NodeType] = []
 
 func push_recent_component_type(nodetype: NodeType) -> void:
 	if recently_created_component_types.size() <= 10:
 		recently_created_component_types.push_front(nodetype)
+	else:
+		recently_created_component_types.pop_back()
 #endregion
 
 #region Testify
@@ -106,9 +108,9 @@ func print_global_data() -> void:
 	components_data.print_all_members("@Global: Components Data: ")
 	nodetypes_data.print_all_members("@Global: NodeTypes Data: ")
 
-func print_recent_compnent_type() -> void:
+func print_recent_component_type() -> void:
 	LogUtil.info("@Global: recently_created_component_types:")
 	for member in recently_created_component_types:
-		print(member)
+		print(member.type_name)
 	LogUtil.info("------------------------------------------")
 #endregion

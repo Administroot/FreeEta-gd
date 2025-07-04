@@ -27,9 +27,9 @@ func set_texture(picture: String) -> Vector2:
 func set_text(text: String, pos: Vector2) -> void:
 	if text not in ["Initial", "Ending"]:
 		$NameLabel.text = text
-	else :
+	else:
 		$NameLabel.text = ""
-	$NameLabel.position = Vector2(- pos.x / 2. + $NameLabel.get_size().x / 2., pos.y / 2.)
+	$NameLabel.position = Vector2(-pos.x / 2. + $NameLabel.get_size().x / 2., pos.y / 2.)
 
 ## While pressing MOUSE_BUTTON_LEFT and dragging: dragging
 ## While pressing MOUSE_BUTTON_RIGHT: show node statics
@@ -90,7 +90,8 @@ func _on_button_gui_input(event: InputEvent) -> void:
 func create_component_by_panel(mode: bool) -> void:
 	if not panel:
 		panel = load("res://CU_node_scene.tscn").instantiate()
-	else :
+		# TODO: Hide `Deletion` button of `panel`
+	else:
 		return
 	var selection_mode = GlobalData.selected_components.components.is_empty()
 	var new_comp = Component.new()
@@ -100,7 +101,7 @@ func create_component_by_panel(mode: bool) -> void:
 		new_comp.prev_node = component.prev_node
 		panel.component = new_comp
 		panel.get_node("Panel/VBox/title").text = "ℹ Create [u]Apposition[/u] Node"
-	else :
+	else:
 		# `False` for tadem
 		# selection mode == true, single selection mode;
 		# selection mode == false, multiple selection mode
@@ -108,12 +109,11 @@ func create_component_by_panel(mode: bool) -> void:
 		if selection_mode:
 			# TODO: Customize `prev_node`
 			new_comp.prev_node = [component.node_id]
-		else :
+		else:
 			# TODO: Customize `prev_node`
 			new_comp.prev_node = GlobalData.selected_components.get_components_id()
 		panel.component = new_comp
 	panel.get_node("Panel").position = Vector2(960, 540)
 	add_child(panel)
-	GlobalData.push_recent_component_type(new_comp.get_nodetype_by_component())
 	await panel.tree_exited
 	emit_signal("refresh")

@@ -128,9 +128,12 @@ func _on_confirm_button_pressed() -> void:
 		queue_free()
 		return
 	#### Sync with `GlobalData` ####
+	GlobalData.push_recent_component_type(component.get_nodetype_by_component())
 	GlobalData.components_data.update_component(component)
 	GlobalData.save_components()
 	################################
+	LogUtil.info("New Component Created!")
+	component.printall()
 	queue_free()
 
 

@@ -8,10 +8,7 @@ var data = GlobalData.nodetypes_data
 func _ready() -> void:
 	var item_root = label_list.create_item()
 	item_root.set_metadata(0, {"favor_flag": false})
-	# TODO: Realize recent `NodeType` function
-	create_recent_member(item_root, "Pump")
-	create_recent_member(item_root, "Valve")
-	create_recent_member(item_root, "Switch")
+	load_recent_members(item_root)
 
 	var tree_root = node_list.create_item()
 	for i in range(len(data.types)):
@@ -24,6 +21,16 @@ func create_nodelist_member(parent: TreeItem, node: NodeType, sprite_path: Strin
 	label.set_custom_font_size(0, 25)
 	label.add_button(0, load(sprite_path), -1, false, "")
 	label.set_editable(0, false)
+
+func load_recent_members(root: TreeItem) -> void:
+	# Remove duplicated members
+	var recent: Array[String] = []
+	for types in GlobalData.recently_created_component_types:
+		if types.type_name not in recent:
+			recent.append(types.type_name)
+	# Find recent `NodeType`
+	for typename in recent:
+		create_recent_member(root, typename)
 
 # When user press specific node tree item
 func _on_node_list_cell_selected() -> void:
