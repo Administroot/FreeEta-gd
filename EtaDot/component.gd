@@ -90,7 +90,8 @@ func _on_button_gui_input(event: InputEvent) -> void:
 func create_component_by_panel(mode: bool) -> void:
 	if not panel:
 		panel = load("res://CU_node_scene.tscn").instantiate()
-		# TODO: Hide `Deletion` button of `panel`
+		# Hide `Deletion` button of `panel`
+		panel.get_node("Panel/DelButton").hide()
 	else:
 		return
 	var selection_mode = GlobalData.selected_components.components.is_empty()
@@ -107,10 +108,10 @@ func create_component_by_panel(mode: bool) -> void:
 		# selection mode == false, multiple selection mode
 		panel.get_node("Panel/VBox/title").text = "ℹ Create [u]Tadem[/u] Node"
 		if selection_mode:
-			# TODO: Customize `prev_node`
+			# Customize `prev_node`
 			new_comp.prev_node = [component.node_id]
 		else:
-			# TODO: Customize `prev_node`
+			# Customize `prev_node`
 			new_comp.prev_node = GlobalData.selected_components.get_components_id()
 		panel.component = new_comp
 	panel.get_node("Panel").position = Vector2(960, 540)
