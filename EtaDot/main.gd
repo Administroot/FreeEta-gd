@@ -66,7 +66,9 @@ func clean_components() -> void:
 func on_eta_button_toggled() -> void:
 	clear_scenetree()
 	$ZoomLabel.show()
-	GlobalData.components_data.print_all_members("Components")
+	var scene = preload("res://RustDemo.tscn").instantiate()
+	$Scenes.add_child(scene)
+	# GlobalData.components_data.print_all_members("Components")
 #endregion
 
 #region RawData

@@ -28,11 +28,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/LineMap2D/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/json_editor/plugin.cfg")
-
-[gui]
-
-theme/custom_font="uid://fe5tlvx5dbyw"
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
 [input]
 

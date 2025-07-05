@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://c0raimf721by6"]
-
-[node name="CrabButton" type="Node2D"]
-
-[node name="Button" type="Button" parent="."]
-offset_right = 266.0
-offset_bottom = 172.0
-text = "Please press me!!"
