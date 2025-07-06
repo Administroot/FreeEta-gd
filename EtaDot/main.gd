@@ -193,3 +193,5 @@ func single_selection_mode() -> void:
 func _on_refresh_button_pressed() -> void:
 	if $"Scenes/BottomSlide".get_node("HBoxContainer/ViewButton").is_pressed():
 		on_view_button_toggled()
+	elif $"Scenes/BottomSlide".get_node("HBoxContainer/EtaButton").is_pressed():
+		on_eta_button_toggled()
