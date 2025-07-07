@@ -1,8 +1,7 @@
 use godot::classes::Line2D;
 use godot::obj::WithBaseField;
 use godot::prelude::*;
-use rand_distr::{Cauchy, Distribution, Normal};
-use rand::rng;
+use crate::common::generate_rand;
 
 #[derive(GodotClass)]
 #[class(base=Line2D)]
@@ -33,7 +32,7 @@ impl ILine2D for Quad {
 impl Quad {
     #[func]
     fn generate_vertexs(&mut self){
-        let mut vertexs = generate_rand();
+        let mut vertexs = Self::assemble_vertexs(generate_rand(1u16));
         loop {
             self.base_mut().add_point(vertexs.pop().unwrap());
             if vertexs.len() == 0 {
@@ -43,26 +42,13 @@ impl Quad {
     }
 }
 
-fn generate_rand() -> Array<Vector2> {
-    let mut rng = rng();
-    // Vertex A
-    let normal = Normal::new(480., 1.).unwrap();
-    let cauchy = Cauchy::new(286., 2.).unwrap();
-    let a = Vector2::new(normal.sample(&mut rng), cauchy.sample(&mut rng));
-    // Vertex B
-    let normal = Normal::new(1305., 1.).unwrap();
-    let b = Vector2::new(normal.sample(&mut rng), cauchy.sample(&mut rng));
-    // Vertex C
-    let cauchy = Cauchy::new(744., 2.).unwrap();
-    let c = Vector2::new(normal.sample(&mut rng), cauchy.sample(&mut rng));
-    // Vertex D
-    let normal = Normal::new(480., 1.).unwrap();
-    let d = Vector2::new(normal.sample(&mut rng), cauchy.sample(&mut rng));
-    // Assemble
-    let mut arr = Array::new();
-    arr.push(a);
-    arr.push(b);
-    arr.push(c);
-    arr.push(d);
-    return arr
+impl Quad {
+    fn assemble_vertexs(mut raw_data: Vec<Vec<f64>>) -> Array<Vector2>{
+        let mut v = Array::new();
+        for _ in 0..raw_data.len(){
+            let coordinate = raw_data.pop().unwrap();
+            v.push(Vector2::new(coordinate[0] as f32, coordinate[1] as f32));
+        }
+        return v
+    }
 }
