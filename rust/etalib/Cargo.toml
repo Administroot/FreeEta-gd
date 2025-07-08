@@ -1,0 +1,22 @@
+[package]
+name = "etalib"
+# description = ""
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+# homepage.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+godot = "0.3.2"
+rand = "0.9.1"
+rand_distr = "0.5.1"
+
+[badges]
+maintenance = { status = "actively-developed" }
+
+[lib]
+crate-type = ["rlib", "cdylib"]

@@ -1,13 +1,17 @@
-[package]
-name = "rust"
-version = "1.0.0"
+[workspace]
+members = ["etalib", "etactl"]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0-dev"
 edition = "2024"
 license = "GPL-3.0"
+authors = ["Administroot <boli_lemon@foxmail.com>"]
+repository = "https://github.com/Administroot/FreeEta-gd"
+# homepage = ""
+categories = ["engineering"]
+keywords = ["eta", "safety engineering", "event tree analysis", "gui", "ui", "graphics"]
+rust-version = "1.88"
 
-[dependencies]
-godot = "0.3.2"
-rand = "0.9.1"
-rand_distr = "0.5.1"
-
-[lib]
-crate-type = ["cdylib"] # Compile this crate to a dynamic C library.
+[workspace.dependencies]
+etalib = { version = "0.1.0-dev", path = "etalib"}

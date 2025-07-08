@@ -6,4 +6,4 @@ struct RustExtension;
 unsafe impl ExtensionLibrary for RustExtension {}
 
 mod quad;
-mod common;
+pub mod common;

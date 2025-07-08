@@ -1,0 +1,17 @@
+[package]
+name = "etactl"
+# description = ""
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+# homepage.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+etalib = { path = "../etalib" }
+
+[badges]
+maintenance = { status = "actively-developed" }

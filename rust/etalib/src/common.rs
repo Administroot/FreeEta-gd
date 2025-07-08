@@ -26,7 +26,6 @@ pub fn generate_rand(turns: u16) -> Vec<Vec<f64>>{
     return v
 }
 
-#[allow(dead_code)]
 pub fn print_rand_data(data: &Vec<Vec<f64>>) {
     for (i, row) in data.iter().enumerate() {
         print!("Row {}: [", i);
