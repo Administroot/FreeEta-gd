@@ -13,6 +13,7 @@ etactl <flag> [params]
 ```
 
 **Params**:
+
 - `-f foo.json`: Load components from  `foo.json`.
 - `-o bar.json`: Export the result of event tree analysis to `bar.json`(default `output.json`, support '`csv`', '`json`' format).
 

@@ -1,12 +1,16 @@
+mod model;
+
 use etalib::common::*;
 use std::io::stdout;
 use crossterm::{
-    style::{Color, Print, ResetColor, SetForegroundColor},
+    style::{Color, Print, ResetColor, SetBackgroundColor, SetForegroundColor},
     ExecutableCommand,
 };
 
 use std::path::PathBuf;
 use clap::Parser;
+
+use model::{serialize_system_to_path, deserialize_system_from_path, System};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about = "Event Tree Analysis Terminal of FreeEta")]
@@ -19,20 +23,44 @@ struct Cli {
 }
 
 fn main() -> std::io::Result<()> {
+    // `sys`: JUST FOR TEST
+    let sys = System::new();
     // Clap
     let cli = Cli::parse();
-    let input_msg = match cli.input_file.as_deref() {
-        Some(input_file) => format!("Value of input: {}", input_file.display()),
-        None => String::new(),
-    };
-    let output_msg = match cli.output_file.as_deref() {
-        Some(output_file) => format!("Value of output: {}", output_file.display()),
-        None => String::new(),
+    let _input = match cli.input_file.as_deref() {
+        Some(path) => {
+            stdout()
+                .execute(SetForegroundColor(Color::DarkGreen))?
+                .execute(Print("Parsing file ...... "))?
+                .execute(ResetColor)?;
+            match deserialize_system_from_path(path) {
+                Ok(_system) => {
+                    // Logic
+                    stdout().execute(Print("I've got system!"))?;
+                    // Hint
+                    stdout()
+                        .execute(SetBackgroundColor(Color::DarkGreen))?
+                        .execute(Print("Success"))?
+                        .execute(ResetColor)?;
+                    true
+                }
+                Err(e) => {
+                    let mut output = String::new();
+                    output.push_str(&format!("Failed to deserialize system from {}: {}", path.display(), e));
+                    stdout()
+                        .execute(SetForegroundColor(Color::Red))?
+                        .execute(Print(output))?
+                        .execute(ResetColor)?;
+                    false
+                }
+            }
+        }
+        None => false,
     };
     stdout()
-        .execute(SetForegroundColor(Color::Cyan))?
-        .execute(Print(&input_msg))?
-        .execute(Print(&output_msg))?;
+        .execute(SetForegroundColor(Color::Cyan))?;
+        // .execute(Print(&input_msg))?
+        // .execute(Print(&output_msg))?;
     // Crossterm
     let data = generate_rand(0u16);
     stdout()
