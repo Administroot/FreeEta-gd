@@ -26,15 +26,17 @@ pub fn generate_rand(turns: u16) -> Vec<Vec<f64>>{
     return v
 }
 
-pub fn print_rand_data(data: &Vec<Vec<f64>>) {
+pub fn print_rand_data(data: &Vec<Vec<f64>>) -> String {
+    let mut output = String::new();
     for (i, row) in data.iter().enumerate() {
-        print!("Row {}: [", i);
+        output.push_str(&format!("Row {}: [", i));
         for (j, val) in row.iter().enumerate() {
             if j != 0 {
-                print!(", ");
+                output.push_str(", ");
             }
-            print!("{:.4}", val);
+            output.push_str(&format!("{:.4}", val));
         }
-        println!("]");
+        output.push_str("]\n");
     }
+    output
 }

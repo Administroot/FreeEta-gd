@@ -11,6 +11,8 @@ categories.workspace = true
 keywords.workspace = true
 
 [dependencies]
+clap = { version = "4.5.40", features = ["derive"] }
+crossterm = "0.29.0"
 etalib = { path = "../etalib" }
 
 [badges]
