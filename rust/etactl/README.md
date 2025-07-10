@@ -4,20 +4,21 @@
 
 This is the terminal utility of [FreeEta-gd](https://github.com/Administroot/FreeEta-gd), designed for large event tree analysis.
 
+You can install **ETACTL** without [FreeEta-gd](https://github.com/Administroot/FreeEta-gd)!
+
 Specialized for data scientists and engineers.
 
 ## Usage
 
 ```shell
-etactl <flag> [params]
+etactl [OPTIONS]
 ```
 
-**Params**:
+Enter `etactl --help` or `etactl -h` to search supported commands.
 
-- `-f foo.json`: Load components from  `foo.json`.
-- `-o bar.json`: Export the result of event tree analysis to `bar.json`(default `output.json`, support '`csv`', '`json`' format).
+## Attentions
 
-Remember, you can always enter `etactl --help` or `etactl -h` to search supported commands.
+❗Due to the vacancies of logic check mechanism ( They are in full-project [FreeEta-gd](https://github.com/Administroot/FreeEta-gd) ), you need to check your input file under scrutiny.
 
 ## Authors
 

@@ -15,9 +15,11 @@ use model::{serialize_system_to_path, deserialize_system_from_path, System};
 #[derive(Parser, Debug)]
 #[command(author, version, about = "Event Tree Analysis Terminal of FreeEta")]
 struct Cli {
+    /// Load Components from file. (Support `CSV`, `JSON`, `TOML`)
     #[arg(short = 'i', long = "input", value_name = "FILE")]
     input_file: Option<PathBuf>,
 
+    /// Export ETA (Event Tree Analysis) data to file, default `output.json`. (Support `CSV`, `JSON`, `TOML`)
     #[arg(short = 'o', long = "output", value_name = "FILE")]
     output_file: Option<PathBuf>,
 }
