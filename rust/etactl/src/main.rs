@@ -45,8 +45,12 @@ fn main() -> std::io::Result<()> {
                     true
                 }
                 Err(e) => {
+                    stdout()
+                        .execute(SetBackgroundColor(Color::DarkRed))?
+                        .execute(Print("Failed"))?
+                        .execute(ResetColor)?;
                     let mut output = String::new();
-                    output.push_str(&format!("Failed to deserialize system from {}: {}", path.display(), e));
+                    output.push_str(&format!("\nFailed to deserialize system from {}: {}", path.display(), e));
                     stdout()
                         .execute(SetForegroundColor(Color::Red))?
                         .execute(Print(output))?
@@ -57,10 +61,38 @@ fn main() -> std::io::Result<()> {
         }
         None => false,
     };
-    stdout()
-        .execute(SetForegroundColor(Color::Cyan))?;
-        // .execute(Print(&input_msg))?
-        // .execute(Print(&output_msg))?;
+    println!();
+    let _output = match cli.output_file.as_deref() {
+        Some(path) => {
+            stdout()
+                .execute(SetForegroundColor(Color::DarkGreen))?
+                .execute(Print(&format!("Printing outputs to \'{}\' ...... ", path.display())))?
+                .execute(ResetColor)?;
+            match serialize_system_to_path(&sys, path) {
+                Ok(()) => {
+                    stdout()
+                        .execute(SetBackgroundColor(Color::DarkGreen))?
+                        .execute(Print("Success"))?
+                        .execute(ResetColor)?;
+                    true
+                },
+                Err(e) => {
+                    stdout()
+                        .execute(SetBackgroundColor(Color::DarkRed))?
+                        .execute(Print("Failed"))?
+                        .execute(ResetColor)?;
+                    let mut output = String::new();
+                    output.push_str(&format!("\nCannot write to {}: {}", path.display(), e));
+                    stdout()
+                        .execute(SetForegroundColor(Color::Red))?
+                        .execute(Print(output))?
+                        .execute(ResetColor)?;
+                    false
+                }
+            }
+        },
+        None => false,
+    };
     // Crossterm
     let data = generate_rand(0u16);
     stdout()
