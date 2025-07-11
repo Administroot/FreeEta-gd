@@ -1,5 +1,4 @@
-mod model;
-
+use etalib::model::{serialize_system_to_path, deserialize_system_from_path, System};
 use etalib::common::*;
 use std::io::stdout;
 use crossterm::{
@@ -9,8 +8,6 @@ use crossterm::{
 
 use std::path::PathBuf;
 use clap::Parser;
-
-use model::{serialize_system_to_path, deserialize_system_from_path, System};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about = "Event Tree Analysis Terminal of FreeEta")]

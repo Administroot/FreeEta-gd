@@ -234,20 +234,20 @@ version = "0.1.0-dev"
 dependencies = [
  "clap",
  "crossterm",
- "csv",
  "etalib",
- "serde",
- "serde_json",
- "toml",
 ]
 
 [[package]]
 name = "etalib"
 version = "0.1.0-dev"
 dependencies = [
+ "csv",
  "godot",
  "rand",
  "rand_distr",
+ "serde",
+ "serde_json",
+ "toml",
 ]
 
 [[package]]

@@ -7,3 +7,4 @@ unsafe impl ExtensionLibrary for RustExtension {}
 
 mod quad;
 pub mod common;
+pub mod model;
