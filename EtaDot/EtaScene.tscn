@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://5sexyhek2elj"]
+
+[ext_resource type="Script" uid="uid://dfoyfkwblydjo" path="res://eta_scene.gd" id="1_l6v80"]
+
+[node name="EtaScene" type="Node2D"]
+script = ExtResource("1_l6v80")
+
+[node name="Calculator" type="Calculator" parent="."]

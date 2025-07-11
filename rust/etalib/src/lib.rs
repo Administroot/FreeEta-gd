@@ -5,6 +5,6 @@ struct RustExtension;
 #[gdextension]
 unsafe impl ExtensionLibrary for RustExtension {}
 
-mod quad;
+mod calc;
 pub mod common;
 pub mod model;
