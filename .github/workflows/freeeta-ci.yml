@@ -25,8 +25,9 @@ jobs:
           lfs: true
       - name: Install Essentials
         run: |
-          apt update -y && apt upgrade -y
-          apt install -y rustup curl
+          apt update -y -q && apt upgrade -y -q
+          apt install -y curl
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -64,8 +65,9 @@ jobs:
           lfs: true
       - name: Install Essentials
         run: |
-          apt update -y && apt upgrade -y
-          apt install -y rustup curl
+          apt update -y -q && apt upgrade -y -q
+          apt install -y curl
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -101,8 +103,9 @@ jobs:
           lfs: true
       - name: Install Essentials
         run: |
-          apt update -y && apt upgrade -y
-          apt install -y rustup curl
+          apt update -y -q && apt upgrade -y -q
+          apt install -y curl
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -146,8 +149,9 @@ jobs:
           lfs: true
       - name: Install Essentials
         run: |
-          apt update -y && apt upgrade -y
-          apt install -y rustup curl
+          apt update -y -q && apt upgrade -y -q
+          apt install -y curl
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
