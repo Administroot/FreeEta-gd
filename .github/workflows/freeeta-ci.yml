@@ -25,7 +25,6 @@ jobs:
         with:
           lfs: true
       - name: Setup Rust
-        uses: actions/checkout@v4
         run: |
           cd $PROJECT_PATH/rust/
           cargo build --verbose
@@ -59,7 +58,6 @@ jobs:
         with:
           lfs: true
       - name: Setup Rust
-        uses: actions/checkout@v4
         run: |
           cd $PROJECT_PATH/rust/
           cargo build --verbose
@@ -91,7 +89,6 @@ jobs:
         with:
           lfs: true
       - name: Setup Rust
-        uses: actions/checkout@v4
         run: |
           cd $PROJECT_PATH/rust/
           cargo build --verbose
@@ -131,7 +128,6 @@ jobs:
         with:
           lfs: true
       - name: Setup Rust
-        uses: actions/checkout@v4
         run: |
           cd $PROJECT_PATH/rust/
           cargo build --verbose
