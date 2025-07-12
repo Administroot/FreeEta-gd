@@ -26,7 +26,7 @@ jobs:
           lfs: true
       - name: Setup Rust
         run: |
-          cd $PROJECT_PATH/rust/
+          cd $PROJECT_PATH && cd ../rust/
           cargo build --verbose
           cargo build --releases --verbose
       - name: Setup Godot
@@ -59,7 +59,7 @@ jobs:
           lfs: true
       - name: Setup Rust
         run: |
-          cd $PROJECT_PATH/rust/
+          cd $PROJECT_PATH && cd ../rust/
           cargo build --verbose
           cargo build --releases --verbose
       - name: Setup Godot
@@ -90,7 +90,7 @@ jobs:
           lfs: true
       - name: Setup Rust
         run: |
-          cd $PROJECT_PATH/rust/
+          cd $PROJECT_PATH && cd ../rust/
           cargo build --verbose
           cargo build --releases --verbose
       - name: Setup Godot
@@ -129,7 +129,7 @@ jobs:
           lfs: true
       - name: Setup Rust
         run: |
-          cd $PROJECT_PATH/rust/
+          cd $PROJECT_PATH && cd ../rust/
           cargo build --verbose
           cargo build --releases --verbose
       - name: Setup Godot
