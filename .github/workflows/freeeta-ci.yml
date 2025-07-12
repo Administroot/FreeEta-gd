@@ -23,6 +23,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
+      - name: Install Essentials
+        run: apt install -y rustup curl
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -58,6 +60,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
+      - name: Install Essentials
+        run: apt install -y rustup curl
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -91,6 +95,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
+      - name: Install Essentials
+        run: apt install -y rustup curl
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -132,6 +138,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
+      - name: Install Essentials
+        run: apt install -y rustup curl
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
