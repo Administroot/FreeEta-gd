@@ -26,8 +26,9 @@ jobs:
       - name: Install Essentials
         run: |
           apt update -y -q && apt upgrade -y -q
-          apt install -y build-essential
-          apt install curl gcc make rustup
+          apt install -y curl
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -66,8 +67,9 @@ jobs:
       - name: Install Essentials
         run: |
           apt update -y -q && apt upgrade -y -q
-          apt install -y build-essential
-          apt install curl gcc make rustup
+          apt install -y curl
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -104,8 +106,9 @@ jobs:
       - name: Install Essentials
         run: |
           apt update -y -q && apt upgrade -y -q
-          apt install -y build-essential
-          apt install curl gcc make rustup
+          apt install -y curl
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -150,8 +153,9 @@ jobs:
       - name: Install Essentials
         run: |
           apt update -y -q && apt upgrade -y -q
-          apt install -y build-essential
-          apt install curl gcc make rustup
+          apt install -y curl
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
