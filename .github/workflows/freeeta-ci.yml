@@ -27,7 +27,7 @@ jobs:
         run: |
           apt update -y -q && apt upgrade -y -q
           apt install -y curl
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           . $HOME/.cargo/env
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
@@ -68,7 +68,7 @@ jobs:
         run: |
           apt update -y -q && apt upgrade -y -q
           apt install -y curl
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           . $HOME/.cargo/env
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
@@ -107,7 +107,7 @@ jobs:
         run: |
           apt update -y -q && apt upgrade -y -q
           apt install -y curl
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           . $HOME/.cargo/env
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
@@ -154,7 +154,7 @@ jobs:
         run: |
           apt update -y -q && apt upgrade -y -q
           apt install -y curl
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           . $HOME/.cargo/env
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
