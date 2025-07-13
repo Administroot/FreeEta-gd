@@ -29,6 +29,7 @@ jobs:
           apt install -y curl
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           . $HOME/.cargo/env
+          export PATH = $HOME/.cargo/bin:$PATH
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -70,6 +71,7 @@ jobs:
           apt install -y curl
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           . $HOME/.cargo/env
+          export PATH = $HOME/.cargo/bin:$PATH
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -109,6 +111,7 @@ jobs:
           apt install -y curl
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           . $HOME/.cargo/env
+          export PATH = $HOME/.cargo/bin:$PATH
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
@@ -156,6 +159,7 @@ jobs:
           apt install -y curl
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           . $HOME/.cargo/env
+          export PATH = $HOME/.cargo/bin:$PATH
       - name: Setup Rust toolchain
         uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
