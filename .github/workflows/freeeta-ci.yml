@@ -26,19 +26,11 @@ jobs:
       - name: Install Essentials
         run: |
           apt update -y -q && apt upgrade -y -q
-          apt install -y curl
+          apt install -y curl build-essential gcc make
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          # . $HOME/.cargo/env
-          # alias cargo='$HOME/.cargo/bin/cargo.exe'
-          # alias rustup='$HOME/.cargo/bin/rustup.exe'
-          # alias rustc='$HOME/.cargo/bin/rustc.exe'
-      # - name: Setup Rust toolchain
-      #   uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
         run: |
-          export PATH="$HOME/.cargo/bin:$PATH"
           . $HOME/.cargo/env
-          ls -l "$HOME/.cargo/bin" 
           cd $PROJECT_PATH && cd ../rust/
           cargo build --verbose
           cargo build --releases --verbose
@@ -73,19 +65,11 @@ jobs:
       - name: Install Essentials
         run: |
           apt update -y -q && apt upgrade -y -q
-          apt install -y curl
+          apt install -y curl build-essential gcc make
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          # . $HOME/.cargo/env
-          # alias cargo='$HOME/.cargo/bin/cargo.exe'
-          # alias rustup='$HOME/.cargo/bin/rustup.exe'
-          # alias rustc='$HOME/.cargo/bin/rustc.exe'
-      # - name: Setup Rust toolchain
-      #   uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
         run: |
-          export PATH="$HOME/.cargo/bin:$PATH"
           . $HOME/.cargo/env
-          ls -l "$HOME/.cargo/bin"
           cd $PROJECT_PATH && cd ../rust/
           cargo build --verbose
           cargo build --releases --verbose
@@ -118,19 +102,11 @@ jobs:
       - name: Install Essentials
         run: |
           apt update -y -q && apt upgrade -y -q
-          apt install -y curl
+          apt install -y curl build-essential gcc make
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          # . $HOME/.cargo/env
-          # alias cargo='$HOME/.cargo/bin/cargo.exe'
-          # alias rustup='$HOME/.cargo/bin/rustup.exe'
-          # alias rustc='$HOME/.cargo/bin/rustc.exe'
-      # - name: Setup Rust toolchain
-      #   uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
         run: |
-          export PATH="$HOME/.cargo/bin:$PATH"
           . $HOME/.cargo/env
-          ls -l "$HOME/.cargo/bin"
           cd $PROJECT_PATH && cd ../rust/
           cargo build --verbose
           cargo build --releases --verbose
@@ -171,19 +147,11 @@ jobs:
       - name: Install Essentials
         run: |
           apt update -y -q && apt upgrade -y -q
-          apt install -y curl
+          apt install -y curl build-essential gcc make
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          # . $HOME/.cargo/env
-          # alias cargo='$HOME/.cargo/bin/cargo.exe'
-          # alias rustup='$HOME/.cargo/bin/rustup.exe'
-          # alias rustc='$HOME/.cargo/bin/rustc.exe'
-      # - name: Setup Rust toolchain
-      #   uses: hecrj/setup-rust-action@v2.0.1
       - name: Build Rust library and binary
         run: |
-          export PATH="$HOME/.cargo/bin:$PATH"
           . $HOME/.cargo/env
-          ls -l "$HOME/.cargo/bin"
           cd $PROJECT_PATH && cd ../rust/
           cargo build --verbose
           cargo build --releases --verbose
