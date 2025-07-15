@@ -9,7 +9,7 @@ on:
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 
 env:
-  GODOT_VERSION: 4.3
+  GODOT_VERSION: 4.4.1
   EXPORT_NAME: FreeEta
   PROJECT_PATH: EtaDot
 jobs:
