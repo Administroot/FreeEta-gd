@@ -32,9 +32,11 @@ jobs:
         run: |
           . $HOME/.cargo/env
           cd $PROJECT_PATH && cd ../rust/
-          rustup target add x86_64-pc-windows-gnu
-          cargo build --target x86_64-pc-windows-gnu
-          cargo build --target x86_64-pc-windows-gnu --release
+          rustup target add x86_64-pc-windows-msvc
+          cargo build --target x86_64-pc-windows-msvc --release
+          cargo build --target x86_64-pc-windows-msvc --release
+          rm -rf target/release
+          cp -rf target/x86_64-pc-windows-msvc/release target/release
           ls -l target/release
       - name: Setup Godot
         run: |
