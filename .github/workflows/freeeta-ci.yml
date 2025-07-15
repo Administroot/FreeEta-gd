@@ -46,7 +46,7 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --import
-          godot --headless --export-release "FreeEta-win" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
+          godot --headless --export-release "FreeEta-win" "$EXPORT_DIR/windows/$EXPORT_NAME.exe" --verbose
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -84,7 +84,7 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --import
-          godot --headless --export-release "FreeEta-linux" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
+          godot --headless --export-release "FreeEta-linux" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64" --verbose
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -122,7 +122,7 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --import
-          godot --headless --export-release "FreeEta-web" "$EXPORT_DIR/web/index.html"
+          godot --headless --export-release "FreeEta-web" "$EXPORT_DIR/web/index.html" --verbose
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -168,7 +168,7 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --import
-          godot --headless --export-release "FreeEta-mac" "$EXPORT_DIR/mac/$EXPORT_NAME.zip"
+          godot --headless --export-release "FreeEta-mac" "$EXPORT_DIR/mac/$EXPORT_NAME.zip" --verbose
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
