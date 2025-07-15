@@ -32,8 +32,9 @@ jobs:
         run: |
           . $HOME/.cargo/env
           cd $PROJECT_PATH && cd ../rust/
-          cargo build
-          cargo build --release
+          cargo build --target x86_64-pc-windows-gnu
+          cargo build --target x86_64-pc-windows-gnu --release
+          ls -l target/release
       - name: Setup Godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
