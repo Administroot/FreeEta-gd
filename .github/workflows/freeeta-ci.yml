@@ -23,10 +23,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v2
       - name: Install Essentials
         run: |
           apt update -y -q && apt upgrade -y -q
-          apt install -y curl build-essential gcc make mingw-w64
+          apt install -y curl build-essential gcc make
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       - name: Build Rust library and binary
         run: |
