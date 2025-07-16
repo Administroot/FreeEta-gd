@@ -125,7 +125,7 @@ jobs:
         run: |
           mkdir -v -p build/web
           EXPORT_DIR="$(readlink -f build)"
-          cp target/release/etactl $EXPORT_DIR
+          cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR
           cd $PROJECT_PATH
           godot --headless --import
           godot --headless --export-release "FreeEta-web" "$EXPORT_DIR/web/index.html" --verbose
