@@ -75,7 +75,7 @@ jobs:
       - name: Build Rust library and binary
         run: |
           . $HOME/.cargo/env
-          cd $PROJECT_PATH && cd ../rust/
+          cd $PROJECT_PATH/../rust/
           cargo build
           cargo build --release
       - name: Setup Godot
@@ -114,6 +114,7 @@ jobs:
       - name: Build Rust library and binary
         run: |
           . $HOME/.cargo/env
+          cd $PROJECT_PATH/../rust/
           cargo build
           cargo build --release
       - name: Setup Godot
@@ -160,7 +161,7 @@ jobs:
       - name: Build Rust library and binary
         run: |
           . $HOME/.cargo/env
-          cd $PROJECT_PATH && cd ../rust/
+          cd $PROJECT_PATH/../rust/
           cargo build
           cargo build --release
       - name: Setup Godot
