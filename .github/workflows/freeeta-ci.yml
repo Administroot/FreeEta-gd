@@ -1,0 +1,179 @@
+name: "Build FreeEta"
+
+on:
+  push:
+    branches: ["github-ci", "main"]
+  pull_request:
+    branches: ["github-ci", "main"]
+
+# NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
+
+env:
+  GODOT_VERSION: 4.4
+  EXPORT_NAME: FreeEta
+  PROJECT_PATH: EtaDot
+jobs:
+  export-windows:
+    name: Windows Export
+    runs-on: ubuntu-22.04 # Use 22.04 with godot 4
+    container:
+      image: barichello/godot-ci:4.4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Install Essentials
+        run: |
+          apt update -y -q && apt upgrade -y -q
+          apt install -y curl build-essential gcc make mingw-w64
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      - name: Build Rust library and binary
+        run: |
+          . $HOME/.cargo/env
+          cd $PROJECT_PATH && cd ../rust/
+          rustup target add x86_64-pc-windows-gnu
+          cargo build --target x86_64-pc-windows-gnu --release
+          cargo build --target x86_64-pc-windows-gnu --release
+          rm -rf target/release
+          cp -rf target/x86_64-pc-windows-gnu/release target/release
+      - name: Setup Godot
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Windows Build
+        run: |
+          mkdir -v -p build/windows
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --import
+          godot --headless --export-release "FreeEta-win" "$EXPORT_DIR/windows/$EXPORT_NAME.exe" --verbose
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FreeEta-win
+          path: build/windows
+
+  export-linux:
+    name: Linux Export
+    runs-on: ubuntu-22.04 # Use 22.04 with godot 4
+    container:
+      image: barichello/godot-ci:4.4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Install Essentials
+        run: |
+          apt update -y -q && apt upgrade -y -q
+          apt install -y curl build-essential gcc make
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      - name: Build Rust library and binary
+        run: |
+          . $HOME/.cargo/env
+          cd $PROJECT_PATH && cd ../rust/
+          cargo build
+          cargo build --release
+      - name: Setup Godot
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Linux Build
+        run: |
+          mkdir -v -p build/linux
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --import
+          godot --headless --export-release "FreeEta-linux" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64" --verbose
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FreeEta-linux
+          path: build/linux
+
+  export-web:
+    name: Web Export
+    runs-on: ubuntu-22.04 # Use 22.04 with godot 4
+    container:
+      image: barichello/godot-ci:4.4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Install Essentials
+        run: |
+          apt update -y -q && apt upgrade -y -q
+          apt install -y curl build-essential gcc make
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      - name: Build Rust library and binary
+        run: |
+          . $HOME/.cargo/env
+          cd $PROJECT_PATH && cd ../rust/
+          cargo build
+          cargo build --release
+      - name: Setup Godot
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Web Build
+        run: |
+          mkdir -v -p build/web
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --import
+          godot --headless --export-release "FreeEta-web" "$EXPORT_DIR/web/index.html" --verbose
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FreeEta-web
+          path: build/web
+      # - name: Install rsync 📚
+      #   run: |
+      #     apt-get update && apt-get install -y rsync
+      # - name: Deploy to GitHub Pages 🚀
+      #   uses: JamesIves/github-pages-deploy-action@release/v4
+      #   with:
+      #     branch: gh-pages # The branch the action should deploy to.
+      #     folder: build/web # The folder the action should deploy.
+
+  export-mac:
+    name: Mac Export
+    runs-on: ubuntu-22.04 # Use 22.04 with godot 4
+    container:
+      image: barichello/godot-ci:4.4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Install Essentials
+        run: |
+          apt update -y -q && apt upgrade -y -q
+          apt install -y curl build-essential gcc make
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      - name: Build Rust library and binary
+        run: |
+          . $HOME/.cargo/env
+          cd $PROJECT_PATH && cd ../rust/
+          cargo build
+          cargo build --release
+      - name: Setup Godot
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Mac Build
+        run: |
+          mkdir -v -p build/mac
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --import
+          godot --headless --export-release "FreeEta-mac" "$EXPORT_DIR/mac/$EXPORT_NAME.zip" --verbose
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FreeEta-mac
+          path: build/mac
