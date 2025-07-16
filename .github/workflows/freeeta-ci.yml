@@ -37,7 +37,6 @@ jobs:
           cargo build --target x86_64-pc-windows-gnu --release
           rm -rf target/release
           cp -rf target/x86_64-pc-windows-gnu/release target/release
-          ls -l target/release
       - name: Setup Godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
@@ -54,7 +53,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: windows
+          name: FreeEta-win
           path: build/windows
 
   export-linux:
@@ -92,7 +91,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: linux
+          name: FreeEta-linux
           path: build/linux
 
   export-web:
@@ -130,7 +129,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: web
+          name: FreeEta-web
           path: build/web
       # - name: Install rsync 📚
       #   run: |
@@ -176,5 +175,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mac
+          name: FreeEta-mac
           path: build/mac
