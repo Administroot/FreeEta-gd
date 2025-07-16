@@ -47,7 +47,7 @@ jobs:
         run: |
           mkdir -v -p build/windows
           EXPORT_DIR="$(readlink -f build)"
-          cp $PROJECT_PATH/../rust/target/release/etactl.exe $EXPORT_DIR
+          cp $PROJECT_PATH/../rust/target/release/etactl.exe $EXPORT_DIR/windows
           cd $PROJECT_PATH
           godot --headless --import
           godot --headless --export-release "FreeEta-win" "$EXPORT_DIR/windows/$EXPORT_NAME.exe" --verbose
@@ -86,7 +86,7 @@ jobs:
         run: |
           mkdir -v -p build/linux
           EXPORT_DIR="$(readlink -f build)"
-          cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR
+          cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR/linux
           cd $PROJECT_PATH
           godot --headless --import
           godot --headless --export-release "FreeEta-linux" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64" --verbose
@@ -125,7 +125,7 @@ jobs:
         run: |
           mkdir -v -p build/web
           EXPORT_DIR="$(readlink -f build)"
-          cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR
+          cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR/web
           cd $PROJECT_PATH
           godot --headless --import
           godot --headless --export-release "FreeEta-web" "$EXPORT_DIR/web/index.html" --verbose
@@ -172,7 +172,7 @@ jobs:
         run: |
           mkdir -v -p build/mac
           EXPORT_DIR="$(readlink -f build)"
-          cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR
+          cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR/mac
           cd $PROJECT_PATH
           godot --headless --import
           godot --headless --export-release "FreeEta-mac" "$EXPORT_DIR/mac/$EXPORT_NAME.zip" --verbose
