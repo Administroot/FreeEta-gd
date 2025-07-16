@@ -4,8 +4,8 @@
 
 [![Crates.io](https://img.shields.io/crates/v/FreeEta.svg)](https://crates.io/crates/FreeEta)
 ![GitHub License](https://img.shields.io/github/license/Administroot/FreeEta)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Administroot/FreeEta/rust.yml)
-![Made with Godot](https://github.com/godotengine/godot)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Administroot/FreeEta-gd/freeeta-ci.yml)
+![Made with Godot](raw/godotengine.svg)
 
 A fast, elegant & free `Event Tree Analysis`(ETA) utility powered by 🤖Godot.
 
@@ -15,7 +15,6 @@ A fast, elegant & free `Event Tree Analysis`(ETA) utility powered by 🤖Godot.
 
 > [!danger]+
 > FreeEta-gd is on flight🛫
->
 
 ## Installation
 
