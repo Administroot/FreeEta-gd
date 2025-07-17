@@ -13,13 +13,10 @@ func _ready() -> void:
 		var pic_size = set_texture(res.sprite_path)
 		set_text(component.node_name, pic_size)
 
-# FIXME:  set_texture(): Loaded resource as image file, this will not work on export: 'res://assets/valve.svg'.
-# Instead, import the image file as an Image resource and load it normally as a resource.
 func set_texture(picture: String) -> Vector2:
-	var image = Image.load_from_file(picture)
-	var texture = ImageTexture.create_from_image(image)
-	texture.set_size_override(size)
-	$Photo.texture = texture
+	$Photo.texture = load(picture)
+	var texture_size = $Photo.texture.get_size()
+	$Photo.scale = Vector2(size.x / texture_size.x, size.y / texture_size.y)
 	$Button.size = size
 	$Button.position = - size / 2.
 	return size
