@@ -12,6 +12,7 @@ func _init() -> void:
 		DirAccess.make_dir_absolute("user://saves")
 	check_saves("node_types.json")
 	check_saves("components.json")
+	check_default_assets()
 	# Mannually assign global varients
 	GlobalData.components_data = GlobalData.get_components()
 	GlobalData.nodetypes_data = GlobalData.get_nodetypes()
@@ -23,6 +24,35 @@ func check_saves(saves_name: String) -> void:
 		target.store_string(source.get_as_text())
 		source.close()
 		target.close()
+
+func check_default_assets() -> void:
+	var src_dir_path = "res://assets"
+	var dst_dir_path = "user://saves/assets"
+	var src_dir = DirAccess.open(src_dir_path)
+	var dst_dir = DirAccess.open(dst_dir_path)
+	if dst_dir == null:
+		DirAccess.make_dir_absolute(dst_dir_path)
+		dst_dir = DirAccess.open(dst_dir_path)
+	for file_name in src_dir.get_files():
+		var src_file_path = src_dir_path + "/" + file_name
+		var dst_file_path = dst_dir_path + "/" + file_name
+		# Copy file if not exists or hash mismatch
+		var need_copy = true
+		if FileAccess.file_exists(dst_file_path):
+			var src_file = FileAccess.open(src_file_path, FileAccess.READ)
+			var dst_file = FileAccess.open(dst_file_path, FileAccess.READ)
+			var src_hash = FileAccess.get_md5(src_file.get_as_text())
+			var dst_hash = FileAccess.get_md5(dst_file.get_as_text())
+			src_file.close()
+			dst_file.close()
+			if src_hash == dst_hash:
+				need_copy = false
+		if need_copy:
+			var src_file = FileAccess.open(src_file_path, FileAccess.READ)
+			var dst_file = FileAccess.open(dst_file_path, FileAccess.WRITE)
+			dst_file.store_buffer(src_file.get_buffer(src_file.get_length()))
+			src_file.close()
+			dst_file.close()
 #endregion
 
 #region Ready
