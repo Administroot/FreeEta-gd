@@ -1,21 +1,20 @@
 <div align="center">
 
-# ![LOGO](raw/logo.svg) FreeEta-gd
+# ![LOGO](raw/logo.svg) FreeEta
 
 [![Crates.io](https://img.shields.io/crates/v/FreeEta.svg)](https://crates.io/crates/FreeEta)
 ![GitHub License](https://img.shields.io/github/license/Administroot/FreeEta)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Administroot/FreeEta/rust.yml)
-![Made with Godot](https://github.com/godotengine/godot)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Administroot/FreeEta-gd/freeeta-ci.yml)
+![Static Badge](https://img.shields.io/badge/Powered_By-Godot-blue)
 
-A fast, elegant & free `Event Tree Analysis`(ETA) utility powered by 🤖Godot.
+A fast, elegant & free `Event Tree Analysis`(ETA) utility powered by 🤖 Godot and 🦀 Rust.
 
-<img alt="FreeEta-gd" src="raw/showcase.gif" width="70%">
+<img alt="FreeEta" src="raw/showcase.gif" width="70%">
 
 </div>
 
 > [!danger]+
-> FreeEta-gd is on flight🛫
->
+> FreeEta is on flight🛫
 
 ## Installation
 
@@ -27,4 +26,4 @@ Support ALL Platforms!
 
 ## Version
 
-0.0.1
+0.1.0-dev
