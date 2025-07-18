@@ -1,5 +1,6 @@
 use rand_distr::{Cauchy, Distribution, Normal};
 use rand::rng;
+use crate::model::System;
 
 pub fn generate_rand(turns: u16) -> Vec<Vec<f64>>{
     let mut rng = rng();
@@ -39,4 +40,9 @@ pub fn print_rand_data(data: &Vec<Vec<f64>>) -> String {
         output.push_str("]\n");
     }
     output
+}
+
+pub fn algorithm<'a>(sys: &'a mut System){
+    let _ = sys.components;
+    println!("I got system!");
 }

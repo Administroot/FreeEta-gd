@@ -26,16 +26,16 @@ fn main() -> std::io::Result<()> {
     let sys = System::new();
     // Clap
     let cli = Cli::parse();
-    let _input = match cli.input_file.as_deref() {
+    let input = match cli.input_file.as_deref() {
         Some(path) => {
             stdout()
                 .execute(SetForegroundColor(Color::DarkGreen))?
                 .execute(Print("Parsing file ...... "))?
                 .execute(ResetColor)?;
             match deserialize_system_from_path(path) {
-                Ok(_system) => {
+                Ok(mut system) => {
                     // Logic
-                    stdout().execute(Print("I've got system!"))?;
+                    algorithm(&mut system);
                     // Hint
                     stdout()
                         .execute(SetBackgroundColor(Color::DarkGreen))?
@@ -61,7 +61,7 @@ fn main() -> std::io::Result<()> {
         None => false,
     };
     println!();
-    let _output = match cli.output_file.as_deref() {
+    let output = match cli.output_file.as_deref() {
         Some(path) => {
             stdout()
                 .execute(SetForegroundColor(Color::DarkGreen))?
@@ -92,11 +92,19 @@ fn main() -> std::io::Result<()> {
         },
         None => false,
     };
+
+    if !input || !output{
+        stdout()
+            .execute(SetForegroundColor(Color::Red))?
+            .execute(Print("Etactl internal error"))?
+            .execute(ResetColor)?;
+        return Err(std::io::Error::new(std::io::ErrorKind::Other, "Etactl internal error"));
+    }
     // Crossterm
-    let data = generate_rand(0u16);
-    stdout()
-        .execute(SetForegroundColor(Color::Yellow))?
-        .execute(Print(print_rand_data(&data)))?
-        .execute(ResetColor)?;
+    // let data = generate_rand(10u16);
+    // stdout()
+    //     .execute(SetForegroundColor(Color::Yellow))?
+    //     .execute(Print(print_rand_data(&data)))?
+    //     .execute(ResetColor)?;
     Ok(())
 }

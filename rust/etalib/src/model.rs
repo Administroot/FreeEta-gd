@@ -5,7 +5,7 @@ use csv;
 use toml;
 
 #[derive(Serialize, Deserialize)]
-struct Component {
+pub struct Component {
     node_id: i64,
     node_name: String,
     node_type: String,
@@ -22,7 +22,7 @@ impl Component {
 
 #[derive(Serialize, Deserialize)]
 pub struct System {
-    components: Vec<Component>,
+    pub components: Vec<Component>,
 }
 
 impl System {
