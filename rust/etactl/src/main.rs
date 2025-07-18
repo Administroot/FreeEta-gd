@@ -100,11 +100,5 @@ fn main() -> std::io::Result<()> {
             .execute(ResetColor)?;
         return Err(std::io::Error::new(std::io::ErrorKind::Other, "Etactl internal error"));
     }
-    // Crossterm
-    // let data = generate_rand(10u16);
-    // stdout()
-    //     .execute(SetForegroundColor(Color::Yellow))?
-    //     .execute(Print(print_rand_data(&data)))?
-    //     .execute(ResetColor)?;
     Ok(())
 }
