@@ -26,7 +26,7 @@ fn main() -> std::io::Result<()> {
     let sys = System::new();
     // Clap
     let cli = Cli::parse();
-    let input = match cli.input_file.as_deref() {
+    match cli.input_file.as_deref() {
         Some(path) => {
             stdout()
                 .execute(SetForegroundColor(Color::DarkGreen))?
@@ -41,7 +41,6 @@ fn main() -> std::io::Result<()> {
                         .execute(SetBackgroundColor(Color::DarkGreen))?
                         .execute(Print("Success"))?
                         .execute(ResetColor)?;
-                    true
                 }
                 Err(e) => {
                     stdout()
@@ -54,14 +53,13 @@ fn main() -> std::io::Result<()> {
                         .execute(SetForegroundColor(Color::Red))?
                         .execute(Print(output))?
                         .execute(ResetColor)?;
-                    false
                 }
             }
         }
-        None => false,
+        None => {},
     };
     println!();
-    let output = match cli.output_file.as_deref() {
+    match cli.output_file.as_deref() {
         Some(path) => {
             stdout()
                 .execute(SetForegroundColor(Color::DarkGreen))?
@@ -73,7 +71,6 @@ fn main() -> std::io::Result<()> {
                         .execute(SetBackgroundColor(Color::DarkGreen))?
                         .execute(Print("Success"))?
                         .execute(ResetColor)?;
-                    true
                 },
                 Err(e) => {
                     stdout()
@@ -86,19 +83,18 @@ fn main() -> std::io::Result<()> {
                         .execute(SetForegroundColor(Color::Red))?
                         .execute(Print(output))?
                         .execute(ResetColor)?;
-                    false
                 }
             }
         },
-        None => false,
+        None => (),
     };
 
-    if !input || !output{
-        stdout()
-            .execute(SetForegroundColor(Color::Red))?
-            .execute(Print("Etactl internal error"))?
-            .execute(ResetColor)?;
-        return Err(std::io::Error::new(std::io::ErrorKind::Other, "Etactl internal error"));
-    }
+    // if !input || !output{
+    //     stdout()
+    //         .execute(SetForegroundColor(Color::Red))?
+    //         .execute(Print("Etactl internal error"))?
+    //         .execute(ResetColor)?;
+    //     return Err(std::io::Error::new(std::io::ErrorKind::Other, "Etactl internal error"));
+    // }
     Ok(())
 }

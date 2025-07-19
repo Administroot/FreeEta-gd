@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
+use std::collections::HashMap;
 use csv;
 use toml;
 
@@ -28,6 +29,122 @@ pub struct System {
 impl System {
     pub fn new() -> Self {
         System { components: vec![Component::new()] }
+    }
+
+    pub fn system_to_etanode(&self) -> ETANode {
+        // Build successor map
+        let mut successors: HashMap<i64, Vec<i64>> = HashMap::new();
+        for comp in &self.components {
+            for &prev_id in &comp.prev_node {
+                successors.entry(prev_id).or_default().push(comp.node_id);
+            }
+        }
+        
+        // Build `Component` map
+        let comp_map: HashMap<_, _> = self.components.iter()
+            .map(|c| (c.node_id, c))
+            .collect();
+        
+        // Recursivlly build event tree
+        self.build_etanode(0, &comp_map, &successors)
+    }
+    
+    fn build_etanode(
+        &self,
+        node_id: i64,
+        comp_map: &HashMap<i64, &Component>,
+        successors: &HashMap<i64, Vec<i64>>
+    ) -> ETANode {
+        // Terminate processing
+        if node_id == -1 {
+            return ETANode::Outcome {
+                name: "Ending".into(),
+                impact: 0.0
+            };
+        }
+        
+        let comp = comp_map[&node_id];
+        let succ_list = successors.get(&node_id).cloned().unwrap_or_default();
+        
+        // Handle different subsequent nodes
+        match succ_list.len() {
+            // No subsequence -> Failure
+            0 => ETANode::Outcome {
+                name: self.get_failure_name(&comp.node_name),
+                impact: self.get_impact(&comp.node_name)
+            },
+            
+            // One subsequence
+            1 => {
+                let next_id = succ_list[0];
+                let next_node = self.build_etanode(next_id, comp_map, successors);
+                
+                // Failure node
+                let failure_node = ETANode::Outcome {
+                    name: self.get_failure_name(&comp.node_name),
+                    impact: self.get_impact(&comp.node_name)
+                };
+                
+                // Build event node
+                let mut event = ETANode::Event {
+                    name: comp.node_name.clone(),
+                    success_prob: comp.reliability,
+                    failure_prob: 1.0 - comp.reliability,
+                    success_child: Some(Box::new(next_node)),
+                    failure_child: Some(Box::new(failure_node))
+                };
+                
+                // Reliability == 1.0, no failure branch
+                if comp.reliability == 1.0 {
+                    if let ETANode::Event { failure_child, .. } = &mut event {
+                        *failure_child = None;
+                    }
+                }
+                event
+            }
+            
+            // Multiple subsequences (Take the first two nodes)
+            _ => {
+                let mut sorted_succ = succ_list.clone();
+                sorted_succ.sort_unstable();
+                
+                let next_id_success = sorted_succ[0];
+                let next_id_failure = sorted_succ[1];
+                
+                ETANode::Event {
+                    name: comp.node_name.clone(),
+                    success_prob: comp.reliability,
+                    failure_prob: 1.0 - comp.reliability,
+                    success_child: Some(Box::new(
+                        self.build_etanode(next_id_success, comp_map, successors)
+                    )),
+                    failure_child: Some(Box::new(
+                        self.build_etanode(next_id_failure, comp_map, successors)
+                    ))
+                }
+            }
+        }
+    }
+    
+    // TODO: Customize the name
+    fn get_failure_name(&self, node_name: &str) -> String {
+        match node_name {
+            "Pump" => "System_Shutdown".into(),
+            "ValveB" => "ValveB_Failure".into(),
+            "ValveC" => "ValveC_Failure".into(),
+            "ValveD" => "Partial_Failure".into(),
+            _ => format!("{node_name}_Failure")
+        }
+    }
+    
+    // TODO: Customize the impact
+    fn get_impact(&self, node_name: &str) -> f64 {
+        match node_name {
+            "Pump" => 0.8,
+            "ValveB" | "ValveC" => 0.7,
+            "ValveD" => 0.5,
+            _ => 0.5
+        }
     }
 }
 
@@ -85,4 +202,63 @@ pub fn serialize_system_to_path(system: &System, path: &Path) -> Result<(), Box<
         _ => return Err(format!("Unsupported file extension: {}", ext).into()),
     }
     Ok(())
+}
+
+#[derive(Debug, Clone)]
+pub enum ETANode {
+    Event {
+        name: String,
+        success_prob: f64, 
+        #[allow(dead_code)]
+        failure_prob: f64,
+        success_child: Option<Box<ETANode>>,
+        failure_child: Option<Box<ETANode>>,
+    },
+    Outcome {
+        name: String,
+        impact: f64,
+    },
+}
+
+
+impl ETANode {
+    // Generate all possible paths, probabilities and outcomes
+    pub fn generate_paths(&self) -> Vec<(Vec<String>, f64, f64)> {
+        let mut paths = Vec::new();
+        self._dfs(&mut Vec::new(), 1.0, &mut paths);
+        paths
+    }
+
+    // Traversing event tree
+    fn _dfs(&self, current_path: &mut Vec<String>, current_prob: f64, paths: &mut Vec<(Vec<String>, f64, f64)>) {
+        match self {
+            ETANode::Event { name, success_prob, success_child, failure_child, .. } => {
+                // Success branch
+                current_path.push(format!("{}:Success", name));
+                if let Some(child) = success_child {
+                    child._dfs(current_path, current_prob * success_prob, paths);
+                }
+                current_path.pop();
+
+                // Failure branch
+                current_path.push(format!("{}:Failure", name));
+                if let Some(child) = failure_child {
+                    child._dfs(current_path, current_prob * (1.0 - success_prob), paths);
+                }
+                current_path.pop();
+            }
+            ETANode::Outcome { name, impact } => {
+                let _ = name;
+                // Record current_path result
+                paths.push((current_path.clone(), current_prob, *impact));
+            }
+        }
+    }
+}
+
+// Identify high-risk paths ( probability > threshold )
+pub fn high_risk_paths(paths: &[(Vec<String>, f64, f64)], prob_threshold: f64) -> Vec<&(Vec<String>, f64, f64)> {
+    paths.iter()
+        .filter(|(_, prob, impact)| *prob > prob_threshold && *impact > 0.5)
+        .collect()
 }
