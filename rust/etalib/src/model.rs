@@ -22,16 +22,16 @@ impl Component {
 
 
 #[derive(Serialize, Deserialize)]
-pub struct System {
+pub struct IData {
     pub components: Vec<Component>,
 }
 
-impl System {
+impl IData {
     pub fn new() -> Self {
-        System { components: vec![Component::new()] }
+        IData { components: vec![Component::new()] }
     }
 
-    pub fn system_to_etanode(&self) -> ETANode {
+    pub fn to_etanode(&self) -> ETANode {
         // Build successor map
         let mut successors: HashMap<i64, Vec<i64>> = HashMap::new();
         for comp in &self.components {
@@ -148,7 +148,7 @@ impl System {
     }
 }
 
-pub fn deserialize_system_from_path(path: &Path) -> Result<System, Box<dyn std::error::Error>> {
+pub fn deserialize_system_from_path(path: &Path) -> Result<IData, Box<dyn std::error::Error>> {
     let ext = path.extension()
         .and_then(|e| e.to_str())
         .unwrap_or("")
@@ -164,10 +164,10 @@ pub fn deserialize_system_from_path(path: &Path) -> Result<System, Box<dyn std::
         "csv" => {
             let mut rdr = csv::Reader::from_reader(content.as_bytes());
             let components: Vec<Component> = rdr.deserialize().collect::<Result<_, _>>()?;
-            System { components }
+            IData { components }
         },
         "toml" => {
-            let system: System = toml::from_str(&content)?;
+            let system: IData = toml::from_str(&content)?;
             system
         },
         _ => return Err(format!("Unsupported file extension: {}", ext).into()),
@@ -176,7 +176,7 @@ pub fn deserialize_system_from_path(path: &Path) -> Result<System, Box<dyn std::
     Ok(system)
 }
 
-pub fn serialize_system_to_path(system: &System, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
+pub fn serialize_system_to_path(system: &IData, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
     let ext = path.extension()
         .and_then(|e| e.to_str())
         .unwrap_or("")
@@ -256,9 +256,15 @@ impl ETANode {
     }
 }
 
-// Identify high-risk paths ( probability > threshold )
-pub fn high_risk_paths(paths: &[(Vec<String>, f64, f64)], prob_threshold: f64) -> Vec<&(Vec<String>, f64, f64)> {
-    paths.iter()
-        .filter(|(_, prob, impact)| *prob > prob_threshold && *impact > 0.5)
-        .collect()
+#[allow(dead_code)]
+pub struct OData{
+    path: HashMap<String, bool>,
+    prob: f64,
+    impact: f64,
+}
+
+impl OData {
+    pub fn new(path: HashMap<String, bool>, prob: f64, impact: f64) -> Self{
+        Self { path, prob, impact }
+    }
 }

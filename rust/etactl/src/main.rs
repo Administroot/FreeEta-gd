@@ -1,4 +1,4 @@
-use etalib::model::{serialize_system_to_path, deserialize_system_from_path, System};
+use etalib::model::{serialize_system_to_path, deserialize_system_from_path, IData};
 use etalib::common::*;
 use std::io::stdout;
 use crossterm::{
@@ -23,7 +23,7 @@ struct Cli {
 
 fn main() -> std::io::Result<()> {
     // `sys`: JUST FOR TEST
-    let sys = System::new();
+    let sys = IData::new();
     // Clap
     let cli = Cli::parse();
     match cli.input_file.as_deref() {

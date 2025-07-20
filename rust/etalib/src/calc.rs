@@ -1,11 +1,11 @@
 use godot::classes::{file_access::ModeFlags, Node};
 use godot::prelude::*;
-use crate::model::{System, deserialize_system_from_path};
+use crate::model::{IData, deserialize_system_from_path};
 
 #[derive(GodotClass)]
 #[class(base=Node)]
 struct Calculator {
-    sys: System,
+    sys: IData,
     base: Base<Node>,
 }
 
@@ -16,7 +16,7 @@ use std::path::PathBuf;
 #[godot_api]
 impl INode for Calculator {
     fn init(base: Base<Node>) -> Self {
-        Self { sys: System::new(), base}
+        Self { sys: IData::new(), base}
     }
 
     fn ready(&mut self) {
@@ -41,7 +41,7 @@ impl Calculator {
     }
 }
 
-fn load_system(path: Option<&str>) -> Result<System, Box<dyn std::error::Error>> {
+fn load_system(path: Option<&str>) -> Result<IData, Box<dyn std::error::Error>> {
     let path = path.unwrap_or("user://saves/components.json");
     let file = FileAccess::open(path, ModeFlags::READ)
         .ok_or("Failed to open save file")?;
