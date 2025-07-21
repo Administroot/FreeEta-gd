@@ -27,8 +27,38 @@ pub struct IData {
 }
 
 impl IData {
-    pub fn new() -> Self {
-        IData { components: vec![Component::new()] }
+
+    pub fn deserialize(&mut self, path: &Path) -> Result<(), Box<dyn std::error::Error>>{
+        let ext = path.extension()
+            .and_then(|e| e.to_str())
+            .unwrap_or("")
+            .to_ascii_lowercase();
+        // let content = fs::read_to_string(path).expect(&format!("File not exists! Path: {}", path.display()));
+        let content = fs::read_to_string(path)?;
+        let idata = match ext.as_str() {
+            "json" => { 
+                // let system = serde_json::from_str(&content).expect(&format!("File {} is not a valid json or type mismatch!", path.display()));
+                let system = serde_json::from_str(&content)?;
+                system
+            },
+            "csv" => {
+                let mut rdr = csv::Reader::from_reader(content.as_bytes());
+                // let components: Vec<Component> = rdr.deserialize().collect::<Result<_, _>>().expect(&format!("File {} is not a valid csv or type mismatch!", path.display()));
+                let components: Vec<Component> = rdr.deserialize().collect::<Result<_, _>>()?;
+                IData { components }
+            },
+            "toml" => {
+                // let system: IData = toml::from_str(&content).expect(&format!("File {} is not a valid toml or type mismatch!", path.display()));
+                let system: IData = toml::from_str(&content)?;
+                system
+            },
+            _ => {
+                let msg = format!("Unsupported file extension {}!", &ext);
+                return Err(msg.into());
+            },
+        };
+        *self = idata;
+        Ok(())
     }
 
     pub fn to_etanode(&self) -> ETANode {
@@ -146,62 +176,6 @@ impl IData {
             _ => 0.5
         }
     }
-}
-
-pub fn deserialize_system_from_path(path: &Path) -> Result<IData, Box<dyn std::error::Error>> {
-    let ext = path.extension()
-        .and_then(|e| e.to_str())
-        .unwrap_or("")
-        .to_ascii_lowercase();
-
-    let content = fs::read_to_string(path)?;
-
-    let system = match ext.as_str() {
-        "json" => { 
-            let system = serde_json::from_str(&content)?;
-            system
-        },
-        "csv" => {
-            let mut rdr = csv::Reader::from_reader(content.as_bytes());
-            let components: Vec<Component> = rdr.deserialize().collect::<Result<_, _>>()?;
-            IData { components }
-        },
-        "toml" => {
-            let system: IData = toml::from_str(&content)?;
-            system
-        },
-        _ => return Err(format!("Unsupported file extension: {}", ext).into()),
-    };
-
-    Ok(system)
-}
-
-pub fn serialize_system_to_path(system: &IData, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
-    let ext = path.extension()
-        .and_then(|e| e.to_str())
-        .unwrap_or("")
-        .to_ascii_lowercase();
-
-    match ext.as_str() {
-        "json" => {
-            let json_str = serde_json::to_string_pretty(system)?;
-            fs::write(path, json_str)?;
-        },
-        "csv" => {
-            let mut wtr = csv::Writer::from_writer(vec![]);
-            for component in &system.components {
-                wtr.serialize(component)?;
-            }
-            let data = String::from_utf8(wtr.into_inner()?)?;
-            fs::write(path, data)?;
-        },
-        "toml" => {
-            let toml_str = toml::to_string_pretty(system)?;
-            fs::write(path, toml_str)?;
-        },
-        _ => return Err(format!("Unsupported file extension: {}", ext).into()),
-    }
-    Ok(())
 }
 
 #[derive(Debug, Clone)]

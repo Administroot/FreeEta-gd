@@ -1,6 +1,6 @@
-use etalib::model::{serialize_system_to_path, deserialize_system_from_path, IData};
 use etalib::common::*;
-use std::io::stdout;
+use etalib::model::IData;
+use std::{io::stdout, vec};
 use crossterm::{
     style::{Color, Print, ResetColor, SetBackgroundColor, SetForegroundColor},
     ExecutableCommand,
@@ -22,9 +22,8 @@ struct Cli {
 }
 
 fn main() -> std::io::Result<()> {
-    // `sys`: JUST FOR TEST
-    let sys = IData::new();
-    // Clap
+    let mut idata = IData{ components: vec![]};
+    // Util: Clap
     let cli = Cli::parse();
     match cli.input_file.as_deref() {
         Some(path) => {
@@ -32,41 +31,11 @@ fn main() -> std::io::Result<()> {
                 .execute(SetForegroundColor(Color::DarkGreen))?
                 .execute(Print("Parsing file ...... "))?
                 .execute(ResetColor)?;
-            match deserialize_system_from_path(path) {
-                Ok(mut system) => {
-                    // Logic
-                    algorithm(&mut system);
-                    // Hint
-                    stdout()
-                        .execute(SetBackgroundColor(Color::DarkGreen))?
-                        .execute(Print("Success"))?
-                        .execute(ResetColor)?;
-                }
-                Err(e) => {
-                    stdout()
-                        .execute(SetBackgroundColor(Color::DarkRed))?
-                        .execute(Print("Failed"))?
-                        .execute(ResetColor)?;
-                    let mut output = String::new();
-                    output.push_str(&format!("\nFailed to deserialize system from {}: {}", path.display(), e));
-                    stdout()
-                        .execute(SetForegroundColor(Color::Red))?
-                        .execute(Print(output))?
-                        .execute(ResetColor)?;
-                }
-            }
-        }
-        None => {},
-    };
-    println!();
-    match cli.output_file.as_deref() {
-        Some(path) => {
-            stdout()
-                .execute(SetForegroundColor(Color::DarkGreen))?
-                .execute(Print(&format!("Printing outputs to \'{}\' ...... ", path.display())))?
-                .execute(ResetColor)?;
-            match serialize_system_to_path(&sys, path) {
-                Ok(()) => {
+
+            match idata.deserialize(path) {
+                Ok(_) => {
+                    // TODO: Logic
+                    algorithm(&mut idata);
                     stdout()
                         .execute(SetBackgroundColor(Color::DarkGreen))?
                         .execute(Print("Success"))?
@@ -78,23 +47,26 @@ fn main() -> std::io::Result<()> {
                         .execute(Print("Failed"))?
                         .execute(ResetColor)?;
                     let mut output = String::new();
-                    output.push_str(&format!("\nCannot write to {}: {}", path.display(), e));
+                    output.push_str(&format!("\nDeserialize from {} failed: {}", path.display(), e));
                     stdout()
                         .execute(SetForegroundColor(Color::Red))?
                         .execute(Print(output))?
                         .execute(ResetColor)?;
-                }
-            }
+                },
+            };
+        }
+        None => {},
+    };
+    println!();
+    match cli.output_file.as_deref() {
+        Some(path) => {
+            stdout()
+                .execute(SetForegroundColor(Color::DarkGreen))?
+                .execute(Print(&format!("Printing outputs to \'{}\' ...... ", path.display())))?
+                .execute(ResetColor)?;
         },
         None => (),
     };
 
-    // if !input || !output{
-    //     stdout()
-    //         .execute(SetForegroundColor(Color::Red))?
-    //         .execute(Print("Etactl internal error"))?
-    //         .execute(ResetColor)?;
-    //     return Err(std::io::Error::new(std::io::ErrorKind::Other, "Etactl internal error"));
-    // }
     Ok(())
 }
