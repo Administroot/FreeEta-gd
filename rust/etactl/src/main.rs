@@ -1,5 +1,5 @@
 use etalib::common::*;
-use etalib::model::IData;
+use etalib::model::{IData, OData};
 use std::{io::stdout, vec};
 use crossterm::{
     style::{Color, Print, ResetColor, SetBackgroundColor, SetForegroundColor},
@@ -16,13 +16,14 @@ struct Cli {
     #[arg(short = 'i', long = "input", value_name = "FILE")]
     input_file: Option<PathBuf>,
 
-    /// Export ETA (Event Tree Analysis) data to file, default `output.json`. (Support `CSV`, `JSON`, `TOML`)
+    /// Export ETA (Event Tree Analysis) data to file. (Support `JSON`, `TOML`)
     #[arg(short = 'o', long = "output", value_name = "FILE")]
     output_file: Option<PathBuf>,
 }
 
 fn main() -> std::io::Result<()> {
     let mut idata = IData{ components: vec![]};
+    let mut odata = OData::new();
     // Util: Clap
     let cli = Cli::parse();
     match cli.input_file.as_deref() {
@@ -35,7 +36,7 @@ fn main() -> std::io::Result<()> {
             match idata.deserialize(path) {
                 Ok(_) => {
                     // TODO: Logic
-                    algorithm(&mut idata);
+                    odata = algorithm(&mut idata);
                     stdout()
                         .execute(SetBackgroundColor(Color::DarkGreen))?
                         .execute(Print("Success"))?
@@ -62,10 +63,30 @@ fn main() -> std::io::Result<()> {
         Some(path) => {
             stdout()
                 .execute(SetForegroundColor(Color::DarkGreen))?
-                .execute(Print(&format!("Printing outputs to \'{}\' ...... ", path.display())))?
+                .execute(Print(&format!("Export data to \'{}\' ...... ", path.display())))?
                 .execute(ResetColor)?;
+            match odata.serialize(path) {
+                Ok(_) => {
+                    stdout()
+                        .execute(SetBackgroundColor(Color::DarkGreen))?
+                        .execute(Print("Success"))?
+                        .execute(ResetColor)?;
+                },
+                Err(e) => {
+                    stdout()
+                        .execute(SetBackgroundColor(Color::DarkRed))?
+                        .execute(Print("Failed"))?
+                        .execute(ResetColor)?;
+                    let mut output = String::new();
+                    output.push_str(&format!("\nSerialize to {} failed: {}", path.display(), e));
+                    stdout()
+                        .execute(SetForegroundColor(Color::Red))?
+                        .execute(Print(output))?
+                        .execute(ResetColor)?;
+                },
+            }
         },
-        None => (),
+        None => {},
     };
 
     Ok(())

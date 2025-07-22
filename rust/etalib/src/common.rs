@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use crate::model::{IData, OData};
+use crate::model::{IData, EtaPath, OData};
 
 // Identify high-risk paths ( probability > threshold )
 // fn high_risk_paths(paths: &[(Vec<String>, f64, f64)], prob_threshold: f64) -> Vec<&(Vec<String>, f64, f64)> {
@@ -8,8 +8,8 @@ use crate::model::{IData, OData};
 //         .collect()
 // }
 
-fn parse_path_to_odatas(paths: &[(Vec<String>, f64, f64)]) -> Vec<OData> {
-    let mut odatas = Vec::new();
+fn parse_path_to_odata(paths: &[(Vec<String>, f64, f64)]) -> OData {
+    let mut odata = OData::new();
     for (path, prob, impact) in paths {
         let mut map = HashMap::new();
         for pair in path{
@@ -24,18 +24,18 @@ fn parse_path_to_odatas(paths: &[(Vec<String>, f64, f64)]) -> Vec<OData> {
                 map.insert(key, value);
             }
         }
-        odatas.push(OData::new(map, *prob, *impact));
+        odata.etapaths.push(EtaPath::new(map, *prob, *impact));
     }
-    odatas
+    odata
 }
 
-pub fn algorithm<'a>(idata: &'a mut IData){
+pub fn algorithm<'a>(idata: &'a mut IData) -> OData{
     let eta = idata.to_etanode();
     // Generate all paths
     let paths = eta.generate_paths();
-    println!("All Paths:");
-    for (path, prob, impact) in &paths {
-        println!("- Path: {:?}, Prob: {:.4}, Impact: {:.2}", path, prob, impact);
-    }
-    parse_path_to_odatas(&paths);
+    // println!("All Paths:");
+    // for (path, prob, impact) in &paths {
+    //     println!("- Path: {:?}, Prob: {:.4}, Impact: {:.2}", path, prob, impact);
+    // }
+    parse_path_to_odata(&paths)
 }

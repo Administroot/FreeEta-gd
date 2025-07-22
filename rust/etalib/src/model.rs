@@ -33,22 +33,18 @@ impl IData {
             .and_then(|e| e.to_str())
             .unwrap_or("")
             .to_ascii_lowercase();
-        // let content = fs::read_to_string(path).expect(&format!("File not exists! Path: {}", path.display()));
         let content = fs::read_to_string(path)?;
         let idata = match ext.as_str() {
             "json" => { 
-                // let system = serde_json::from_str(&content).expect(&format!("File {} is not a valid json or type mismatch!", path.display()));
                 let system = serde_json::from_str(&content)?;
                 system
             },
             "csv" => {
                 let mut rdr = csv::Reader::from_reader(content.as_bytes());
-                // let components: Vec<Component> = rdr.deserialize().collect::<Result<_, _>>().expect(&format!("File {} is not a valid csv or type mismatch!", path.display()));
                 let components: Vec<Component> = rdr.deserialize().collect::<Result<_, _>>()?;
                 IData { components }
             },
             "toml" => {
-                // let system: IData = toml::from_str(&content).expect(&format!("File {} is not a valid toml or type mismatch!", path.display()));
                 let system: IData = toml::from_str(&content)?;
                 system
             },
@@ -230,15 +226,46 @@ impl ETANode {
     }
 }
 
+#[derive(Serialize, Deserialize)]
 #[allow(dead_code)]
-pub struct OData{
+pub struct EtaPath {
     path: HashMap<String, bool>,
     prob: f64,
     impact: f64,
 }
 
-impl OData {
+impl EtaPath {
     pub fn new(path: HashMap<String, bool>, prob: f64, impact: f64) -> Self{
         Self { path, prob, impact }
+    }
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct OData {
+    pub etapaths: Vec<EtaPath>,
+}
+
+impl OData {
+    pub fn new() -> Self {
+        Self { etapaths: vec![] }
+    }
+
+    pub fn serialize(&self, path: &Path) -> Result<(),  Box<dyn std::error::Error>>{
+        let ext = path.extension()
+            .and_then(|e| e.to_str())
+            .unwrap_or("")
+            .to_ascii_lowercase();
+        match ext.as_str() {
+            "json" => {
+                let json_str = serde_json::to_string_pretty(self)?;
+                fs::write(path, json_str)?;
+            },
+            "toml" => {
+                let toml_str = toml::to_string_pretty(self)?;
+                fs::write(path, toml_str)?;
+            },
+            _ => return Err(format!("Unsupported file extension: {}", ext).into()),
+        }
+        Ok(())
     }
 }
