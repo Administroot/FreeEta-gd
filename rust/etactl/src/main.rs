@@ -12,7 +12,7 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[command(author, version, about = "Event Tree Analysis Terminal of FreeEta")]
 struct Cli {
-    /// Load Components from file. (Support `CSV`, `JSON`, `TOML`)
+    /// Load Components from file. (Support `JSON`, `TOML`)
     #[arg(short = 'i', long = "input", value_name = "FILE")]
     input_file: Option<PathBuf>,
 

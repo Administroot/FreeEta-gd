@@ -2,7 +2,6 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
 use std::collections::HashMap;
-use csv;
 use toml;
 
 #[derive(Serialize, Deserialize)]
@@ -38,11 +37,6 @@ impl IData {
             "json" => { 
                 let system = serde_json::from_str(&content)?;
                 system
-            },
-            "csv" => {
-                let mut rdr = csv::Reader::from_reader(content.as_bytes());
-                let components: Vec<Component> = rdr.deserialize().collect::<Result<_, _>>()?;
-                IData { components }
             },
             "toml" => {
                 let system: IData = toml::from_str(&content)?;
