@@ -14,7 +14,6 @@ keywords.workspace = true
 godot = "0.3.2"
 rand = "0.9.1"
 rand_distr = "0.5.1"
-csv = "1.3.1"
 serde = { version = "1.0.219", features = ["derive"]}
 serde_json = "1.0.140"
 toml = "0.9.0"

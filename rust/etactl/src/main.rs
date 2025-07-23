@@ -1,5 +1,5 @@
-use etalib::model::{serialize_system_to_path, deserialize_system_from_path, System};
 use etalib::common::*;
+use etalib::model::{IData, OData};
 use std::io::stdout;
 use crossterm::{
     style::{Color, Print, ResetColor, SetBackgroundColor, SetForegroundColor},
@@ -12,68 +12,35 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[command(author, version, about = "Event Tree Analysis Terminal of FreeEta")]
 struct Cli {
-    /// Load Components from file. (Support `CSV`, `JSON`, `TOML`)
+    /// Load Components from file. (Support `JSON`, `TOML`)
     #[arg(short = 'i', long = "input", value_name = "FILE")]
     input_file: Option<PathBuf>,
 
-    /// Export ETA (Event Tree Analysis) data to file, default `output.json`. (Support `CSV`, `JSON`, `TOML`)
+    /// Export ETA (Event Tree Analysis) data to file. (Support `JSON`, `TOML`)
     #[arg(short = 'o', long = "output", value_name = "FILE")]
     output_file: Option<PathBuf>,
 }
 
 fn main() -> std::io::Result<()> {
-    // `sys`: JUST FOR TEST
-    let sys = System::new();
-    // Clap
+    let mut idata = IData::new();
+    let mut odata = OData::new();
+    // Util: Clap
     let cli = Cli::parse();
-    let _input = match cli.input_file.as_deref() {
+    match cli.input_file.as_deref() {
         Some(path) => {
             stdout()
                 .execute(SetForegroundColor(Color::DarkGreen))?
                 .execute(Print("Parsing file ...... "))?
                 .execute(ResetColor)?;
-            match deserialize_system_from_path(path) {
-                Ok(_system) => {
-                    // Logic
-                    stdout().execute(Print("I've got system!"))?;
-                    // Hint
+
+            match idata.deserialize(path) {
+                Ok(_) => {
+                    // TODO: Logic
+                    odata = algorithm(&mut idata);
                     stdout()
                         .execute(SetBackgroundColor(Color::DarkGreen))?
                         .execute(Print("Success"))?
                         .execute(ResetColor)?;
-                    true
-                }
-                Err(e) => {
-                    stdout()
-                        .execute(SetBackgroundColor(Color::DarkRed))?
-                        .execute(Print("Failed"))?
-                        .execute(ResetColor)?;
-                    let mut output = String::new();
-                    output.push_str(&format!("\nFailed to deserialize system from {}: {}", path.display(), e));
-                    stdout()
-                        .execute(SetForegroundColor(Color::Red))?
-                        .execute(Print(output))?
-                        .execute(ResetColor)?;
-                    false
-                }
-            }
-        }
-        None => false,
-    };
-    println!();
-    let _output = match cli.output_file.as_deref() {
-        Some(path) => {
-            stdout()
-                .execute(SetForegroundColor(Color::DarkGreen))?
-                .execute(Print(&format!("Printing outputs to \'{}\' ...... ", path.display())))?
-                .execute(ResetColor)?;
-            match serialize_system_to_path(&sys, path) {
-                Ok(()) => {
-                    stdout()
-                        .execute(SetBackgroundColor(Color::DarkGreen))?
-                        .execute(Print("Success"))?
-                        .execute(ResetColor)?;
-                    true
                 },
                 Err(e) => {
                     stdout()
@@ -81,22 +48,46 @@ fn main() -> std::io::Result<()> {
                         .execute(Print("Failed"))?
                         .execute(ResetColor)?;
                     let mut output = String::new();
-                    output.push_str(&format!("\nCannot write to {}: {}", path.display(), e));
+                    output.push_str(&format!("\nDeserialize from {} failed: {}", path.display(), e));
                     stdout()
                         .execute(SetForegroundColor(Color::Red))?
                         .execute(Print(output))?
                         .execute(ResetColor)?;
-                    false
-                }
+                },
+            };
+        }
+        None => {},
+    };
+    println!();
+    match cli.output_file.as_deref() {
+        Some(path) => {
+            stdout()
+                .execute(SetForegroundColor(Color::DarkGreen))?
+                .execute(Print(&format!("Export data to \'{}\' ...... ", path.display())))?
+                .execute(ResetColor)?;
+            match odata.serialize(path) {
+                Ok(_) => {
+                    stdout()
+                        .execute(SetBackgroundColor(Color::DarkGreen))?
+                        .execute(Print("Success"))?
+                        .execute(ResetColor)?;
+                },
+                Err(e) => {
+                    stdout()
+                        .execute(SetBackgroundColor(Color::DarkRed))?
+                        .execute(Print("Failed"))?
+                        .execute(ResetColor)?;
+                    let mut output = String::new();
+                    output.push_str(&format!("\nSerialize to {} failed: {}", path.display(), e));
+                    stdout()
+                        .execute(SetForegroundColor(Color::Red))?
+                        .execute(Print(output))?
+                        .execute(ResetColor)?;
+                },
             }
         },
-        None => false,
+        None => {},
     };
-    // Crossterm
-    let data = generate_rand(0u16);
-    stdout()
-        .execute(SetForegroundColor(Color::Yellow))?
-        .execute(Print(print_rand_data(&data)))?
-        .execute(ResetColor)?;
+
     Ok(())
 }

@@ -1,42 +1,41 @@
-use rand_distr::{Cauchy, Distribution, Normal};
-use rand::rng;
+use std::collections::HashMap;
+use crate::model::{IData, EtaPath, OData};
 
-pub fn generate_rand(turns: u16) -> Vec<Vec<f64>>{
-    let mut rng = rng();
-    let mut v = Vec::new();
-    for _ in 0..turns{
-        // Vertex A
-        let normal = Normal::new(480., 1.).unwrap();
-        let cauchy = Cauchy::new(286., 2.).unwrap();
-        let pair = vec![normal.sample(&mut rng), cauchy.sample(&mut rng)];
-        v.push(pair);
-        // Vertex B
-        let normal = Normal::new(1305., 1.).unwrap();
-        let pair = vec![normal.sample(&mut rng), cauchy.sample(&mut rng)];
-        v.push(pair);
-        // Vertex C
-        let cauchy = Cauchy::new(744., 2.).unwrap();
-        let pair = vec![normal.sample(&mut rng), cauchy.sample(&mut rng)];
-        v.push(pair);
-        // Vertex D
-        let normal = Normal::new(480., 1.).unwrap();
-        let pair = vec![normal.sample(&mut rng), cauchy.sample(&mut rng)];
-        v.push(pair);
+// Identify high-risk paths ( probability > threshold )
+// fn high_risk_paths(paths: &[(Vec<String>, f64, f64)], prob_threshold: f64) -> Vec<&(Vec<String>, f64, f64)> {
+//     paths.iter()
+//         .filter(|(_, prob, impact)| *prob > prob_threshold && *impact > 0.5)
+//         .collect()
+// }
+
+fn parse_path_to_odata(paths: &[(Vec<String>, f64, f64)]) -> OData {
+    let mut odata = OData::new();
+    for (path, prob, impact) in paths {
+        let mut map = HashMap::new();
+        for pair in path{
+            let parts: Vec<&str> = pair.split(':').collect();
+            if parts.len() == 2 {
+                let key = parts[0].to_string();
+                let value = match parts[1] {
+                    "Success" => true,
+                    "Failure" => false,
+                    _ => false,
+                };
+                map.insert(key, value);
+            }
+        }
+        odata.etapaths.push(EtaPath::new(map, *prob, *impact));
     }
-    return v
+    odata
 }
 
-pub fn print_rand_data(data: &Vec<Vec<f64>>) -> String {
-    let mut output = String::new();
-    for (i, row) in data.iter().enumerate() {
-        output.push_str(&format!("Row {}: [", i));
-        for (j, val) in row.iter().enumerate() {
-            if j != 0 {
-                output.push_str(", ");
-            }
-            output.push_str(&format!("{:.4}", val));
-        }
-        output.push_str("]\n");
-    }
-    output
+pub fn algorithm<'a>(idata: &'a mut IData) -> OData{
+    let eta = idata.to_etanode();
+    // Generate all paths
+    let paths = eta.generate_paths();
+    // println!("All Paths:");
+    // for (path, prob, impact) in &paths {
+    //     println!("- Path: {:?}, Prob: {:.4}, Impact: {:.2}", path, prob, impact);
+    // }
+    parse_path_to_odata(&paths)
 }
