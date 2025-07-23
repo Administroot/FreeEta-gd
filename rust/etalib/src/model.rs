@@ -27,6 +27,10 @@ pub struct IData {
 
 impl IData {
 
+    pub fn new() -> Self{
+        Self { components: vec![] }
+    }
+
     pub fn deserialize(&mut self, path: &Path) -> Result<(), Box<dyn std::error::Error>>{
         let ext = path.extension()
             .and_then(|e| e.to_str())

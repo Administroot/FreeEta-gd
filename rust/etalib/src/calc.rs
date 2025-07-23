@@ -17,7 +17,7 @@ use std::path::PathBuf;
 #[godot_api]
 impl INode for Calculator {
     fn init(base: Base<Node>) -> Self {
-        Self { idata: IData::new("user://saves/components.json"), base }
+        Self { idata: IData::initialize("user://saves/components.json"), base }
     }
 }
 
@@ -32,7 +32,7 @@ impl Calculator {
 }
 
 impl IData {
-    pub fn new(path: &str) -> Self {
+    pub fn initialize(path: &str) -> Self {
         let file = FileAccess::open(path, ModeFlags::READ)
             .ok_or("Failed to open save file").unwrap();
         let content = file.get_as_text();
@@ -41,7 +41,7 @@ impl IData {
         fs::write(&tmp_path, content.to_string()).expect(&format!("Cannnot write buffer to {}", tmp_path.display()));
         // Optionally, remove the temporary file
         let _ = fs::remove_file(&tmp_path);
-        let mut data = IData {components: vec![]};
+        let mut data = IData::new();
         match data.deserialize(&tmp_path) {
             Ok(_) => {},
             Err(e) => godot_error!("Deserialize stage failed: {}", e),

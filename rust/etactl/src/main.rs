@@ -1,6 +1,6 @@
 use etalib::common::*;
 use etalib::model::{IData, OData};
-use std::{io::stdout, vec};
+use std::io::stdout;
 use crossterm::{
     style::{Color, Print, ResetColor, SetBackgroundColor, SetForegroundColor},
     ExecutableCommand,
@@ -22,7 +22,7 @@ struct Cli {
 }
 
 fn main() -> std::io::Result<()> {
-    let mut idata = IData{ components: vec![]};
+    let mut idata = IData::new();
     let mut odata = OData::new();
     // Util: Clap
     let cli = Cli::parse();
