@@ -31,7 +31,7 @@ jobs:
       - name: Build Rust library and binary
         run: |
           . $HOME/.cargo/env
-          cd $PROJECT_PATH && cd ../rust/
+          cd $PROJECT_PATH/../rust/
           rustup target add x86_64-pc-windows-gnu
           cargo build --target x86_64-pc-windows-gnu --release
           cargo build --target x86_64-pc-windows-gnu --release
@@ -47,6 +47,7 @@ jobs:
         run: |
           mkdir -v -p build/windows
           EXPORT_DIR="$(readlink -f build)"
+          cp $PROJECT_PATH/../rust/target/release/etactl.exe $EXPORT_DIR/windows
           cd $PROJECT_PATH
           godot --headless --import
           godot --headless --export-release "FreeEta-win" "$EXPORT_DIR/windows/$EXPORT_NAME.exe" --verbose
@@ -74,7 +75,7 @@ jobs:
       - name: Build Rust library and binary
         run: |
           . $HOME/.cargo/env
-          cd $PROJECT_PATH && cd ../rust/
+          cd $PROJECT_PATH/../rust/
           cargo build
           cargo build --release
       - name: Setup Godot
@@ -85,6 +86,7 @@ jobs:
         run: |
           mkdir -v -p build/linux
           EXPORT_DIR="$(readlink -f build)"
+          cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR/linux
           cd $PROJECT_PATH
           godot --headless --import
           godot --headless --export-release "FreeEta-linux" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64" --verbose
@@ -112,7 +114,7 @@ jobs:
       - name: Build Rust library and binary
         run: |
           . $HOME/.cargo/env
-          cd $PROJECT_PATH && cd ../rust/
+          cd $PROJECT_PATH/../rust/
           cargo build
           cargo build --release
       - name: Setup Godot
@@ -123,6 +125,7 @@ jobs:
         run: |
           mkdir -v -p build/web
           EXPORT_DIR="$(readlink -f build)"
+          cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR/web
           cd $PROJECT_PATH
           godot --headless --import
           godot --headless --export-release "FreeEta-web" "$EXPORT_DIR/web/index.html" --verbose
@@ -158,7 +161,7 @@ jobs:
       - name: Build Rust library and binary
         run: |
           . $HOME/.cargo/env
-          cd $PROJECT_PATH && cd ../rust/
+          cd $PROJECT_PATH/../rust/
           cargo build
           cargo build --release
       - name: Setup Godot
@@ -169,6 +172,7 @@ jobs:
         run: |
           mkdir -v -p build/mac
           EXPORT_DIR="$(readlink -f build)"
+          cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR/mac
           cd $PROJECT_PATH
           godot --headless --import
           godot --headless --export-release "FreeEta-mac" "$EXPORT_DIR/mac/$EXPORT_NAME.zip" --verbose
