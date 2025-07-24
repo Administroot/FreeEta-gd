@@ -6,3 +6,5 @@
 script = ExtResource("1_l6v80")
 
 [node name="Calculator" type="Calculator" parent="."]
+
+[connection signal="tmp_files_prepared" from="Calculator" to="." method="_on_calculator_tmp_files_prepared"]

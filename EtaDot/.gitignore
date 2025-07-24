@@ -6,3 +6,6 @@
 
 # Krita temp files
 *~
+
+# Program temp files
+tmp_*
