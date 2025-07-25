@@ -12,10 +12,6 @@ struct Calculator {
 }
 
 use godot::classes::{INode, FileAccess};
-use std::fs;
-use std::path::Path;
-
-const TMP_OUTPUT_FILE: &str = "tmp_output.json";
 
 #[godot_api]
 impl INode for Calculator {
@@ -25,7 +21,6 @@ impl INode for Calculator {
 
     fn ready(&mut self) {
         self.generate_eta_data();
-        Self::remove_tmp_file(Path::new(TMP_OUTPUT_FILE));
     }
 }
 
@@ -33,24 +28,12 @@ impl INode for Calculator {
 impl Calculator {
     #[func]
     fn generate_eta_data(&mut self){
-        let odata = algorithm(&mut self.idata);
-        let path = Path::new(TMP_OUTPUT_FILE);
-        match odata.serialize(path) {
-            Ok(_) => {},
-            Err(e) => godot_error!("Could not buffer to {}: {}", path.display(), e),
-        };
-        self.signals().tmp_files_prepared().emit();
-    }
-
-    fn remove_tmp_file(path: &Path){
-        match fs::remove_file(path) {
-            Ok(_) => {},
-            Err(e) => godot_error!("Remove tmp file {} failed: {}", path.display(), e),
-        }
+        let _odata = algorithm(&mut self.idata);
+        self.signals().calculator_prepared().emit();
     }
 
     #[signal]
-    fn tmp_files_prepared();
+    fn calculator_prepared();
 }
 
 impl IData {
