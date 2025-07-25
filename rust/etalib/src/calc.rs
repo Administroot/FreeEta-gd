@@ -1,13 +1,14 @@
 use godot::classes::{file_access::ModeFlags, Node};
 use godot::prelude::*;
 use crate::common::algorithm;
-use crate::model::IData;
+use crate::model::{IData, OData};
 
 #[derive(GodotClass)]
 #[class(base=Node)]
 #[allow(dead_code)]
 struct Calculator {
     idata: IData,
+    odata: OData,
     base: Base<Node>,
 }
 
@@ -16,7 +17,7 @@ use godot::classes::{INode, FileAccess};
 #[godot_api]
 impl INode for Calculator {
     fn init(base: Base<Node>) -> Self {
-        Self { idata: IData::initialize("user://saves/components.json"), base }
+        Self { idata: IData::initialize("user://saves/components.json"), odata: OData::new(),base }
     }
 
     fn ready(&mut self) {
@@ -28,7 +29,7 @@ impl INode for Calculator {
 impl Calculator {
     #[func]
     fn generate_eta_data(&mut self){
-        let _odata = algorithm(&mut self.idata);
+        self.odata = algorithm(&mut self.idata);
         self.signals().calculator_prepared().emit();
     }
 
