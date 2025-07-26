@@ -8,3 +8,4 @@ script = ExtResource("1_l6v80")
 [node name="Calculator" type="Calculator" parent="."]
 
 [connection signal="calculator_prepared" from="Calculator" to="." method="_on_calculator_calculator_prepared"]
+[connection signal="start_calculation" from="Calculator" to="." method="_on_calculator_start_calculation"]

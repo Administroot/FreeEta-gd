@@ -22,6 +22,7 @@ impl INode for Calculator {
 
     fn ready(&mut self) {
         self.generate_eta_data();
+        self.signals().start_calculation().connect_self(Self::process_calculation);
     }
 }
 
@@ -29,9 +30,16 @@ impl INode for Calculator {
 impl Calculator {
     #[func]
     fn generate_eta_data(&mut self){
-        self.odata = algorithm(&mut self.idata);
+        self.signals().start_calculation().emit();
         self.signals().calculator_prepared().emit();
     }
+
+    fn process_calculation(&mut self){
+        self.odata = algorithm(&mut self.idata);
+    }
+
+    #[signal]
+    fn start_calculation();
 
     #[signal]
     fn calculator_prepared();
