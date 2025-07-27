@@ -10,7 +10,16 @@ use std::path::PathBuf;
 use clap::Parser;
 
 #[derive(Parser, Debug)]
-#[command(author, version, about = "Event Tree Analysis Terminal of FreeEta")]
+#[command(author, version, about = r"Event Tree Analysis Terminal of FreeEta.
+________  ________   _______    _______    _______   _________   ________     
+|\  _____\|\   __  \ |\  ___ \  |\  ___ \  |\  ___ \ |\___   ___\|\   __  \    
+\ \  \__/ \ \  \|\  \\ \   __/| \ \   __/| \ \   __/|\|___ \  \_|\ \  \|\  \   
+ \ \   __\ \ \   _  _\\ \  \_|/__\ \  \_|/__\ \  \_|/__   \ \  \  \ \   __  \  
+  \ \  \_|  \ \  \\  \|\ \  \_|\ \\ \  \_|\ \\ \  \_|\ \   \ \  \  \ \  \ \  \ 
+   \ \__\    \ \__\\ _\ \ \_______\\ \_______\\ \_______\   \ \__\  \ \__\ \__\
+    \|__|     \|__|\|__| \|_______| \|_______| \|_______|    \|__|   \|__|\|__|
+")]
+#[command(arg_required_else_help(true))]
 struct Cli {
     /// Load Components from file. (Support `JSON`, `TOML`)
     #[arg(short = 'i', long = "input", value_name = "FILE")]
@@ -19,6 +28,9 @@ struct Cli {
     /// Export ETA (Event Tree Analysis) data to file. (Support `JSON`, `TOML`)
     #[arg(short = 'o', long = "output", value_name = "FILE")]
     output_file: Option<PathBuf>,
+
+    // Params not exists
+    name: Option<String>,
 }
 
 fn main() -> std::io::Result<()> {
@@ -26,6 +38,26 @@ fn main() -> std::io::Result<()> {
     let mut odata = OData::new();
     // Util: Clap
     let cli = Cli::parse();
+    match cli.name.as_deref() {
+        Some(s) => {
+            stdout()
+                .execute(SetForegroundColor(Color::Red))?
+                .execute(Print("error: "))?
+                .execute(ResetColor)?;
+            stdout()
+                .execute(Print("unexpected parameter \'"))?
+                .execute(SetForegroundColor(Color::DarkYellow))?
+                .execute(Print(s))?
+                .execute(ResetColor)?
+                .execute(Print("\' found"))?
+                .execute(Print("\n\nFor more information, try '--help'."))?
+                .execute(ResetColor)?;
+        },
+        None => {
+            return Ok(());
+        },
+    }
+
     match cli.input_file.as_deref() {
         Some(path) => {
             stdout()
