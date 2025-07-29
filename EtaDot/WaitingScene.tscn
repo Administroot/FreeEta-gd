@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cguoe4vknp2gf"]
+
+[ext_resource type="Theme" uid="uid://cydiramlfc76f" path="res://themes/InfoDialog.tres" id="1_k85dr"]
+[ext_resource type="Script" uid="uid://dado2pomfaci0" path="res://waiting_scene.gd" id="2_0hxyb"]
+
+[node name="WaitingScene" type="PopupPanel"]
+title = "🔨 Building ... "
+initial_position = 1
+size = Vector2i(800, 141)
+visible = true
+borderless = false
+always_on_top = true
+min_size = Vector2i(800, 0)
+content_scale_mode = 1
+theme = ExtResource("1_k85dr")
+script = ExtResource("2_0hxyb")
