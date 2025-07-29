@@ -1,23 +1,28 @@
 use godot::classes::{file_access::ModeFlags, Node};
 use godot::prelude::*;
-use crate::model::IData;
+use crate::common::algorithm;
+use crate::model::{IData, OData};
 
 #[derive(GodotClass)]
 #[class(base=Node)]
 #[allow(dead_code)]
 struct Calculator {
     idata: IData,
+    odata: OData,
     base: Base<Node>,
 }
 
 use godot::classes::{INode, FileAccess};
-use std::fs;
-use std::path::PathBuf;
 
 #[godot_api]
 impl INode for Calculator {
     fn init(base: Base<Node>) -> Self {
-        Self { idata: IData::initialize("user://saves/components.json"), base }
+        Self { idata: IData::initialize("user://saves/components.json"), odata: OData::new(),base }
+    }
+
+    fn ready(&mut self) {
+        self.generate_eta_data();
+        self.signals().start_calculation().connect_self(Self::process_calculation);
     }
 }
 
@@ -25,27 +30,42 @@ impl INode for Calculator {
 impl Calculator {
     #[func]
     fn generate_eta_data(&mut self){
-        // TODO:
-        let _ = self;
-        godot_print!("I have got system!");
+        self.signals().start_calculation().emit();
+        self.signals().calculator_prepared().emit();
     }
+
+    fn process_calculation(&mut self){
+        self.odata = algorithm(&mut self.idata);
+    }
+
+    #[signal]
+    fn start_calculation();
+
+    #[signal]
+    fn calculator_prepared();
 }
 
 impl IData {
-    pub fn initialize(path: &str) -> Self {
+    fn initialize(path: &str) -> Self {
         let file = FileAccess::open(path, ModeFlags::READ)
             .ok_or("Failed to open save file").unwrap();
         let content = file.get_as_text();
-        // Write the contents to a temporary file so we can use deserialize_system_from_path
-        let tmp_path = PathBuf::from(&format!("tmp_{}" , &path));
-        fs::write(&tmp_path, content.to_string()).expect(&format!("Cannnot write buffer to {}", tmp_path.display()));
-        // Optionally, remove the temporary file
-        let _ = fs::remove_file(&tmp_path);
+
         let mut data = IData::new();
-        match data.deserialize(&tmp_path) {
+        match data.deserialize_gstring(&content) {
             Ok(_) => {},
             Err(e) => godot_error!("Deserialize stage failed: {}", e),
         }
         data
+    }
+
+    fn deserialize_gstring(&mut self, txt: &GString) -> Result<(), Box<dyn std::error::Error>> {
+        match serde_json::from_str::<IData>(&txt.to_string()) {
+            Ok(parsed) => {
+                *self = parsed;
+                Ok(())
+            }
+            Err(e) => Err(Box::new(e)),
+        }
     }
 }

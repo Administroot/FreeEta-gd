@@ -1,4 +1,4 @@
-name: "Build FreeEta"
+name: "Build EtaDot"
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 env:
   GODOT_VERSION: 4.4
-  EXPORT_NAME: FreeEta
+  EXPORT_NAME: EtaDot
   PROJECT_PATH: EtaDot
 jobs:
   export-windows:
@@ -50,11 +50,11 @@ jobs:
           cp $PROJECT_PATH/../rust/target/release/etactl.exe $EXPORT_DIR/windows
           cd $PROJECT_PATH
           godot --headless --import
-          godot --headless --export-release "FreeEta-win" "$EXPORT_DIR/windows/$EXPORT_NAME.exe" --verbose
+          godot --headless --export-release "EtaDot-win" "$EXPORT_DIR/windows/$EXPORT_NAME.exe" --verbose
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FreeEta-win
+          name: EtaDot-win
           path: build/windows
 
   export-linux:
@@ -89,11 +89,11 @@ jobs:
           cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR/linux
           cd $PROJECT_PATH
           godot --headless --import
-          godot --headless --export-release "FreeEta-linux" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64" --verbose
+          godot --headless --export-release "EtaDot-linux" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64" --verbose
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FreeEta-linux
+          name: EtaDot-linux
           path: build/linux
 
   export-web:
@@ -128,11 +128,11 @@ jobs:
           cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR/web
           cd $PROJECT_PATH
           godot --headless --import
-          godot --headless --export-release "FreeEta-web" "$EXPORT_DIR/web/index.html" --verbose
+          godot --headless --export-release "EtaDot-web" "$EXPORT_DIR/web/index.html" --verbose
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FreeEta-web
+          name: EtaDot-web
           path: build/web
       # - name: Install rsync 📚
       #   run: |
@@ -175,9 +175,9 @@ jobs:
           cp $PROJECT_PATH/../rust/target/release/etactl $EXPORT_DIR/mac
           cd $PROJECT_PATH
           godot --headless --import
-          godot --headless --export-release "FreeEta-mac" "$EXPORT_DIR/mac/$EXPORT_NAME.zip" --verbose
+          godot --headless --export-release "EtaDot-mac" "$EXPORT_DIR/mac/$EXPORT_NAME.zip" --verbose
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FreeEta-mac
+          name: EtaDot-mac
           path: build/mac
