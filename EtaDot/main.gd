@@ -96,6 +96,7 @@ func clean_components() -> void:
 func on_eta_button_toggled() -> void:
 	clear_scenetree()
 	$ZoomLabel.show()
+	# TODO: Initailize `waiting_scene` here and seperate two scenes below.
 	var scene = preload("res://EtaScene.tscn").instantiate()
 	$Scenes.add_child(scene)
 	# GlobalData.components_data.print_all_members("Components")
@@ -151,7 +152,6 @@ func _input(event: InputEvent) -> void:
 	########################################
 	########### Scroll Function ############
 	if $Scenes.has_node("CompTreeLayout"):
-		# FIXME: After creating `component`, scroll function lose efficacy.
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				zoom_scene(1 + zoom_step)

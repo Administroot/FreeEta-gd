@@ -33,9 +33,5 @@ pub fn algorithm<'a>(idata: &'a mut IData) -> OData{
     let eta = idata.to_etanode();
     // Generate all paths
     let paths = eta.generate_paths();
-    // println!("All Paths:");
-    // for (path, prob, impact) in &paths {
-    //     println!("- Path: {:?}, Prob: {:.4}, Impact: {:.2}", path, prob, impact);
-    // }
     parse_path_to_odata(&paths)
 }

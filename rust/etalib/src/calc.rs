@@ -6,7 +6,7 @@ use crate::model::{IData, OData};
 #[derive(GodotClass)]
 #[class(base=Node)]
 #[allow(dead_code)]
-struct Calculator {
+pub struct Calculator {
     idata: IData,
     odata: OData,
     base: Base<Node>,
@@ -21,22 +21,30 @@ impl INode for Calculator {
     }
 
     fn ready(&mut self) {
-        self.generate_eta_data();
-        self.signals().start_calculation().connect_self(Self::process_calculation);
+        self.signals().start_calculation().connect_self(Self::main_calculation);
+        self.signals().start_calculation().emit();
+        // self.generate_eta_data();
     }
 }
 
 #[godot_api]
 impl Calculator {
     #[func]
-    fn generate_eta_data(&mut self){
-        self.signals().start_calculation().emit();
+    fn main_calculation(&mut self){
+        // Calculate data
+        self.odata = algorithm(&mut self.idata);
+        // Layout
+        Self::layout();
+        // Emit completion signal
         self.signals().calculator_prepared().emit();
+
+        // self.signals().start_calculation().emit();
+        // self.signals().calculator_prepared().emit();
     }
 
-    fn process_calculation(&mut self){
-        self.odata = algorithm(&mut self.idata);
-    }
+    // fn process_calculation(&mut self){
+    //     self.odata = algorithm(&mut self.idata);
+    // }
 
     #[signal]
     fn start_calculation();
