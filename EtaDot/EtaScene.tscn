@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dfoyfkwblydjo" path="res://eta_scene.gd" id="1_l6v80"]
 
 [node name="EtaScene" type="Node2D"]
+show_behind_parent = true
 script = ExtResource("1_l6v80")
 
 [node name="Calculator" type="Calculator" parent="."]

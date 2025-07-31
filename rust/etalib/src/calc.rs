@@ -22,8 +22,8 @@ impl INode for Calculator {
 
     fn ready(&mut self) {
         self.signals().start_calculation().connect_self(Self::main_calculation);
-        self.signals().start_calculation().emit();
-        // self.generate_eta_data();
+        // Manually emit signal
+        // self.signals().start_calculation().emit();
     }
 }
 
@@ -37,14 +37,7 @@ impl Calculator {
         Self::layout();
         // Emit completion signal
         self.signals().calculator_prepared().emit();
-
-        // self.signals().start_calculation().emit();
-        // self.signals().calculator_prepared().emit();
     }
-
-    // fn process_calculation(&mut self){
-    //     self.odata = algorithm(&mut self.idata);
-    // }
 
     #[signal]
     fn start_calculation();

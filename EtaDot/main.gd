@@ -96,10 +96,31 @@ func clean_components() -> void:
 func on_eta_button_toggled() -> void:
 	clear_scenetree()
 	$ZoomLabel.show()
-	# TODO: Initailize `waiting_scene` here and seperate two scenes below.
-	var scene = preload("res://EtaScene.tscn").instantiate()
-	$Scenes.add_child(scene)
+	var eta_scene = preload("res://EtaScene.tscn").instantiate()
+	$Scenes.add_child(eta_scene)
+	eta_scene.start_calculation.connect(_on_start_calculation)
+	eta_scene.calculator_prepared.connect(_on_calculator_prepared)
 	# GlobalData.components_data.print_all_members("Components")
+	eta_scene.calculation_start()
+
+#@onready var timer = $"Timer"
+#var current_time = 0.0
+var start_time: int
+
+func _on_calculator_prepared():
+	# var spend_time = "%.0f" % current_time + " s"
+	var elapsed_time = Time.get_ticks_msec() - start_time
+	var msg = "Calculation finished! It takes " + str(elapsed_time) + " ms."
+	LogUtil.info(msg)
+	#timer.stop()
+	pass
+
+func _on_start_calculation():
+	LogUtil.info("Calculation starts! ☕ Have a cup of coffee. 🌝")
+	start_time = Time.get_ticks_msec()
+	# current_time = 0.0
+	# timer.start()
+
 #endregion
 
 #region RawData
