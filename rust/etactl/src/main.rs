@@ -53,9 +53,7 @@ fn main() -> std::io::Result<()> {
                 .execute(Print("\n\nFor more information, try '--help'."))?
                 .execute(ResetColor)?;
         },
-        None => {
-            return Ok(());
-        },
+        None => {},
     }
 
     match cli.input_file.as_deref() {

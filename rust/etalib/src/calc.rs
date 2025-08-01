@@ -34,7 +34,7 @@ impl Calculator {
         // Calculate data
         self.odata = algorithm(&mut self.idata);
         // Layout
-        Self::layout();
+        Self::layout(&self.odata);
         // Emit completion signal
         self.signals().calculator_prepared().emit();
     }

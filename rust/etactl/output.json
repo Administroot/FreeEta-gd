@@ -1,0 +1,76 @@
+{
+  "etapaths": [
+    {
+      "path": {
+        "ValveB": true,
+        "ValveD": true,
+        "Initial": true,
+        "ValveA": true,
+        "Pump": true
+      },
+      "prob": 0.7834364999999999,
+      "impact": 0.0
+    },
+    {
+      "path": {
+        "ValveB": true,
+        "Initial": true,
+        "ValveA": true,
+        "ValveD": false,
+        "Pump": true
+      },
+      "prob": 0.1382535,
+      "impact": 0.5
+    },
+    {
+      "path": {
+        "Initial": true,
+        "ValveB": false,
+        "Pump": true,
+        "ValveA": true
+      },
+      "prob": 0.009310000000000008,
+      "impact": 0.7
+    },
+    {
+      "path": {
+        "Pump": true,
+        "ValveC": true,
+        "ValveA": false,
+        "ValveD": true,
+        "Initial": true
+      },
+      "prob": 0.041233500000000034,
+      "impact": 0.0
+    },
+    {
+      "path": {
+        "Initial": true,
+        "Pump": true,
+        "ValveD": false,
+        "ValveC": true,
+        "ValveA": false
+      },
+      "prob": 0.007276500000000007,
+      "impact": 0.5
+    },
+    {
+      "path": {
+        "ValveC": false,
+        "ValveA": false,
+        "Initial": true,
+        "Pump": true
+      },
+      "prob": 0.0004900000000000009,
+      "impact": 0.7
+    },
+    {
+      "path": {
+        "Initial": true,
+        "Pump": false
+      },
+      "prob": 0.020000000000000018,
+      "impact": 0.8
+    }
+  ]
+}
