@@ -12,7 +12,7 @@ pub struct Calculator {
     base: Base<Node>,
 }
 
-use godot::classes::{INode, FileAccess};
+use godot::classes::{Control, FileAccess, INode};
 
 #[godot_api]
 impl INode for Calculator {
@@ -31,10 +31,30 @@ impl INode for Calculator {
 impl Calculator {
     #[func]
     fn main_calculation(&mut self){
+        // Get node's parent
+        // let parent = match self.base_mut().get_parent() {
+        //     Some(p) => {
+        //     }
+        //     None => {
+        //         godot_error!("Could not get node [color=red]Calculator[/color]'s parent");
+        //         return;
+        //     },
+        // };
+        let parent = if let Some(parent_node) = self.base().get_parent() {
+            if let Ok(control) = parent_node.try_cast::<Control>() {
+                control
+            } else {
+                godot_error!("Invalid parent node for Calculator - expected Control");
+                return;
+            }
+        } else {
+            godot_error!("Invalid parent node for Calculator - expected Control");
+            return;
+        };
         // Calculate data
         self.odata = algorithm(&mut self.idata);
         // Layout
-        Self::layout(&self.odata);
+        self.layout(&self.odata, parent);
         // Emit completion signal
         self.signals().calculator_prepared().emit();
     }

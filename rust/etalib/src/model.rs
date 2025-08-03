@@ -236,6 +236,18 @@ impl EtaPath {
     pub fn new(path: HashMap<String, bool>, prob: f64, impact: f64) -> Self{
         Self { path, prob, impact }
     }
+    
+    pub fn get_path(&self) -> &HashMap<String, bool> {
+        &self.path
+    }
+    
+    pub fn get_prob(&self) -> f64 {
+        self.prob
+    }
+    
+    pub fn get_impact(&self) -> f64 {
+        self.impact
+    }
 }
 
 #[derive(Serialize, Deserialize)]
