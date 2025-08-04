@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 signal calculator_prepared
 signal start_calculation
