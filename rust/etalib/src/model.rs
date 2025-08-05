@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+use serde::{ Deserialize, Serialize };
 use std::fs;
 use std::path::Path;
 use std::collections::HashMap;
@@ -15,10 +15,15 @@ pub struct Component {
 
 impl Component {
     pub fn new() -> Self {
-        Component { node_id: 1024, node_name: String::from("new_node"), node_type: String::from("new_node_type"), prev_node: Vec::new(), reliability: 1f64 }
+        Component {
+            node_id: 1024,
+            node_name: String::from("new_node"),
+            node_type: String::from("new_node_type"),
+            prev_node: Vec::new(),
+            reliability: 1f64,
+        }
     }
 }
-
 
 #[derive(Serialize, Deserialize)]
 pub struct IData {
@@ -26,30 +31,30 @@ pub struct IData {
 }
 
 impl IData {
-
-    pub fn new() -> Self{
+    pub fn new() -> Self {
         Self { components: vec![] }
     }
 
-    pub fn deserialize(&mut self, path: &Path) -> Result<(), Box<dyn std::error::Error>>{
-        let ext = path.extension()
+    pub fn deserialize(&mut self, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
+        let ext = path
+            .extension()
             .and_then(|e| e.to_str())
             .unwrap_or("")
             .to_ascii_lowercase();
         let content = fs::read_to_string(path)?;
         let idata = match ext.as_str() {
-            "json" => { 
+            "json" => {
                 let system = serde_json::from_str(&content)?;
                 system
-            },
+            }
             "toml" => {
                 let system: IData = toml::from_str(&content)?;
                 system
-            },
+            }
             _ => {
                 let msg = format!("Unsupported file extension {}!", &ext);
                 return Err(msg.into());
-            },
+            }
         };
         *self = idata;
         Ok(())
@@ -63,16 +68,17 @@ impl IData {
                 successors.entry(prev_id).or_default().push(comp.node_id);
             }
         }
-        
+
         // Build `Component` map
-        let comp_map: HashMap<_, _> = self.components.iter()
+        let comp_map: HashMap<_, _> = self.components
+            .iter()
             .map(|c| (c.node_id, c))
             .collect();
-        
+
         // Recursivlly build event tree
         self.build_etanode(0, &comp_map, &successors)
     }
-    
+
     fn build_etanode(
         &self,
         node_id: i64,
@@ -83,41 +89,42 @@ impl IData {
         if node_id == -1 {
             return ETANode::Outcome {
                 name: "Ending".into(),
-                impact: 0.0
+                impact: 0.0,
             };
         }
-        
+
         let comp = comp_map[&node_id];
         let succ_list = successors.get(&node_id).cloned().unwrap_or_default();
-        
+
         // Handle different subsequent nodes
         match succ_list.len() {
             // No subsequence -> Failure
-            0 => ETANode::Outcome {
-                name: self.get_failure_name(&comp.node_name),
-                impact: self.get_impact(&comp.node_name)
-            },
-            
+            0 =>
+                ETANode::Outcome {
+                    name: self.get_failure_name(&comp.node_name),
+                    impact: self.get_impact(&comp.node_name),
+                },
+
             // One subsequence
             1 => {
                 let next_id = succ_list[0];
                 let next_node = self.build_etanode(next_id, comp_map, successors);
-                
+
                 // Failure node
                 let failure_node = ETANode::Outcome {
                     name: self.get_failure_name(&comp.node_name),
-                    impact: self.get_impact(&comp.node_name)
+                    impact: self.get_impact(&comp.node_name),
                 };
-                
+
                 // Build event node
                 let mut event = ETANode::Event {
                     name: comp.node_name.clone(),
                     success_prob: comp.reliability,
                     failure_prob: 1.0 - comp.reliability,
                     success_child: Some(Box::new(next_node)),
-                    failure_child: Some(Box::new(failure_node))
+                    failure_child: Some(Box::new(failure_node)),
                 };
-                
+
                 // Reliability == 1.0, no failure branch
                 if comp.reliability == 1.0 {
                     if let ETANode::Event { failure_child, .. } = &mut event {
@@ -126,30 +133,30 @@ impl IData {
                 }
                 event
             }
-            
+
             // Multiple subsequences (Take the first two nodes)
             _ => {
                 let mut sorted_succ = succ_list.clone();
                 sorted_succ.sort_unstable();
-                
+
                 let next_id_success = sorted_succ[0];
                 let next_id_failure = sorted_succ[1];
-                
+
                 ETANode::Event {
                     name: comp.node_name.clone(),
                     success_prob: comp.reliability,
                     failure_prob: 1.0 - comp.reliability,
-                    success_child: Some(Box::new(
-                        self.build_etanode(next_id_success, comp_map, successors)
-                    )),
-                    failure_child: Some(Box::new(
-                        self.build_etanode(next_id_failure, comp_map, successors)
-                    ))
+                    success_child: Some(
+                        Box::new(self.build_etanode(next_id_success, comp_map, successors))
+                    ),
+                    failure_child: Some(
+                        Box::new(self.build_etanode(next_id_failure, comp_map, successors))
+                    ),
                 }
             }
         }
     }
-    
+
     // TODO: Customize the name
     fn get_failure_name(&self, node_name: &str) -> String {
         match node_name {
@@ -157,17 +164,17 @@ impl IData {
             "ValveB" => "ValveB_Failure".into(),
             "ValveC" => "ValveC_Failure".into(),
             "ValveD" => "Partial_Failure".into(),
-            _ => format!("{node_name}_Failure")
+            _ => format!("{node_name}_Failure"),
         }
     }
-    
+
     // TODO: Customize the impact
     fn get_impact(&self, node_name: &str) -> f64 {
         match node_name {
             "Pump" => 0.8,
             "ValveB" | "ValveC" => 0.7,
             "ValveD" => 0.5,
-            _ => 0.5
+            _ => 0.5,
         }
     }
 }
@@ -176,7 +183,7 @@ impl IData {
 pub enum ETANode {
     Event {
         name: String,
-        success_prob: f64, 
+        success_prob: f64,
         #[allow(dead_code)]
         failure_prob: f64,
         success_child: Option<Box<ETANode>>,
@@ -188,7 +195,6 @@ pub enum ETANode {
     },
 }
 
-
 impl ETANode {
     // Generate all possible paths, probabilities and outcomes
     pub fn generate_paths(&self) -> Vec<(Vec<String>, f64, f64)> {
@@ -198,7 +204,12 @@ impl ETANode {
     }
 
     // Traversing event tree
-    fn _dfs(&self, current_path: &mut Vec<String>, current_prob: f64, paths: &mut Vec<(Vec<String>, f64, f64)>) {
+    fn _dfs(
+        &self,
+        current_path: &mut Vec<String>,
+        current_prob: f64,
+        paths: &mut Vec<(Vec<String>, f64, f64)>
+    ) {
         match self {
             ETANode::Event { name, success_prob, success_child, failure_child, .. } => {
                 // Success branch
@@ -233,18 +244,18 @@ pub struct EtaPath {
 }
 
 impl EtaPath {
-    pub fn new(path: HashMap<String, bool>, prob: f64, impact: f64) -> Self{
+    pub fn new(path: HashMap<String, bool>, prob: f64, impact: f64) -> Self {
         Self { path, prob, impact }
     }
-    
+
     pub fn get_path(&self) -> &HashMap<String, bool> {
         &self.path
     }
-    
+
     pub fn get_prob(&self) -> f64 {
         self.prob
     }
-    
+
     pub fn get_impact(&self) -> f64 {
         self.impact
     }
@@ -260,8 +271,9 @@ impl OData {
         Self { etapaths: vec![] }
     }
 
-    pub fn serialize(&self, path: &Path) -> Result<(),  Box<dyn std::error::Error>>{
-        let ext = path.extension()
+    pub fn serialize(&self, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
+        let ext = path
+            .extension()
             .and_then(|e| e.to_str())
             .unwrap_or("")
             .to_ascii_lowercase();
@@ -269,13 +281,23 @@ impl OData {
             "json" => {
                 let json_str = serde_json::to_string_pretty(self)?;
                 fs::write(path, json_str)?;
-            },
+            }
             "toml" => {
                 let toml_str = toml::to_string_pretty(self)?;
                 fs::write(path, toml_str)?;
-            },
-            _ => return Err(format!("Unsupported file extension: {}", ext).into()),
+            }
+            _ => {
+                return Err(format!("Unsupported file extension: {}", ext).into());
+            }
         }
         Ok(())
+    }
+
+    pub fn get_longest_path(&self) -> u16 {
+        self.etapaths
+            .iter()
+            .map(|path| path.path.len() as u16)
+            .max()
+            .unwrap_or(0)
     }
 }

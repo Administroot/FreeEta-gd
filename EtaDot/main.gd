@@ -97,6 +97,7 @@ func on_eta_button_toggled() -> void:
 	clear_scenetree()
 	$ZoomLabel.show()
 	var eta_scene = preload("res://EtaScene.tscn").instantiate()
+	eta_scene.position = Vector2(0, 57)
 	$Scenes.add_child(eta_scene)
 	eta_scene.start_calculation.connect(_on_start_calculation)
 	eta_scene.calculator_prepared.connect(_on_calculator_prepared)
@@ -109,7 +110,6 @@ func _on_calculator_prepared():
 	var elapsed_time = Time.get_ticks_msec() - start_time
 	var msg = "Calculation finished! It takes " + str(elapsed_time) + " ms."
 	LogUtil.info(msg)
-	pass
 
 func _on_start_calculation():
 	LogUtil.info("Calculation starts! ☕ Have a cup of coffee. 🌝")

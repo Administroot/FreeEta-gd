@@ -1,10 +1,10 @@
-use godot::classes::{file_access::ModeFlags, Node};
+use godot::classes::{ file_access::ModeFlags, Node };
 use godot::prelude::*;
 use crate::common::algorithm;
-use crate::model::{IData, OData};
+use crate::model::{ IData, OData };
 
 #[derive(GodotClass)]
-#[class(base=Node)]
+#[class(base = Node)]
 #[allow(dead_code)]
 pub struct Calculator {
     idata: IData,
@@ -12,12 +12,12 @@ pub struct Calculator {
     base: Base<Node>,
 }
 
-use godot::classes::{Control, FileAccess, INode};
+use godot::classes::{ Control, FileAccess, INode };
 
 #[godot_api]
 impl INode for Calculator {
     fn init(base: Base<Node>) -> Self {
-        Self { idata: IData::initialize("user://saves/components.json"), odata: OData::new(),base }
+        Self { idata: IData::initialize("user://saves/components.json"), odata: OData::new(), base }
     }
 
     fn ready(&mut self) {
@@ -30,16 +30,7 @@ impl INode for Calculator {
 #[godot_api]
 impl Calculator {
     #[func]
-    fn main_calculation(&mut self){
-        // Get node's parent
-        // let parent = match self.base_mut().get_parent() {
-        //     Some(p) => {
-        //     }
-        //     None => {
-        //         godot_error!("Could not get node [color=red]Calculator[/color]'s parent");
-        //         return;
-        //     },
-        // };
+    fn main_calculation(&mut self) {
         let parent = if let Some(parent_node) = self.base().get_parent() {
             if let Ok(control) = parent_node.try_cast::<Control>() {
                 control
@@ -69,12 +60,13 @@ impl Calculator {
 impl IData {
     fn initialize(path: &str) -> Self {
         let file = FileAccess::open(path, ModeFlags::READ)
-            .ok_or("Failed to open save file").unwrap();
+            .ok_or("Failed to open save file")
+            .unwrap();
         let content = file.get_as_text();
 
         let mut data = IData::new();
         match data.deserialize_gstring(&content) {
-            Ok(_) => {},
+            Ok(_) => {}
             Err(e) => godot_error!("Deserialize stage failed: {}", e),
         }
         data
