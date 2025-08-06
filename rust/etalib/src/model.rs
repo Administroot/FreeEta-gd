@@ -1,7 +1,7 @@
 use serde::{ Deserialize, Serialize };
 use std::fs;
 use std::path::Path;
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 use toml;
 
 #[derive(Serialize, Deserialize)]
@@ -77,6 +77,38 @@ impl IData {
 
         // Recursivlly build event tree
         self.build_etanode(0, &comp_map, &successors)
+    }
+
+    pub fn get_stages_bfs(&self) -> Vec<String> {
+
+        let mut in_degree = vec![0; self.components.len()];
+        let mut queue = VecDeque::new();
+        let mut stages = Vec::new();
+
+        // Calculate in-degree of each node
+        for (i, component) in self.components.iter().enumerate() {
+            in_degree[i] = component.prev_node.len();
+            if in_degree[i] == 0 {
+                queue.push_back(i);
+            }
+        }
+
+        // Topological ordering 
+        while let Some(current) = queue.pop_front() {
+            stages.push(self.components[current].node_name.clone());
+
+            // Find all nodes that precede the current node
+            for (next, component) in self.components.iter().enumerate() {
+                if component.prev_node.contains(&self.components[current].node_id) {
+                    in_degree[next] -= 1;
+                    if in_degree[next] == 0 {
+                        queue.push_back(next);
+                    }
+                }
+            }
+        }
+
+        stages
     }
 
     fn build_etanode(
@@ -291,13 +323,5 @@ impl OData {
             }
         }
         Ok(())
-    }
-
-    pub fn get_longest_path(&self) -> u16 {
-        self.etapaths
-            .iter()
-            .map(|path| path.path.len() as u16)
-            .max()
-            .unwrap_or(0)
     }
 }

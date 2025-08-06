@@ -7,7 +7,7 @@ use crate::model::{ IData, OData };
 #[class(base = Node)]
 #[allow(dead_code)]
 pub struct Calculator {
-    idata: IData,
+    pub idata: IData,
     odata: OData,
     base: Base<Node>,
 }
@@ -45,7 +45,7 @@ impl Calculator {
         // Calculate data
         self.odata = algorithm(&mut self.idata);
         // Layout
-        self.layout(&self.odata, parent);
+        self.layout(parent);
         // Emit completion signal
         self.signals().calculator_prepared().emit();
     }
